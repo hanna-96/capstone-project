@@ -18,17 +18,6 @@ module.exports = {
   watchOptions: {
     ignored: /node_modules/
   },
-  plugins: [
-    // new WorkboxWebpackPlugin.InjectManifest({
-    //   swSrc: path.join(process.cwd(), './src-sw.js'),
-    //   swDest: 'service-worker.js'
-    // })
-    new WorkboxWebpackPlugin.GenerateSW({
-      swDest: 'sw.js',
-      clientsClaim: true,
-      skipWaiting: true,
-    })  
-  ],
   module: {
     rules: [
       {
@@ -41,5 +30,16 @@ module.exports = {
       //   use: ['style-loader', 'css-loader']
       // }
     ]
-  }
+  },
+  plugins: [
+    new WorkboxWebpackPlugin.InjectManifest({
+      swSrc: path.join(process.cwd(), './src-sw.js'),
+      swDest: 'sw.js'
+    })
+    // new WorkboxWebpackPlugin.GenerateSW({
+    //   swDest: 'sw.js',
+    //   clientsClaim: true,
+    //   skipWaiting: true,
+    // })  
+  ]
 }

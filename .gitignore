@@ -1,5 +1,6 @@
 node_modules
 public/bundle.js
 public/bundle.js.map
-workbox-1e68fd5e.js
-workbox-1e68fd5e.js.map
+sw.js
+precache-manifest.196e9616fca8eb55165a92ab14659b27.js
+precache-manifest.410e3431cf5d7a75ee9bce903c02376c.js
