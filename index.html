@@ -45,12 +45,15 @@
           <div class="loading-spinner"></div>
         </div>
       </main>
-    
-        <!-- <script
+      <script
           defer
           async
-          src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"
-        ></script> -->
-
+          src="bundle.js"
+        ></script>
+        <script
+        defer
+        async
+        src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"
+      ></script>
     </body>
 </html>
