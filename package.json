@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "copy": "copyfiles -u 1 src/**/**/* src/**/* src/* build",
     "build": "npm run copy",
-    "start": "node server.js"
+    "start": "node server.js",
+    "build-watch": "webpack -w"
   },
   "repository": {
     "type": "git",
@@ -22,10 +23,20 @@
   "homepage": "https://github.com/CapstoneProgect/capstone-project#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "path": "^0.12.7"
+    "html-webpack-plugin": "^4.3.0",
+    "http-server": "^0.12.3",
+    "path": "^0.12.7",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/polyfill": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "babel-loader": "^8.1.0",
     "copyfiles": "^1.2.0",
-    "workbox-cli": "^3.5.0"
+    "workbox-cli": "^3.5.0",
+    "workbox-webpack-plugin": "^5.1.3"
   }
 }

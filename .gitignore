@@ -1,1 +1,5 @@
 node_modules
+public/bundle.js
+public/bundle.js.map
+workbox-1e68fd5e.js
+workbox-1e68fd5e.js.map
