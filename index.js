@@ -1,10 +1,5 @@
-// //  Register service worker.
-// if ("serviceWorker" in navigator){
-//     window.addEventListener("load", () => {
-//     navigator.serviceWorker.register("/public/sw.js");
-//     })
-// }
 import { Workbox } from "workbox-window";
+
 fetch("https://api.exchangeratesapi.io/latest")
 .then(response => response.json())
 .then(data => {
@@ -14,6 +9,7 @@ fetch("https://api.exchangeratesapi.io/latest")
     return false;
   }
   let html = "";
+
   for (const [currency, rate] of Object.entries(data.rates)) {
     html += `<article class="card card-currency">
     <div class="currency">${currency}</div>
@@ -22,9 +18,11 @@ fetch("https://api.exchangeratesapi.io/latest")
   }
   main.innerHTML = html;
 });
+
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    const wb = new Workbox("/public/sw.js");
+    const wb = new Workbox("/sw.js");
     const updateButton = document.querySelector("#app-update");
     // Fires when the registered service worker has installed but is waiting to activate.
     wb.addEventListener("waiting", event => {
@@ -34,12 +32,14 @@ if ("serviceWorker" in navigator) {
       wb.addEventListener("controlling", event => {
         window.location.reload();
       });
+
       // Send a message telling the service worker to skip waiting.
       // This will trigger the `controlling` event handler above.
       wb.messageSW({ type: "SKIP_WAITING" });
     });
     });
+
     wb.register();
   });
-}
 
+}
