@@ -38,26 +38,38 @@ async function createTable() {
   };
   return await DynamoDB.createTable(params).promise();
 }
-(async ()=>{
-  console.log('the func call', await createTable());
-})()
+// (async ()=>{
+//   console.log('the func call', await createTable());
+// })()
 
-// function addItem(id, userName, firstName, lastName,) {
-//   const params = {
-//     TableName: "Users",
-//     Item: {
-//       id: { S: id },
-//       name: { S: name },
-//       image: { S: image },
-//       description: { S: description },
-//     },
-//   };
+async function addItem(id, userName, firstName, lastName,ingredient) {
+  const params = {
+    TableName: "Users",
+    Item: {
+      id: { N: id },
+      userName: { S: userName },
+      firstName: { S: firstName },
+      lastName: { S: lastName },
+      ingredients:{L:[
+        {S:ingredient,
+        }
+      ]}
 
-//  return await  DynamoDB.putItem(params, async function (err) {
-//     if (err) {
-//       console.error("Unable to add a spot", err);
-//     } else {
-//      await console.log(`Added ${name} to the database`);
-//     }
-//   }.promise());
-// }
+    },
+  };
+
+  return await DynamoDB.putItem(params).promise();
+}
+
+(async () => {
+  console.log(
+    "the func call",
+    await addItem(
+      "2",
+      "anna_96",
+      "Anna",
+      "Rzh",
+      ['vodka',"bhfbejcnej"]
+    )
+  );
+})();
