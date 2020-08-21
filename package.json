@@ -1,6 +1,26 @@
 {
   "name": "workbox-tutorial-v4",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "copy": "copyfiles -u 1 src/**/**/* src/**/* src/* build",
+    "build": "npm run copy",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CapstoneProgect/capstone-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CapstoneProgect/capstone-project/issues"
+  },
+  "homepage": "https://github.com/CapstoneProgect/capstone-project#readme",
+  "dependencies": {
+    "aws-sdk": "^2.738.0",
+    "express": "^4.17.1",
+    "path": "^0.12.7"
     "dev": "webpack-dev-server --env.mode development --colors",
     "build": "webpack --env.mode production -w"
   },
