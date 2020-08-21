@@ -1,45 +1,37 @@
-const WorkboxWebpackPlugin = require("workbox-webpack-plugin")
-const path = require('path')
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
+const path = require("path");
+const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
 
-module.exports = {
-  mode: 'development',
-  entry: [
-    '@babel/polyfill', // enables async-await
-    './app.js'
-  ],
-  output: {
-    path: __dirname,
-    filename: './public/bundle.js'
-  },
-  resolve: {
-    extensions: ['.js', '.jsx']
-  },
-  devtool: 'source-map',
-  watchOptions: {
-    ignored: /node_modules/
-  },
-  module: {
-    rules: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader'
-      }
-      // {
-      //   test: /\.css$/,
-      //   use: ['style-loader', 'css-loader']
-      // }
-    ]
-  },
-  plugins: [
-    new WorkboxWebpackPlugin.InjectManifest({
-      swSrc: path.join(process.cwd(), './src-sw.js'),
-      swDest: 'sw.js'
+module.exports = env => {
+  const mode = env.mode ? env.mode : "production";
+
+  return {
+    mode,
+    entry: {
+      main: "./src/index.js"
+    },
+    output: {
+      filename: 'bundle.js',
+      path: path.resolve(__dirname, "public")
+    },
+    plugins: [
+    new webpack.HashedModuleIdsPlugin(),
+    new HtmlWebpackPlugin({
+      template: "./index.html",
+      minify: { collapseWhitespace: true, removeComments: true },
+      inject: false
     })
-    // new WorkboxWebpackPlugin.GenerateSW({
-    //   swDest: 'sw.js',
-    //   clientsClaim: true,
-    //   skipWaiting: true,
-    // })  
-  ]
-}
+    , new WorkboxWebpackPlugin.InjectManifest({
+      swSrc: "./src/src-sw.js",
+      swDest: "sw.js"
+    })
+
+    ],
+    devtool: "source-map"
+  };
+};
+
+
+// filename: "[name].[chunkhash].js",
+// chunkFilename: "[name].[chunkhash].bundle.js",

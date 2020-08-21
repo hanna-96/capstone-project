@@ -1,6 +1,4 @@
-// workbox.precaching.precacheAndRoute(self.__WB_MANIFEST)
 workbox.precaching.precacheAndRoute(self.__precacheManifest);
-//^^^^ this is from smashing magazine tutorial
 
 workbox.routing.registerRoute(
   /https:\/\/api\.exchangeratesapi\.io\/latest/,
@@ -13,3 +11,9 @@ workbox.routing.registerRoute(
     ]
   })
 );
+
+addEventListener("message", event => {
+  if (event.data && event.data.type === "SKIP_WAITING") {
+    skipWaiting();
+  }
+});
