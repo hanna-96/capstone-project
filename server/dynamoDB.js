@@ -42,7 +42,7 @@ async function createTable() {
 //   console.log('the func call', await createTable());
 // })()
 
-async function addItem(id, userName, firstName, lastName,ingredient) {
+async function addItem(id, userName, firstName, lastName, ingredient) {
   const params = {
     TableName: "Users",
     Item: {
@@ -50,26 +50,38 @@ async function addItem(id, userName, firstName, lastName,ingredient) {
       userName: { S: userName },
       firstName: { S: firstName },
       lastName: { S: lastName },
-      ingredients:{L:[
-        {S:ingredient,
-        }
-      ]}
-
+      ingredients: {
+          L: //L -array
+                    ingredient.map(item => {
+                        return {
+                            M: {
+                                  name: {S: item.name},
+                                  image: {S: item.image}
+                            }
+                        }
+                    }
+                  )
+                }
     },
   };
-
+  
   return await DynamoDB.putItem(params).promise();
 }
 
 (async () => {
-  console.log(
-    "the func call",
-    await addItem(
-      "2",
-      "anna_96",
-      "Anna",
-      "Rzh",
-      ['vodka',"bhfbejcnej"]
-    )
-  );
-})();
+    console.log(
+        "the func call",
+        await addItem(
+            "2",
+            "anna_96",
+            "Anna",
+            "Rzh",
+            [{name: 'vodka', image: "bhfbejcnej"}, {name: 'rum', image: "bhfbejcnej"}, {name: 'rum',image:"bhfbejcnej"}]
+            )
+            );
+        })();
+                                                //   M: { 
+                                                
+                                                //     name: { S: ingredient[0].name},
+                                                //     image: {S: ingredient[0].image}
+                                                //   }
