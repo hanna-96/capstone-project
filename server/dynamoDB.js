@@ -18,7 +18,6 @@ async function createTable() {
     ],
     AttributeDefinitions: [
       { AttributeName: "id", AttributeType: "N" },
-
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 10,
@@ -27,9 +26,6 @@ async function createTable() {
   };
   return await DynamoDB.createTable(params).promise();
 }
-// (async ()=>{
-//   console.log('the func call', await createTable());
-// })()
 
 async function addUser(id, userName, firstName, lastName, ingredient) {
   const params = {
