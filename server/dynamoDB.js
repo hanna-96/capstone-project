@@ -15,21 +15,10 @@ async function createTable() {
     TableName: "Users",
     KeySchema: [
       { AttributeName: "id", KeyType: "HASH" },
-      // { AttributeName: "userName", KeyType: "HASH" },
-      // { AttributeName: "firstName", KeyType: "HASH" },
-      // { AttributeName: "lastName", KeyType: "HASH" },
-      // { AttributeName: "email", KeyType: "HASH" },
-      // { AttributeName: "password", KeyType: "HASH" },
-      // { AttributeName: "cabinet", KeyType: "RANGE" },
     ],
     AttributeDefinitions: [
       { AttributeName: "id", AttributeType: "N" },
-      // { AttributeName: "userName", AttributeType: "S" },
-      // { AttributeName: "firstName", AttributeType: "S" },
-      // { AttributeName: "lastName", AttributeType: "S" },
-      // { AttributeName: "email", AttributeType: "S" },
-      // { AttributeName: "password", AttributeType: "S" },
-      // { AttributeName: "cabinet", AttributeType: "M" }, // M=object ; L= array;what is better
+
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 10,
@@ -42,7 +31,7 @@ async function createTable() {
 //   console.log('the func call', await createTable());
 // })()
 
-async function addItem(id, userName, firstName, lastName, ingredient) {
+async function addUser(id, userName, firstName, lastName, ingredient) {
   const params = {
     TableName: "Users",
     Item: {
@@ -68,20 +57,47 @@ async function addItem(id, userName, firstName, lastName, ingredient) {
   return await DynamoDB.putItem(params).promise();
 }
 
-(async () => {
-    console.log(
-        "the func call",
-        await addItem(
-            "2",
-            "anna_96",
-            "Anna",
-            "Rzh",
-            [{name: 'vodka', image: "bhfbejcnej"}, {name: 'rum', image: "bhfbejcnej"}, {name: 'rum',image:"bhfbejcnej"}]
-            )
-            );
+// (async () => {
+//     console.log(
+//         "the func call",
+//         await addUser(
+//             "3",
+//             "sasachop",
+//             "Anna",
+//             "Rzh",
+//             [{name: 'vodka', image: "bhfbejcnej"}, {name: 'rum', image: "bhfbejcnej"}, {name: 'rum',image:"bhfbejcnej"}]
+//             )
+//             );
+//         })();
+//get allusers query
+        async function getAllUsers() {
+          const params = {
+            TableName: "Users",
+          };
+          return await DynamoDB.scan(params).promise();
+        }
+// (async () => {
+//   console.log(
+//     "the func worked ",
+//     await getAllUsers()
+//   );
+// })();
+//get single user 
+        async function getSingleUser(id,ingredientName) {
+          const params = {
+            TableName: "Users",
+            Key: {
+              id: { N: id },
+              // ingredient:{}
+            },
+          };
+          return await DynamoDB.getItem(params).promise();
+        }
+        (async () => {
+          const user = await getSingleUser("2")
+          const ingredients = user.Item.ingredients.L;
+          console.log(
+            "the func worked ",
+            ingredients
+          );
         })();
-                                                //   M: { 
-                                                
-                                                //     name: { S: ingredient[0].name},
-                                                //     image: {S: ingredient[0].image}
-                                                //   }
