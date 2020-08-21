@@ -9,7 +9,7 @@ module.exports = env => {
   return {
     mode,
     entry: {
-      main: "./src/index.js"
+      main: "./index.js"
     },
     output: {
       filename: 'bundle.js',
@@ -23,7 +23,7 @@ module.exports = env => {
       inject: false
     })
     , new WorkboxWebpackPlugin.InjectManifest({
-      swSrc: "./src/src-sw.js",
+      swSrc: "./src-sw.js",
       swDest: "sw.js"
     })
 

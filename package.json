@@ -2,7 +2,7 @@
   "name": "workbox-tutorial-v4",
   "scripts": {
     "dev": "webpack-dev-server --env.mode development --colors",
-    "build": "webpack --env.mode production"
+    "build": "webpack --env.mode production -w"
   },
   "author": "Jad Joubran",
   "license": "UNLICENSED",
