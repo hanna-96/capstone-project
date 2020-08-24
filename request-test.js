@@ -31,7 +31,7 @@ const Request = () => {
   return (
     
     <div>
-      {console.log(drinks)}
+      {/* {console.log(drinks)} */}
       { drinks.length ? <div>
         <p><img src={drinks[0].strDrinkThumb} /></p>
         <p>Drink of the Day : {drinks[0].strDrink}</p>

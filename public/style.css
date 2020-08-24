@@ -1,12 +1,12 @@
 
 /* app shell CSS */
-:root {
+/* :root {
   --primary: coral;
   --gray: #ececec;
   --whitesmoke: #f5f5f5;
   --dark: #222;
   --navbar-height: 70px;
-}
+} */
 body {
   margin: 0;
   background-color: var(--whitesmoke);
