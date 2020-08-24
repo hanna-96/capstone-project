@@ -3,7 +3,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --env.mode development --colors",
-    "build": "webpack --env.mode production -w"
+    "build": "webpack --env.mode production -w",
+    "start": "node server"
   },
   "repository": {
     "type": "git",
@@ -15,11 +16,14 @@
   },
   "homepage": "https://github.com/CapstoneProgect/capstone-project#readme",
   "dependencies": {
+    "aws-amplify": "^3.0.24",
     "aws-sdk": "^2.738.0",
     "express": "^4.17.1",
-    "path": "^0.12.7",
     "html-webpack-plugin": "^3.2.0",
     "http-server": "^0.11.1",
+    "path": "^0.12.7",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "webpack-dev-server": "^3.1.14",
     "workbox-webpack-plugin": "^4.3.1"
   },
