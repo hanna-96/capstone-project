@@ -35,7 +35,8 @@ const Request = () => {
       { drinks.length ? <div>
         <p><img src={drinks[0].strDrinkThumb} /></p>
         <p>Drink of the Day : {drinks[0].strDrink}</p>
-        </div> : <div></div>} 
+        </div>
+ : <div></div>} 
         </div>
     
   )

@@ -2,7 +2,8 @@ import { Workbox } from "workbox-window";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './app'
-
+import './public/style.css'
+// import '../public/manifest.json'
 
 
 

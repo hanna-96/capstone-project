@@ -1,9 +1,6 @@
 import React from 'react';
 import Request from './request-test'
 
-// import './App.css';
-// import Routes from './routes'
-// import NavBar from './components/NavBar'
 
 function App() {
   return (
