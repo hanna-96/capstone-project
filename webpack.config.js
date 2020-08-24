@@ -15,6 +15,16 @@ module.exports = env => {
       filename: 'bundle.js',
       path: path.resolve(__dirname, "public")
     },
+    resolve: {
+      extensions: ['.js', '.jsx']
+    },
+    module: {
+      rules: [
+        {
+          test: /\.jsx?$/,
+          exclude: /node_modules/,
+          loader: 'babel-loader'
+        }]},
     plugins: [
     new webpack.HashedModuleIdsPlugin(),
     new HtmlWebpackPlugin({
