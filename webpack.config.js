@@ -26,7 +26,8 @@ module.exports = env => {
           loader: 'babel-loader'
         },
         {
-          test: /\.s[ac]ss$/i,
+          test: /\.css$/,
+          exclude: /node_modules/,
           use: [
             // Creates `style` nodes from JS strings
             'style-loader',
