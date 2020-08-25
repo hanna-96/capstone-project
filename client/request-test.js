@@ -15,7 +15,7 @@ const Request = () => {
   useEffect( () => {
     
     
-    const getDrinks = async (ing)  => {
+    const getDrinks = async (ing, idx)  => {
       
       try {
         const {data} =await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ing}`) || ''
@@ -27,7 +27,7 @@ const Request = () => {
         else {
           setDrinks(prevDrinks => [...prevDrinks])
           setLen(prevLen => [...prevLen])
-          setSkip(idx => idx+1)
+          setSkip(idx)
           
         }
       } catch (error) {
@@ -36,7 +36,7 @@ const Request = () => {
       
     }
    
-    ingreds.forEach( async (ing) => await getDrinks(ing))
+    ingreds.forEach( async (ing, idx) => await getDrinks(ing, idx))
 
 }, [])
 
