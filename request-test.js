@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react'
 
 
 const Request = () => { 
-
   const [drinks, setDrinks] = useState([])
 
   const [didRun, setDidRun] = useState(false)

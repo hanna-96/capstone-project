@@ -1,10 +1,10 @@
-var AWS = require("aws-sdk");
-const {accessKeyId,secretAccessKey} = require('../secrets')
-let awsConfig = {
+const AWS = require("aws-sdk");
+require('../secrets')
+const awsConfig = {
   region: "us-east-2",
-  endpoint: "http://dynamodb.us-east-2.amazonaws.com",
-  accessKeyId,
-  secretAccessKey
+  endpoint: process.env.AWS_ENDPOINT,
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY
 };
 AWS.config.update(awsConfig);
 
