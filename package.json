@@ -14,13 +14,12 @@
     "url": "git+https://github.com/CapstoneProgect/capstone-project.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/CapstoneProgect/capstone-project/issues"
   },
   "homepage": "https://github.com/CapstoneProgect/capstone-project#readme",
   "dependencies": {
+    "aws-amplify": "^3.0.24",
     "aws-sdk": "^2.738.0",
     "axios": "^0.20.0",
     "babel-loader": "^8.1.0",
@@ -32,6 +31,9 @@
     "path": "^0.12.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+
+    "react-router": "^5.2.0",
+
     "react-router-dom": "^5.2.0",
     "webpack-dev-server": "^3.1.14",
     "workbox-webpack-plugin": "^4.3.1"
