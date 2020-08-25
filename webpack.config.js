@@ -16,7 +16,8 @@ module.exports = env => {
       path: path.resolve(__dirname, "public")
     },
     resolve: {
-      extensions: ['.js', '.jsx']
+      extensions: ['.js', '.jsx', '.json'],
+      mainFields: ['browser', 'main', 'module'],
     },
     module: {
       rules: [
@@ -24,7 +25,20 @@ module.exports = env => {
           test: /\.jsx?$/,
           exclude: /node_modules/,
           loader: 'babel-loader'
-        }]},
+        },
+        {
+          test: /\.css$/,
+          exclude: /node_modules/,
+          use: [
+            // Creates `style` nodes from JS strings
+            'style-loader',
+            // Translates CSS into CommonJS
+            'css-loader',
+            // Compiles Sass to CSS
+            'sass-loader'
+          ]
+        }],
+      },
     plugins: [
     new webpack.HashedModuleIdsPlugin(),
     new HtmlWebpackPlugin({

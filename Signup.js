@@ -3,20 +3,26 @@ import React, { Component } from 'react';
 // import Validate from "../utility/FormValidation";
 import { Auth } from 'aws-amplify'
 
-class Signup extends Component {
-  state = {
-    username: "",
-    email: "",
-    password: "",
-    confirmpassword: "",
-    errors: {
-      cognito: null,
-      blankfield: false,
-      passwordmatch: false
+export default class Signup extends Component {
+    constructor() {
+        super()
+        this.state = {
+          username: "",
+          email: "",
+          password: "",
+          confirmpassword: "",
+          errors: {
+            cognito: null,
+            blankfield: false,
+            passwordmatch: false
+          }
     }
+    this.clearErrorState = this.clearErrorState.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.onInputChange = this.onInputChange.bind(this)
   }
 
-  clearErrorState = () => {
+  clearErrorState() {
     this.setState({
       errors: {
         cognito: null,
@@ -26,17 +32,17 @@ class Signup extends Component {
     });
   }
 
-  handleSubmit = async event => {
+  async handleSubmit (event) {
     event.preventDefault();
 
     // Form validation
     this.clearErrorState();
-    const error = Validate(event, this.state);
-    if (error) {
-      this.setState({
-        errors: { ...this.state.errors, ...error }
-      });
-    }
+    // const error = Validate(event, this.state);
+    // if (error) {
+    //   this.setState({
+    //     errors: { ...this.state.errors, ...error }
+    //   });
+    // }
 
     // AWS Cognito integration here
     const {username, email, password} = this.state
@@ -63,11 +69,11 @@ class Signup extends Component {
     }
   };
 
-  onInputChange = event => {
+  onInputChange(event) {
     this.setState({
       [event.target.id]: event.target.value
     });
-    document.getElementById(event.target.id).classList.remove("is-danger");
+    // document.getElementById(event.target.id).classList.remove("is-danger");
   }
 
   render() {
@@ -75,7 +81,7 @@ class Signup extends Component {
       <section className="section auth">
         <div className="container">
           <h1>Signup</h1>
-          <FormErrors formerrors={this.state.errors} />
+          {/* <FormErrors formerrors={this.state.errors} /> */}
 
           <form onSubmit={this.handleSubmit}>
             <div className="field">
@@ -155,5 +161,3 @@ class Signup extends Component {
     );
   }
 }
-
-export default Signup;
