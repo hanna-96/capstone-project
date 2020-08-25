@@ -1,9 +1,13 @@
 {
   "name": "capstone",
   "scripts": {
+    "start-dev": "npm run build-watch & npm run start-server",
+    "start-server": "nodemon server.js -e html,js,css --ignore public",
+
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --env.mode development --colors",
-    "build": "webpack --env.mode production -w"
+    "build-client": "webpack",
+    "build-watch": "webpack --env.mode production -w"
   },
   "repository": {
     "type": "git",
