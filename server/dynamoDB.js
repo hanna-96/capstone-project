@@ -59,7 +59,7 @@ async function createTable() {
 //   return await DynamoDB.putItem(params).promise();
 // }
 //WHEN ADDING A NEW USER WE DON'T NEED TO SPECIFY INGREDIENT
-async function addUser(id, userName, firstName, lastName,ingredients = []) {
+async function addUser(id, userName, firstName, lastName,ingredient = '') {
   const params = {
     TableName: "Users",
     Item: {
@@ -67,7 +67,7 @@ async function addUser(id, userName, firstName, lastName,ingredients = []) {
       userName: userName,
       firstName: firstName,
       lastName: lastName,
-      // ingredients: [],
+      ingredients: [ingredient],
       // //L -array
       //  ingredient.map((item) => {
       //   return {
@@ -140,12 +140,15 @@ async function updateUserName(id, name) {
   return await DocumentClient.put(params).promise();
 }
 //update User by adding a new ingredient
-async function updateUserIngredients(id, newIngredient) {
+async function updateUserIngredients(id,userName,firstName,lastName, newIngredient) {
   const params = {
     TableName: "Users",
     Item: {
       userId: id,
-      ingredients: [...ingredients,newIngredient]
+      userName,
+      firstName,
+      lastName,
+      ingredients:[newIngredient]
     },
     ReturnConsumedCapacity: "TOTAL",
   };
@@ -157,6 +160,7 @@ async function updateUserIngredients(id, newIngredient) {
 //     "the func worked",
 //     await updateUserIngredients(
 //     3,
+//     "irina_bareto","Irina","Bareto",
 //       "champagne"
 //     )
 //   );
