@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './app'
 import './public/style.css'
+import Router from 'react-router-dom'
 // import '../public/manifest.json'
 import { BrowserRouter as Router } from 'react-router-dom'
 import Amplify from 'aws-amplify'
