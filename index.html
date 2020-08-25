@@ -4,87 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Weather PWA">
+    <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
     <link rel="manifest" href="/manifest.json">
-    <title>Currencies</title>
-    <style>
-      /* app shell CSS */
-      :root {
-        --primary: #2977ff;
-        --gray: #ececec;
-        --whitesmoke: #f5f5f5;
-        --dark: #222;
-        --navbar-height: 70px;
-      }
-      body {
-        margin: 0;
-        background-color: var(--whitesmoke);
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-          Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans",
-          "Helvetica Neue", sans-serif;
-      }
-      #navbar {
-        height: var(--navbar-height);
-        background-color: var(--primary);
-        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 22px;
-        font-weight: 550;
-        letter-spacing: 0.9px;
-      }
-      .card {
-        background-color: white;
-        padding: 20px;
-        margin: 20px;
-        border-radius: 3px;
-        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-      }
-      .card-currency {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      .loading-spinner {
-        animation-duration: 0.75s;
-        animation-iteration-count: infinite;
-        animation-name: rotate-forever;
-        animation-timing-function: linear;
-        height: 30px;
-        width: 30px;
-        border: 3px solid var(--primary);
-        border-right-color: transparent;
-        border-radius: 50%;
-      }
-      .loading-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: calc(100vh - var(--navbar-height));
-      }
-      @keyframes rotate-forever {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-      .app-update {
-        display: none;
-        position: absolute;
-        right: 10px;
-      }
-      .app-update.show {
-        display: block;
-      }
-    </style>
+    <title>Mixologist</title>
+    <!-- <link rel="stylesheet" href="/style.css"> -->
   </head>
   <body>
-    <!-- app shell HTML -->
     <nav id="navbar">
-      Currencies (€)
+      Mixologist
       <button id="app-update" class="app-update">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -100,11 +30,9 @@
         </svg>
       </button>
     </nav>
-
+    <div id='root'></div>
     <main id="main">
-      <div class="loading-container">
-        <div class="loading-spinner"></div>
-      </div>
+  
     </main>
 
     <script
@@ -112,5 +40,6 @@
       async
       src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"
     ></script>
+    <!-- <script defer async src='/bundle.js'></script> -->
   </body>
 </html>

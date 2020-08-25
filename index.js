@@ -1,23 +1,10 @@
 import { Workbox } from "workbox-window";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './app'
+import './public/style.css'
+// import '../public/manifest.json'
 
-fetch("https://api.exchangeratesapi.io/latest")
-.then(response => response.json())
-.then(data => {
-  const main = document.querySelector("#main");
-  if (!data || !data.rates) {
-    main.innerHTML = "There was an error. Please try again.";
-    return false;
-  }
-  let html = "";
-
-  for (const [currency, rate] of Object.entries(data.rates)) {
-    html += `<article class="card card-currency">
-    <div class="currency">${currency}</div>
-    <div class="rate">${rate}</div>
-    </article>`;
-  }
-  main.innerHTML = html;
-});
 
 
 if ("serviceWorker" in navigator) {
@@ -43,3 +30,5 @@ if ("serviceWorker" in navigator) {
   });
 
 }
+
+ReactDOM.render(<App />, document.getElementById('root'));
