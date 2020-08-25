@@ -9,8 +9,8 @@ const Request = () => {
 
   const [len, setLen] = useState([])
   
-  const [skip, setSkip] = useState(0)
-  const ingreds = ['lime_juice', 'sauce', 'tequila', 'gin', 'vodka']
+  const [skip, setSkip] = useState([])
+  const ingreds = ['lime_juice', 'sauce', 'tequila', 'gin', 'testt', 'vodka', 'blah', 'whiskey']
 
   useEffect( () => {
     
@@ -27,7 +27,7 @@ const Request = () => {
         else {
           setDrinks(prevDrinks => [...prevDrinks])
           setLen(prevLen => [...prevLen])
-          setSkip(idx)
+          setSkip(prev => [...prev,idx])
           
         }
       } catch (error) {
@@ -37,17 +37,20 @@ const Request = () => {
     }
    
     ingreds.forEach( async (ing, idx) => await getDrinks(ing, idx))
-
+    
 }, [])
 
- if (skip) {ingreds.splice(skip,1)}
+ 
+
   return (
     
     
     <div>
-      {console.log(len, skip)}
+      {console.log(len, skip, ingreds)}
+      {skip.length ? skip.forEach( (val) => ingreds.splice(val,1)) : ingreds}
+      {console.log(ingreds)}
       { 
-
+      
       drinkList.length && len.length === ingreds.length ?
       <div>
         <p><img src={drinkList[140].strDrinkThumb} /></p>
