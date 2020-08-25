@@ -16,7 +16,8 @@ module.exports = env => {
       path: path.resolve(__dirname, "public")
     },
     resolve: {
-      extensions: ['.js', '.jsx']
+      extensions: ['.js', '.jsx', '.json'],
+      mainFields: ['browser', 'main', 'module'],
     },
     module: {
       rules: [
