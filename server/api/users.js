@@ -1,11 +1,11 @@
 const router = require("express").Router();
-const AWS = require("aws-sdk");
-
-AWS.config.update({
-  region: "us-east-2",
-});
-
-const DynamoDB = new AWS.DynamoDB();
+const {
+    addUser,
+    getAllUsers,
+    getSingleUser,
+    updateUserName,
+    deleteUser,
+  } = require("../dynamoDB");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -60,11 +60,5 @@ router.use((req, res, next) => {
   err.status = 404;
   next(err);
 });
-const {
-  addUser,
-  getAllUsers,
-  getSingleUser,
-  updateUserName,
-  deleteUser,
-} = require("../dynamoDB");
+
 module.exports = router;
