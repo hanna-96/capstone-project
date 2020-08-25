@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/CapstoneProgect/capstone-project#readme",
   "dependencies": {
+    "@google-cloud/vision": "^2.1.1",
     "aws-sdk": "^2.738.0",
     "axios": "^0.20.0",
     "babel-loader": "^8.1.0",
