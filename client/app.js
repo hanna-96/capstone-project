@@ -1,5 +1,5 @@
 import React from 'react';
-import CameraInput from './CameraInput'
+import CameraInput from './components/CameraInput'
 // import {Route} from 'react-router-dom'
 // import Login from './Login'
 // import Signup from './Signup'
@@ -12,7 +12,7 @@ function App() {
     <div className="App">
       <h2>Welcome to Mixologist</h2>
       <CameraInput />
-      <Request />
+      {/* <Request /> */}
       <Routes />
     </div>
   );
