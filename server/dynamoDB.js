@@ -59,15 +59,17 @@ async function createTable() {
 //   return await DynamoDB.putItem(params).promise();
 // }
 //WHEN ADDING A NEW USER WE DON'T NEED TO SPECIFY INGREDIENT
-async function addUser(id, userName, firstName, lastName,ingredient = '') {
+async function addUser(userName, firstName, lastName,ingredient = '') {
   const params = {
     TableName: "Users",
     Item: {
-      userId: id,
+      // userId: id,
       userName: userName,
       firstName: firstName,
       lastName: lastName,
-      ingredients: [ingredient],
+      password: password,
+      email: email,
+      ingredients: [ingredient]
       // //L -array
       //  ingredient.map((item) => {
       //   return {

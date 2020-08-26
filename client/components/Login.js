@@ -1,36 +1,50 @@
-import React from 'react';
+import React from 'react'
+import axios from 'axios'
 
-class Login extends React.Component {
+export default class Login extends React.Component {
     constructor() {
         super()
         this.state = {
-            email: '',
-            password: ''
+          email: '',
+          password: ''
         }
         this.handleChange = this.handleChange.bind(this)
-        this.handleSumbit = this.handleSumbit.bind(this)
-    }
-    handleSumbit(e) {
-        e.preventDefault()
-    }
-    handleChange(e) {
+        this.handleSubmit = this.handleSubmit.bind(this)
+      }
+      async handleSubmit(event) {
+        event.preventDefault()
+        const data = await axios.post('/api/users', this.state);
+        console.log(data, "hello")
+        // this.props.history.push('/') 
+      }
+      handleChange(event) {
         this.setState({
-            [event.target.name]: event.target.value
+          [event.target.name]: event.target.value
         })
+      }
+      render() {
+          return (
+            <div>
+              <form onSubmit={this.handleSubmit}>
+                <label>Email</label>
+                <input
+                  name='email'
+                  type='email'
+                  required
+                  onChange={this.handleChange}
+                />
+                <p>
+                  <label>Password</label>
+                  <input
+                    name='password'
+                    type='password'
+                    required
+                    onChange={this.handleChange}
+                  />
+                </p>
+                <button type='submit'>Log in</button>
+              </form>
+              </div>
+            )
+      }
     }
-    render() {
-        return (
-            <h1>Hello inside login</h1>
-            // <form onSubmit={this.handleSumbit}>
-            //     <input type='text' name='email' value={this.state.email} 
-            //     onChange={this.handleChange} />
-            //         <label>Your email</label>
-            //         <input type='text' name='password' value={this.state.password} 
-            //     onChange={this.handleChange} />
-            //         <label>Your password</label>
-            // </form>
-        )
-    }
-}
-
-export default Login

@@ -26,13 +26,15 @@ router.get("/:userId", async (req, res, next) => {
 });
 router.post("/", async (req, res, next) => {
   try {
-    const { id, userName, firstName, lastName } = req.body;
-    const newUser = await addUser(id, userName, firstName, lastName);
+    const { userName, firstName, lastName, email, password } = req.body;
+    const newUser = await addUser(8, userName, firstName, lastName, email, password);
+    console.log(newUser)
     res.send(newUser.Item);
   } catch (error) {
     console.error(next);
   }
 });
+
 router.put("/:userId", async (req, res, next) => {
   try {
     const id = +req.params.userId;
@@ -40,7 +42,7 @@ router.put("/:userId", async (req, res, next) => {
     const updatedUser = await updateUserName(id, name);
     res.send(updatedUser.Item);
   } catch (error) {
-    console.error(next);
+    console.log(next);
   }
 });
 //add update User by adding a new Ingredient

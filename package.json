@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/CapstoneProgect/capstone-project#readme",
   "dependencies": {
-    "aws-amplify": "^3.0.24",
     "aws-sdk": "^2.738.0",
     "axios": "^0.20.0",
     "babel-loader": "^8.1.0",

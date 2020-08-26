@@ -5,8 +5,8 @@ import App from './client/app'
 import './public/style.css'
 // import '../public/manifest.json'
 import { BrowserRouter as Router } from 'react-router-dom'
-import Amplify from 'aws-amplify'
-import config from './config.json'
+// import Auth from '@aws-amplify/auth';
+// import config from './config.json'
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
@@ -32,13 +32,11 @@ if ("serviceWorker" in navigator) {
 
 }
 
-Amplify.configure({
-  Auth: {
-    mandatorySignIn: true,
-    region: config.cognito.REGION,
-    userPoolId: config.cognito.USER_POOL_ID,
-    userPoolWebClientId: config.cognito.APP_CLIENT_ID
-  }
-})
+// Auth.configure({
+//     mandatorySignIn: true,
+//     region: config.cognito.REGION,
+//     userPoolId: config.cognito.USER_POOL_ID,
+//     userPoolWebClientId: config.cognito.APP_CLIENT_ID
+// })
 
 ReactDOM.render(<Router><App /></Router>, document.getElementById('root'));
