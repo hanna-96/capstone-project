@@ -1,5 +1,5 @@
 const AWS = require("aws-sdk");
-require('../secrets')
+if (process.env.NODE_ENV === 'dev') require('../secrets')
 const awsConfig = {
   region: "us-east-2",
   endpoint: process.env.AWS_ENDPOINT,

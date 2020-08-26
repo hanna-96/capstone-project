@@ -2,7 +2,7 @@
   "name": "capstone",
   "main": "index.js",
   "scripts": {
-    "start-dev": "npm run build-watch & npm run start-server",
+    "start-dev": "NODE_ENV='dev' npm run build-watch & NODE_ENV='dev' npm run start-server",
     "start-server": "nodemon server.js -e html,js,css --ignore public",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --env.mode development --colors",
