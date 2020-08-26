@@ -28,14 +28,16 @@ router.get("/:userId", async (req, res, next) => {
 
 router.post("/signup", async (req, res, next) => {
   try {
-    const id = + req.body.id
+    // const id = +req.body.id
+    // console.log('req body is',req.body)
     const { userName, firstName, lastName, email, password } = req.body;
-    // const id = Math.floor(Math.random() * 100)
+    const id = Math.floor(Math.random() * 100)
+    // console.log('thisi is id',id)
     const newUser = await addUser(id, userName, firstName, lastName, email, password);
-    console.log(newUser, 'NEW USER')
+    // console.log('NEW USER backend',newUser)
     res.send(newUser.Item);
   } catch (error) {
-    console.error(next);
+    console.error(error);
   }
 });
 

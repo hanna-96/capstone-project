@@ -53,9 +53,9 @@ async function addUser(id, userName, firstName, lastName, email, password) {
 //         "the func worked",
 //         await addUser(
 //             8,
-//             "sara_culhane",
-//             "Sara",
-//             "Culhane",
+//             "jfjbfurgh",
+//             "fvfbf",
+//             "bgbg",
 //             "sara@gmail.com",
 //             "lovecoding"
 //             )

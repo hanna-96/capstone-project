@@ -1,37 +1,48 @@
-import React from 'react'
-import axios from 'axios'
+import React from "react";
+import axios from "axios";
 
 export default class Signup extends React.Component {
   constructor() {
-    super()
+    super();
     this.state = {
-      id: '',
-      userName: '',
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-    }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-  }
-  async handleSubmit(event) {
-    event.preventDefault()
-    console.log(this.state, 'state')
-    const data = await axios.post('/api/users/signup', this.state);
-    console.log(data, "hello")
-    // this.props.history.push('/') 
+      // id: '',
+      userName: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleChange(event) {
     this.setState({
-      [event.target.name]: event.target.value
-    })
+      [event.target.name]: event.target.value,
+    });
   }
+  async handleSubmit(event) {
+    event.preventDefault();
+    console.log('signup state before',this.state)
+    const data = await axios.post("/api/users", this.state);
+    console.log('signup state after',this.state)
+    console.log("data from frontEnd", data);
+    // this.props.history.push('/')
+    this.setState({
+      // id: '',
+      userName: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+    });
+  }
+
   render() {
-  return (
-        // <div>
-          <form onSubmit={this.handleSubmit}>
-            <label>ID</label>
+    // console.log('signup state',this.state)
+    return (
+      // <div>
+      <form onSubmit={this.handleSubmit}>
+        {/* <label>ID</label>
               <input
                 name='id'
                 type='text'
@@ -39,62 +50,59 @@ export default class Signup extends React.Component {
                 required
                 onChange={this.handleChange}
                 value={this.state.id}
-              />
-            <label>First Name</label>
+              /> */}
+        <p>
+          <label>User Name</label>
+          <input
+            name="userName"
+            type="text"
+            required
+            onChange={this.handleChange}
+            value={this.state.userName}
+          />
+        </p>
+        <label>First Name</label>
 
-            <input
-              name='firstName'
-              type='text'
-              placeholder='First Name'
-              required
-              onChange={this.handleChange}
-              value={this.state.firstName}
-            />
-              <label>Last Name</label>
-              <input
-                name='lastName'
-                type='text'
-                placeholder='Last Name'
-                required
-                onChange={this.handleChange}
-                value={this.state.lastName}
-              />
-            <label>Email</label>
-            <input
-              name='email'
-              type='text'
-              required
-              onChange={this.handleChange}
-              value={this.state.email}
-            />
-            <p>
-              <label>Password</label>
-              <input
-                name='password'
-                type='text'
-                required
-                onChange={this.handleChange}
-                value={this.state.password}
-              />
-            </p>
-            <p>
-              <label>User Name</label>
-              <input
-                name='userName'
-                type='text'
-                required
-                onChange={this.handleChange}
-                value={this.state.userName}
-              />
-            </p>
-            <button type='submit'>Sign up</button>
-          </form> 
-      )
+        <input
+          name="firstName"
+          type="text"
+          placeholder="First Name"
+          required
+          onChange={this.handleChange}
+          value={this.state.firstName}
+        />
+        <label>Last Name</label>
+        <input
+          name="lastName"
+          type="text"
+          placeholder="Last Name"
+          required
+          onChange={this.handleChange}
+          value={this.state.lastName}
+        />
+        <label>Email</label>
+        <input
+          name="email"
+          type="text"
+          required
+          onChange={this.handleChange}
+          value={this.state.email}
+        />
+        <p>
+          <label>Password</label>
+          <input
+            name="password"
+            type="text"
+            required
+            onChange={this.handleChange}
+            value={this.state.password}
+          />
+        </p>
+        <button type="submit">Sign up</button>
+      </form>
+    );
   }
 }
-
-
-
 
 // import React, { Component } from 'react';
 // // import FormErrors from "../FormErrors";
@@ -153,7 +161,7 @@ export default class Signup extends React.Component {
 //             }
 //         }) //optional fields in attribute
 
-//         // this.props.history.push('/welcome') redirect 
+//         // this.props.history.push('/welcome') redirect
 //     } catch (error) {
 //         let err = null;
 //         !error.message ? err = { "message": error} : err = error
@@ -184,7 +192,7 @@ export default class Signup extends React.Component {
 //           <form onSubmit={this.handleSubmit}>
 //             <div>
 //               <p>
-//                 <input 
+//                 <input
 //                   type="text"
 //                   id="username"
 //                   aria-describedby="userNameHelp"
@@ -196,7 +204,7 @@ export default class Signup extends React.Component {
 //             </div>
 //             <div>
 //               <p>
-//                 <input 
+//                 <input
 //                   type="email"
 //                   id="email"
 //                   aria-describedby="emailHelp"
@@ -211,7 +219,7 @@ export default class Signup extends React.Component {
 //             </div>
 //             <div>
 //               <p>
-//                 <input 
+//                 <input
 //                   type="password"
 //                   id="password"
 //                   placeholder="Password"
@@ -225,8 +233,8 @@ export default class Signup extends React.Component {
 //             </div>
 //             <div>
 //               <p>
-//               <input 
-//                   className="input" 
+//               <input
+//                   className="input"
 //                   type="password"
 //                   id="confirmpassword"
 //                   placeholder="Confirm password"

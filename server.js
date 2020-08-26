@@ -2,9 +2,13 @@ const express = require("express");
 const app = express();
 const port = 8080;
 const path = require('path')
+const bodyParser = require('body-parser')
 const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
 const routes = require('./server/api/users')
-
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
 app.use('/api/users', routes)
 app.use(redirectToHTTPS([/localhost:8080/], [], 301));
 
