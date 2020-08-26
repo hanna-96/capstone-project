@@ -9,9 +9,9 @@ export default class Routes extends React.Component {
         return (
             <div>
                 <Switch>
-                    <Route exact path="/" component={Login} />
+                    <Route exact path="/login" component={Login} />
                     <Route exact path="/signup" component={Signup} />
-                    <Route exact path="/bla" component={Request} />
+                    <Route exact path="/" component={Request} />
                 </Switch>
             </div>
         )

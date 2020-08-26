@@ -32,7 +32,7 @@ async function createTable() {
 // (async ()=>{
 //   console.log('the func worked', await createTable());
 // })()
-async function addUser(id, userName, firstName, lastName) {
+async function addUser(id, userName, firstName, lastName, email, password) {
   const params = {
     TableName: "Users",
     Item: {
@@ -40,7 +40,9 @@ async function addUser(id, userName, firstName, lastName) {
       userName: userName,
       firstName: firstName,
       lastName: lastName,
+      email: email,
       ingredients: [],
+      password: password
     },
   };
 
@@ -50,10 +52,12 @@ async function addUser(id, userName, firstName, lastName) {
 //     console.log(
 //         "the func worked",
 //         await addUser(
-//             2,
+//             8,
 //             "sara_culhane",
 //             "Sara",
 //             "Culhane",
+//             "sara@gmail.com",
+//             "lovecoding"
 //             )
 //             );
 //         })();

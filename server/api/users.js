@@ -25,15 +25,20 @@ router.get("/:userId", async (req, res, next) => {
     next(error);
   }
 });
+
 router.post("/", async (req, res, next) => {
   try {
-    const { id, userName, firstName, lastName } = req.body;
-    const newUser = await addUser(id, userName, firstName, lastName);
+    const id = + req.body.id
+    const { userName, firstName, lastName, email, password } = req.body;
+    // const id = Math.floor(Math.random() * 100)
+    const newUser = await addUser(id, userName, firstName, lastName, email, password);
+    console.log(newUser, 'NEW USER')
     res.send(newUser.Item);
   } catch (error) {
     console.error(next);
   }
 });
+
 router.put("/:userId", async (req, res, next) => {
   try {
     const id = +req.params.userId;
@@ -41,7 +46,7 @@ router.put("/:userId", async (req, res, next) => {
     const updatedUser = await updateUserName(id, name);
     res.send(updatedUser.Item);
   } catch (error) {
-    console.error(next);
+    console.log(next);
   }
 });
 router.get("/:userId/allingredients", async (req, res, next) => {
