@@ -21,7 +21,6 @@
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
-    "aws-amplify": "^3.0.24",
     "aws-sdk": "^2.738.0",
     "axios": "^0.20.0",
     "babel-loader": "^8.1.0",

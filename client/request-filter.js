@@ -1,57 +1,21 @@
 import axios from 'axios'
 import React, {useEffect, useState} from 'react'
-import { makeStyles } from '@material-ui/core/styles';
-import {Button, Input, FormControl }from '@material-ui/core';
 
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-      width: '25ch',
-    },
-  },
-}));
+const RequestFilter = (props) => {
 
-export const InputForm = () => {
-    
-    const classes = useStyles();
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log(e.target.ing.value)
-    }
-    const handleClick = (e) =>  {
-        e.preventDefault()
-        console.log(e);
-      }
-    return (
-    <div className='submission'>
-    <form onSubmit={handleSubmit}>
-        <FormControl >
-          <Input type='text' name='ing' placeholder="Placeholder" />
-            
-        </FormControl>
-        <Button type='submit' value='Submit'>Submit Ingredient</Button>
-    </form>
-    </div>
-    )
-}
-
-const RequestFilter = () => {
-
-
-    let ingred = 'lime_juicedfssd'   
-
+    let {ingred} = props
+     ingred = ingred.split(' ').join('_')
     const [valid, setValid] = useState(false)
-    const [test, setTest] = useState('')
     useEffect( () => {
         const reqValidator = async (ing) => {
             try{
                 const {data} =await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ing}`)
                 if(data.drinks) setValid(true)
+                else setValid(false)
             } catch(err) {
                 console.log(err)
+                
             }
             
         }
@@ -61,9 +25,10 @@ const RequestFilter = () => {
 
     
     return (
+        
         <div>
-            <InputForm />
-    <p>{valid.toString()}</p>
+    <p>{valid ? 'Item has been added. Click here to view drinks!' : 'Sorry could not find this ingredient'}</p>
+    {console.log(valid, ingred)}
     </div>
 
     )
@@ -71,3 +36,4 @@ const RequestFilter = () => {
 }
 
 export default RequestFilter
+
