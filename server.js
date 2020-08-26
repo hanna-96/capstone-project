@@ -3,20 +3,31 @@ const app = express();
 const port = 8080;
 const path = require('path')
 const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
+const vision = require('@google-cloud/vision')
+// This serves static files from the specified directory
+app.use(express.static(__dirname + "/public"));
 
 
 app.use(redirectToHTTPS([/localhost:8080/], [], 301));
 
 app.use('/api/users',require('./server/api/users'))
 
-// This serves static files from the specified directory
-app.use(express.static(__dirname + "/public"));
-
 // sends index.html
 app.use("*", (req, res) => {
   res.sendFile(path.join(__dirname, "public/index.html"));
-});
+})
 
+app.post('/gvision', async (req, res, next) => {
+  try {
+    console.log(req.body)
+    const client = new vision.ImageAnnotatorClient()
+    const fileName = req.body.file
+    const [result] = await client.documentTextDetection(fileName)
+    const fullTextAnnotation = result.fullTextAnnotation
+    // console.log(`Result: ${fullTextAnnotation.text}`)
+    res.json(fullTextAnnotation.text)
+  } catch (e) { next(e) }
+})
 // error handling endware
 app.use((err, req, res, next) => {
   console.error(err);
