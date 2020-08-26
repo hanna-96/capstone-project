@@ -5,7 +5,7 @@ const path = require('path')
 const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
 
 
-app.use(redirectToHTTPS([/localhost:8080/], [], 301));
+// app.use(redirectToHTTPS([/localhost:8080/], [], 301));
 
 app.use('/api/users',require('./server/api/users'))
 
