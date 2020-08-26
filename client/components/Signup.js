@@ -5,11 +5,12 @@ export default class Signup extends React.Component {
   constructor() {
     super()
     this.state = {
+      id: '',
       userName: '',
       firstName: '',
       lastName: '',
       email: '',
-      password: ''
+      password: '',
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -29,13 +30,24 @@ export default class Signup extends React.Component {
   return (
         // <div>
           <form onSubmit={this.handleSubmit}>
+            <label>ID</label>
+              <input
+                name='id'
+                type='text'
+                placeholder='id'
+                required
+                onChange={this.handleChange}
+                value={this.state.id}
+              />
             <label>First Name</label>
+
             <input
               name='firstName'
               type='text'
               placeholder='First Name'
               required
               onChange={this.handleChange}
+              value={this.state.firstName}
             />
               <label>Last Name</label>
               <input
@@ -44,21 +56,24 @@ export default class Signup extends React.Component {
                 placeholder='Last Name'
                 required
                 onChange={this.handleChange}
+                value={this.state.lastName}
               />
             <label>Email</label>
             <input
               name='email'
-              type='email'
+              type='text'
               required
               onChange={this.handleChange}
+              value={this.state.email}
             />
             <p>
               <label>Password</label>
               <input
                 name='password'
-                type='password'
+                type='text'
                 required
                 onChange={this.handleChange}
+                value={this.state.password}
               />
             </p>
             <p>
@@ -68,6 +83,7 @@ export default class Signup extends React.Component {
                 type='text'
                 required
                 onChange={this.handleChange}
+                value={this.state.userName}
               />
             </p>
             <button type='submit'>Sign up</button>

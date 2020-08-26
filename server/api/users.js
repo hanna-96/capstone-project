@@ -25,11 +25,14 @@ router.get("/:userId", async (req, res, next) => {
     next(error);
   }
 });
+
 router.post("/", async (req, res, next) => {
   try {
+    const id = + req.body.id
     const { userName, firstName, lastName, email, password } = req.body;
-    const newUser = await addUser(8, userName, firstName, lastName, email, password);
-    console.log(newUser)
+    // const id = Math.floor(Math.random() * 100)
+    const newUser = await addUser(id, userName, firstName, lastName, email, password);
+    console.log(newUser, 'NEW USER')
     res.send(newUser.Item);
   } catch (error) {
     console.error(next);
