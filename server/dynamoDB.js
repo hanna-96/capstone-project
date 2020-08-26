@@ -1,10 +1,10 @@
 const AWS = require("aws-sdk");
-const { accessKeyId, secretAccessKey,endpoint } = require("../secrets");
-let awsConfig = {
+if (process.env.NODE_ENV === 'dev') require('../secrets')
+const awsConfig = {
   region: "us-east-2",
-  endpoint: endpoint,
-  accessKeyId,
-  secretAccessKey,
+  endpoint: process.env.AWS_ENDPOINT,
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY
 };
 AWS.config.update(awsConfig);
 //conecting to AWS DynamoDB

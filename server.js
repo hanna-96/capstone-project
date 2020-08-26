@@ -3,14 +3,14 @@ const app = express();
 const port = 8080;
 const path = require('path')
 const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
+const vision = require('@google-cloud/vision')
+// This serves static files from the specified directory
+app.use(express.static(__dirname + "/public"));
 
 
 app.use(redirectToHTTPS([/localhost:8080/], [], 301));
 
 app.use('/api/users',require('./server/api/users'))
-
-// This serves static files from the specified directory
-app.use(express.static(__dirname + "/public"));
 
 // sends index.html
 app.use("*", (req, res) => {

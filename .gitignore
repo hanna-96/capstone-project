@@ -1,7 +1,9 @@
 node_modules
 secrets.js
-
 public/bundle.js
 public/bundle.js.map
 public/sw.js
 precache-manifest*
+vision-secrets.js
+googleVision
+package-lock.json

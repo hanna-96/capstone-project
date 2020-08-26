@@ -1,11 +1,10 @@
-// workbox.precaching.precacheAndRoute(self.__WB_MANIFEST)
 workbox.precaching.precacheAndRoute(self.__precacheManifest);
-//^^^^ this is from smashing magazine tutorial
 
+//cache the results from our cocktailDB API calls
 workbox.routing.registerRoute(
-  /https:\/\/api\.exchangeratesapi\.io\/latest/,
+  /https:\/\/www\.thecocktaildb\.com\/api\/json\/v1\/1/,
   new workbox.strategies.NetworkFirst({
-    cacheName: "currencies",
+    cacheName: "theCocktailDB",
     plugins: [
       new workbox.expiration.Plugin({
         maxAgeSeconds: 10 * 60 // 10 minutes
