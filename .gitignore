@@ -7,3 +7,4 @@ precache-manifest*
 vision-secrets.js
 googleVision
 package-lock.json
+.DS_Store
