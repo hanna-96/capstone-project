@@ -1,11 +1,12 @@
 const router = require("express").Router();
 const {
-    addUser,
-    getAllUsers,
-    getSingleUser,
-    updateUserName,
-    deleteUser,
-  } = require("../dynamoDB");
+  addUser,
+  getAllUsers,
+  getSingleUser,
+  updateUserName,
+  deleteUser,
+  updateUserIngredients,
+} = require("../dynamoDB");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -45,7 +46,28 @@ router.put("/:userId", async (req, res, next) => {
     console.log(next);
   }
 });
-//add update User by adding a new Ingredient
+router.get("/:userId/allingredients", async (req, res, next) => {
+  try {
+    const id = +req.params.userId;
+    const singleUser = await getSingleUser(id);
+    const usersIngredients = singleUser.Item.ingredients;
+    res.send(usersIngredients);
+  } catch (error) {
+    console.error(next);
+  }
+});
+//update User's ingredients by adding a new Ingredient
+router.put("/:userId/ingredients", async (req, res, next) => {
+  try {
+    const id = +req.params.userId;
+    // TODO:destructure req.body depending on how much iingredinets will come from front-end(input)
+    const { newIngredient } = req.body;
+    const updatedIngredients = await updateUserIngredients(id, [newIngredient]);
+    res.send(updatedIngredients);
+  } catch (error) {
+    console.error(next);
+  }
+});
 
 router.delete("/:userId", async (req, res, next) => {
   try {

@@ -1,5 +1,5 @@
 const AWS = require("aws-sdk");
-const { accessKeyId, secretAccessKey,endpoint } = require("../secrets");
+const { accessKeyId, secretAccessKey, endpoint } = require("../secrets");
 let awsConfig = {
   region: "us-east-2",
   endpoint: endpoint,
@@ -16,11 +16,11 @@ async function createTable() {
     TableName: "Users",
     KeySchema: [
       { AttributeName: "userId", KeyType: "HASH" },
-      // { AttributeName: "ingredientId", KeyType: "RANGE" },
+      // { AttributeName: "ingredientName", KeyType: "RANGE" },
     ],
     AttributeDefinitions: [
       { AttributeName: "userId", AttributeType: "N" },
-      // { AttributeName: "ingredientId", AttributeType: "N" },
+      // { AttributeName: "ingredientName", AttributeType: "S" },
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 3,
@@ -32,34 +32,7 @@ async function createTable() {
 // (async ()=>{
 //   console.log('the func worked', await createTable());
 // })()
-
-//adding an item to the table(User)
-// async function addUser(id, userName, firstName, lastName, ingredient) {
-//   const params = {
-//     TableName: "Users",
-//     Item: {
-//       userId: { N: id },
-//       userName: { S: userName },
-//       firstName: { S: firstName },
-//       lastName: { S: lastName },
-//       ingredients: {
-//         //L -array
-//         L: ingredient.map((item) => {
-//           return {
-//             M: {
-//               name: { S: item.name },
-//               image: { S: item.image },
-//             },
-//           };
-//         }),
-//       },
-//     },
-//   };
-
-//   return await DynamoDB.putItem(params).promise();
-// }
-//WHEN ADDING A NEW USER WE DON'T NEED TO SPECIFY INGREDIENT
-async function addUser(userName, firstName, lastName,ingredient = '') {
+async function addUser(id, userName, firstName, lastName) {
   const params = {
     TableName: "Users",
     Item: {
@@ -67,17 +40,7 @@ async function addUser(userName, firstName, lastName,ingredient = '') {
       userName: userName,
       firstName: firstName,
       lastName: lastName,
-      password: password,
-      email: email,
-      ingredients: [ingredient]
-      // //L -array
-      //  ingredient.map((item) => {
-      //   return {
-      //       name:item.name,
-      //       image:item.image,
-
-      //   };
-      // }),
+      ingredients: [],
     },
   };
 
@@ -87,13 +50,14 @@ async function addUser(userName, firstName, lastName,ingredient = '') {
 //     console.log(
 //         "the func worked",
 //         await addUser(
-//             3,
-//             "irina_bareto",
-//             "Irina",
-//             "Bareto",
+//             2,
+//             "sara_culhane",
+//             "Sara",
+//             "Culhane",
 //             )
 //             );
 //         })();
+
 // get allUsers (!!!expensive operation!!!)
 async function getAllUsers() {
   const params = {
@@ -113,21 +77,19 @@ async function getSingleUser(id) {
   const params = {
     TableName: "Users",
     Key: {
-      // userId: { N: id },
       userId: id,
-      // ingredientId: ingredientId,
     },
   };
   return await DocumentClient.get(params).promise();
 }
-// (async () => {
-//   const user = await getSingleUser(2)
-//   // const ingredients = user.Item.ingredients.L;
-//   console.log(
-//     "the func worked ",
-//     user
-//   );
-// })();
+(async () => {
+  const user = await getSingleUser(2)
+  // const ingredients = user.Item.ingredients.L;
+  console.log(
+    "the func worked ",
+    user
+  );
+})();
 
 //update User (can update any attribute)
 async function updateUserName(id, name) {
@@ -142,28 +104,32 @@ async function updateUserName(id, name) {
   return await DocumentClient.put(params).promise();
 }
 //update User by adding a new ingredient
-async function updateUserIngredients(id,userName,firstName,lastName, newIngredient) {
+async function updateUserIngredients(id, newIngredient) {
+  const user = await getSingleUser(id);
+  // console.log('user is',user.Item)
+  const userIngredients = user.Item.ingredients;
+  // console.log('user ingredients',userIngredients)
+  const updatedIngredients = [...userIngredients, ...newIngredient];
+  console.log('updatedingred',updatedIngredients)
   const params = {
     TableName: "Users",
-    Item: {
+    Key: {
       userId: id,
-      userName,
-      firstName,
-      lastName,
-      ingredients:[newIngredient]
     },
-    ReturnConsumedCapacity: "TOTAL",
+    UpdateExpression: `set ingredients = :ingredients`,
+    ExpressionAttributeValues: {
+      ":ingredients": updatedIngredients,
+    },
   };
-  return await DocumentClient.put(params).promise();
+  return await DocumentClient.update(params).promise();
 }
 // //run in node
 // (async () => {
 //   console.log(
 //     "the func worked",
 //     await updateUserIngredients(
-//     3,
-//     "irina_bareto","Irina","Bareto",
-//       "champagne"
+//     2,
+//      ["champagne"]
 //     )
 //   );
 // })();
