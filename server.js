@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 8080;
+const PORT = process.env.PORT || 8080
 const path = require('path')
 const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
 const vision = require('@google-cloud/vision')
@@ -25,8 +25,8 @@ app.use((err, req, res, next) => {
 });
 
 
-const server = app.listen(8080, () => {
-  console.log("App listening at port ", port);
+const server = app.listen(PORT, () => {
+  console.log("App listening at port ", PORT);
 });
 
 

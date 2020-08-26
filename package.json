@@ -2,12 +2,17 @@
   "name": "capstone",
   "main": "index.js",
   "scripts": {
+    "start": "node server.js",
     "start-dev": "NODE_ENV='dev' npm run build-watch & NODE_ENV='dev' npm run start-server",
     "start-server": "nodemon server.js -e html,js,css --ignore public",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --env.mode development --colors",
     "build-client": "webpack",
-    "build-watch": "webpack --env.mode production -w"
+    "build-watch": "webpack --env.mode production -w",
+	"deploy": "deploy"
+  },
+  "engines": {
+    "node": "12.16.0"
   },
   "repository": {
     "type": "git",
