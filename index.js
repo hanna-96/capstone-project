@@ -10,6 +10,7 @@ import store from './client/redux/store'
 // import Auth from '@aws-amplify/auth';
 // import config from './config.json'
 
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     const wb = new Workbox("/sw.js");

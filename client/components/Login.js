@@ -13,7 +13,7 @@ export default class Login extends React.Component {
       }
       async handleSubmit(event) {
         event.preventDefault()
-        const data = await axios.post('/api/users/login', this.state);
+        const data = await axios.post("/api/users/login", this.state);
         console.log(data, "hello")
         // this.props.history.push('/') 
       }
@@ -29,7 +29,7 @@ export default class Login extends React.Component {
                 <label>Email</label>
                 <input
                   name='email'
-                  type='email'
+                  type='text'
                   required
                   onChange={this.handleChange}
                   value={this.state.email}
@@ -38,7 +38,7 @@ export default class Login extends React.Component {
                   <label>Password</label>
                   <input
                     name='password'
-                    type='password'
+                    type='text'
                     required
                     onChange={this.handleChange}
                     value={this.state.password}
