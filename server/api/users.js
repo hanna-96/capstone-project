@@ -16,11 +16,11 @@ router.get("/", async (req, res, next) => {
     next(error);
   }
 });
-router.get("/:email", async (req, res, next) => {
+router.get("/:userId", async (req, res, next) => {
   try {
-    // const id = +req.params.userId;
-    const email = req.params.email
-    const singleUser = await getSingleUser(email);
+    const id = +req.params.userId;
+    // const email = req.params.email
+    const singleUser = await getSingleUser(id);
     res.send(singleUser.Item);
   } catch (error) {
     next(error);
@@ -66,12 +66,12 @@ router.put("/:userId", async (req, res, next) => {
 });
 router.get("/:userId/allingredients", async (req, res, next) => {
   try {
-    const id = +req.params.id;
+    const id = +req.params.userId;
     const singleUser = await getSingleUser(id);
     const usersIngredients = singleUser.Item.ingredients;
     res.send(usersIngredients);
   } catch (error) {
-    console.error(next);
+    console.error(error);
   }
 });
 //update User's ingredients by adding a new Ingredient

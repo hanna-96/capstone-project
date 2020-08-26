@@ -9,7 +9,7 @@ const initialState = [];
 /**
  * ACTION CREATORS
  */
-const getIngrerdients = (ingredients) => ({
+const getIngredients = (ingredients) => ({
   type: GET_INGREDIENTS,
   ingredients,
 });
@@ -17,10 +17,10 @@ const getIngrerdients = (ingredients) => ({
 /**
  * THUNK CREATORS
  */
-export const getAllIngredinetsThunk = () => {
+export const getAllIngredinetsThunk = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get("/api/users/:userId/ingredients");
+      const { data } = await axios.get(`/api/users/${id}/allingredients`);
       console.log("data allIngredients", data);
       // const spots = data.map((spot) => {
       //   return {
@@ -30,7 +30,7 @@ export const getAllIngredinetsThunk = () => {
       //     image: spot.image.S,
       //   };
       // });
-      dispatch(getIngrerdients(data));
+      dispatch(getIngredients(data));
     } catch (error) {
       console.error(error);
     }
