@@ -13,14 +13,14 @@ const DocumentClient = new AWS.DynamoDB.DocumentClient();
 //creating table
 async function createTable() {
   const params = {
-    TableName: "Users",
+    TableName: "Users2",
     KeySchema: [
-      { AttributeName: "userId", KeyType: "HASH" },
-      // { AttributeName: "ingredientName", KeyType: "RANGE" },
+      { AttributeName: "email", KeyType: "HASH" },
+      // { AttributeName: "email", KeyType: "RANGE" },
     ],
     AttributeDefinitions: [
-      { AttributeName: "userId", AttributeType: "N" },
-      // { AttributeName: "ingredientName", AttributeType: "S" },
+      { AttributeName: "email", AttributeType: "S" },
+      // { AttributeName: "email", AttributeType: "S" },
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 3,
@@ -32,11 +32,27 @@ async function createTable() {
 // (async ()=>{
 //   console.log('the func worked', await createTable());
 // })()
-async function addUser(id, userName, firstName, lastName, email, password) {
+// async function addUser(id, userName, firstName, lastName, email, password) {
+//   const params = {
+//     TableName: "Users",
+//     Item: {
+//       userId: id,
+//       userName: userName,
+//       firstName: firstName,
+//       lastName: lastName,
+//       email: email,
+//       ingredients: [],
+//       password: password
+//     },
+//   };
+
+//   return await DocumentClient.put(params).promise();
+// }
+//changed primary key to email
+async function addUser(userName, firstName, lastName, email, password) {
   const params = {
-    TableName: "Users",
+    TableName: "Users2",
     Item: {
-      userId: id,
       userName: userName,
       firstName: firstName,
       lastName: lastName,
@@ -52,7 +68,6 @@ async function addUser(id, userName, firstName, lastName, email, password) {
 //     console.log(
 //         "the func worked",
 //         await addUser(
-//             8,
 //             "jfjbfurgh",
 //             "fvfbf",
 //             "bgbg",
@@ -77,17 +92,36 @@ async function getAllUsers() {
 // })();
 
 //get single user
-async function getSingleUser(id) {
+// async function getSingleUser(id) {
+//   const params = {
+//     TableName: "Users",
+//     Key: {
+//       userId: id,
+//     },
+//   };
+//   return await DocumentClient.get(params).promise();
+// }
+async function getSingleUser(email) {
   const params = {
-    TableName: "Users",
+    TableName: "Users2",
     Key: {
-      userId: id,
+      email,
+    },
+  };
+  return await DocumentClient.get(params).promise();
+}
+async function getSingleUserByEmail(email) {
+  const params = {
+    TableName: "Users2",
+    Key: {
+      // userId:id,
+      email: email,
     },
   };
   return await DocumentClient.get(params).promise();
 }
 // (async () => {
-//   const user = await getSingleUser(2)
+//   const user = await getSingleUserByEmail("sara@gmail.com")
 //   // const ingredients = user.Item.ingredients.L;
 //   console.log(
 //     "the func worked ",

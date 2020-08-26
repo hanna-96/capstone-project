@@ -16,10 +16,11 @@ router.get("/", async (req, res, next) => {
     next(error);
   }
 });
-router.get("/:userId", async (req, res, next) => {
+router.get("/:email", async (req, res, next) => {
   try {
-    const id = +req.params.userId;
-    const singleUser = await getSingleUser(id);
+    // const id = +req.params.userId;
+    const email = req.params.email
+    const singleUser = await getSingleUser(email);
     res.send(singleUser.Item);
   } catch (error) {
     next(error);
@@ -53,7 +54,7 @@ router.put("/:userId", async (req, res, next) => {
 });
 router.get("/:userId/allingredients", async (req, res, next) => {
   try {
-    const id = +req.params.userId;
+    const id = +req.params.id;
     const singleUser = await getSingleUser(id);
     const usersIngredients = singleUser.Item.ingredients;
     res.send(usersIngredients);
