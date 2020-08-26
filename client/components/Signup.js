@@ -17,7 +17,8 @@ export default class Signup extends React.Component {
   }
   async handleSubmit(event) {
     event.preventDefault()
-    const data = await axios.post('/api/users', this.state);
+    console.log(this.state, 'state')
+    const data = await axios.post('/api/users/signup', this.state);
     console.log(data, "hello")
     // this.props.history.push('/') 
   }

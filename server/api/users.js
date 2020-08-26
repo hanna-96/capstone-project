@@ -26,7 +26,7 @@ router.get("/:userId", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/signup", async (req, res, next) => {
   try {
     const id = + req.body.id
     const { userName, firstName, lastName, email, password } = req.body;
