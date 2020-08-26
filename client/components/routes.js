@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Route, Switch} from 'react-router-dom'
 import Login from './Login'
 import Signup from './Signup'
-import Request from './request-test'
+import Request from '../request-test'
 
 export default class Routes extends React.Component {
     render() {

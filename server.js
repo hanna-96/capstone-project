@@ -15,19 +15,8 @@ app.use('/api/users',require('./server/api/users'))
 // sends index.html
 app.use("*", (req, res) => {
   res.sendFile(path.join(__dirname, "public/index.html"));
-})
+});
 
-app.post('/gvision', async (req, res, next) => {
-  try {
-    console.log(req.body)
-    const client = new vision.ImageAnnotatorClient()
-    const fileName = req.body.file
-    const [result] = await client.documentTextDetection(fileName)
-    const fullTextAnnotation = result.fullTextAnnotation
-    // console.log(`Result: ${fullTextAnnotation.text}`)
-    res.json(fullTextAnnotation.text)
-  } catch (e) { next(e) }
-})
 // error handling endware
 app.use((err, req, res, next) => {
   console.error(err);

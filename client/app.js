@@ -1,12 +1,11 @@
 import React from 'react';
-import CameraInput from './client/components/CameraInput'
+import CameraInput from './CameraInput'
 // import {Route} from 'react-router-dom'
 // import Login from './Login'
 // import Signup from './Signup'
-import Routes from './routes'
+import Routes from "./components/routes";
 
-import Request from './client/request-test'
-
+// import Request from './request-test'
 
 function App() {
   return (

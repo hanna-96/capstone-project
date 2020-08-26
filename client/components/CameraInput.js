@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-require('./vision-secrets')
+require('../../vision-secrets')
 
 const CameraInput = () => {
   const [text, setText] = useState('')

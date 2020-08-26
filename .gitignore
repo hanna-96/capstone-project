@@ -6,3 +6,4 @@ public/sw.js
 precache-manifest*
 vision-secrets.js
 googleVision
+package-lock.json

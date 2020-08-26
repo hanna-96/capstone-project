@@ -1,7 +1,7 @@
 import { Workbox } from "workbox-window";
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './app'
+import App from './client/app'
 import './public/style.css'
 // import '../public/manifest.json'
 import { BrowserRouter as Router } from 'react-router-dom'
