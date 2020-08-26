@@ -28,19 +28,31 @@ router.get("/:userId", async (req, res, next) => {
 
 router.post("/signup", async (req, res, next) => {
   try {
-    // const id = +req.body.id
-    // console.log('req body is',req.body)
     const { userName, firstName, lastName, email, password } = req.body;
     const id = Math.floor(Math.random() * 100)
-    // console.log('thisi is id',id)
     const newUser = await addUser(id, userName, firstName, lastName, email, password);
-    // console.log('NEW USER backend',newUser)
     res.send(newUser.Item);
   } catch (error) {
     console.error(error);
   }
 });
 
+router.post('/login', async (req, res, next) => {
+  try {
+    const user = await getSingleUser(req.body.id);
+    if (!user) {
+      console.log('No such user found:', req.body.email)
+      res.status(401).send('Wrong username and/or password')
+    } else if (!user.correctPassword(req.body.password)) {
+      console.log('Incorrect password for user:', req.body.email)
+      res.status(401).send('Wrong username and/or password')
+    } else {
+      req.login(user, err => (err ? next(err) : res.json(user)))
+    }
+  } catch (err) {
+    next(err)
+  }
+})
 router.put("/:userId", async (req, res, next) => {
   try {
     const id = +req.params.userId;
