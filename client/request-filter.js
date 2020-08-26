@@ -15,7 +15,6 @@ const RequestFilter = (props) => {
                 else setValid(false)
             } catch(err) {
                 console.log(err)
-                
             }
             
         }
@@ -27,7 +26,7 @@ const RequestFilter = (props) => {
     return (
         
         <div>
-    <p>{valid ? 'Item has been added. Click here to view drinks!' : 'Sorry could not find this ingredient'}</p>
+    <p>{valid ? `${ingred.split('_').join(' ')} has been added. Click here to view drinks!` : `Sorry could not find ${ingred}`}</p>
     {console.log(valid, ingred)}
     </div>
 
