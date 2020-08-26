@@ -6,12 +6,13 @@ import { getAllIngredinetsThunk} from "../redux/ingredients";
 
 class AllIngredients extends React.Component {
   componentDidMount() {
-    this.props.getIngredients();
+    const id = this.props.match.params.userId;
+    this.props.getIngredients(id);
   }
   render() {
     
     const ingredients = this.props.ingredients;
-    // console.log('all ingredients are',ingredients)
+    console.log('all ingredients are',ingredients)
     return (
       <div>
         <h1>Welcome to all ingredients page!</h1>
@@ -30,7 +31,7 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    getIngredients: () => dispatch(getAllIngredinetsThunk()),
+    getIngredients: (id) => dispatch(getAllIngredinetsThunk(id)),
     // addSpot:(id,name,image,description)=>dispatch(addSpotThunk(id,name,image,description)),
     // removeSpot:(id)=>dispatch(removeSpotThunk(id))
   };

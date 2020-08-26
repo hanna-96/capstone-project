@@ -92,24 +92,24 @@ async function getAllUsers() {
 // })();
 
 //get single user
-// async function getSingleUser(id) {
-//   const params = {
-//     TableName: "Users",
-//     Key: {
-//       userId: id,
-//     },
-//   };
-//   return await DocumentClient.get(params).promise();
-// }
-async function getSingleUser(email) {
+async function getSingleUser(id) {
   const params = {
-    TableName: "Users2",
+    TableName: "Users",
     Key: {
-      email,
+      userId: id,
     },
   };
   return await DocumentClient.get(params).promise();
 }
+// async function getSingleUser(email) {
+//   const params = {
+//     TableName: "Users2",
+//     Key: {
+//       email,
+//     },
+//   };
+//   return await DocumentClient.get(params).promise();
+// }
 async function getSingleUserByEmail(email) {
   const params = {
     TableName: "Users2",
