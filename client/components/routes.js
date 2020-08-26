@@ -3,6 +3,7 @@ import {Route, Switch} from 'react-router-dom'
 import Login from './Login'
 import Signup from './Signup'
 import Request from '../request-test'
+import AllIngredients from './AllIngredients'
 
 export default class Routes extends React.Component {
     render() {
@@ -12,6 +13,7 @@ export default class Routes extends React.Component {
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/signup" component={Signup} />
                     <Route exact path="/" component={Request} />
+                    <Route exact path="/allingredients" component={AllIngredients} />
                 </Switch>
             </div>
         )
