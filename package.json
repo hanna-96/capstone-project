@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/CapstoneProgect/capstone-project#readme",
   "dependencies": {
-    "@aws-amplify/auth": "^3.3.5",
     "@material-ui/core": "^4.11.0",
     "aws-sdk": "^2.738.0",
     "axios": "^0.20.0",

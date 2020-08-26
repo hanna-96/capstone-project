@@ -82,14 +82,14 @@ async function getSingleUser(id) {
   };
   return await DocumentClient.get(params).promise();
 }
-(async () => {
-  const user = await getSingleUser(2)
-  // const ingredients = user.Item.ingredients.L;
-  console.log(
-    "the func worked ",
-    user
-  );
-})();
+// (async () => {
+//   const user = await getSingleUser(2)
+//   // const ingredients = user.Item.ingredients.L;
+//   console.log(
+//     "the func worked ",
+//     user
+//   );
+// })();
 
 //update User (can update any attribute)
 async function updateUserName(id, name) {
