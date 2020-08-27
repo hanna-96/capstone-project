@@ -27,7 +27,7 @@ app.use(require('cookie-parser')());
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
-app.use('/api/users', routes)
+
 app.use(redirectToHTTPS([/localhost:8080/], [], 301));
 
 app.use(
