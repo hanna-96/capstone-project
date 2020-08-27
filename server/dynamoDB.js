@@ -14,13 +14,13 @@ const DocumentClient = new AWS.DynamoDB.DocumentClient();
 //creating table
 async function createTable() {
   const params = {
-    TableName: "Users",
+    TableName: "Users2",
     KeySchema: [
-      { AttributeName: "userId", KeyType: "HASH" },
+      { AttributeName: "email", KeyType: "HASH" },
       // { AttributeName: "email", KeyType: "RANGE" },
     ],
     AttributeDefinitions: [
-      { AttributeName: "userId", AttributeType: "N" },
+      { AttributeName: "email", AttributeType: "N" },
       // { AttributeName: "email", AttributeType: "S" },
     ],
     ProvisionedThroughput: {
@@ -50,10 +50,11 @@ async function createTable() {
 //   return await DocumentClient.put(params).promise();
 // }
 //changed primary key to email !!!for another table
-async function addUser(userName, firstName, lastName, email, password) {
+async function addUser(id, userName, firstName, lastName, email, password) {
   const params = {
     TableName: "Users2",
     Item: {
+      id: id,
       userName: userName,
       firstName: firstName,
       lastName: lastName,
@@ -81,7 +82,7 @@ async function addUser(userName, firstName, lastName, email, password) {
 // get allUsers (!!!expensive operation!!!)
 async function getAllUsers() {
   const params = {
-    TableName: "Users",
+    TableName: "Users2",
   };
   return await DocumentClient.scan(params).promise();
 }
@@ -124,11 +125,11 @@ async function getSingleUserByEmail(email) {
 // })();
 
 //update User (can update any attribute)
-async function updateUserName(id, name) {
+async function updateUserName(email, name) {
   const params = {
-    TableName: "Users",
+    TableName: "Users2",
     Item: {
-      userId: id,
+      email: email,
       name: name,
     },
     ReturnConsumedCapacity: "TOTAL",
@@ -167,11 +168,11 @@ async function updateUserIngredients(id, newIngredient) {
 // })();
 
 //delete User
-async function deleteUser(id) {
+async function deleteUser(email) {
   const params = {
-    TableName: "Users",
+    TableName: "Users2",
     Key: {
-      userId: id,
+      email: email,
     },
   };
 

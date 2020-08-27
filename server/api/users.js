@@ -31,7 +31,7 @@ router.get("/:userId", async (req, res, next) => {
 router.post("/signup", async (req, res, next) => {
   try {
     const { userName, firstName, lastName, email, password } = req.body;
-    const id = Math.floor(Math.random() * 100);
+    const id = Math.floor(Math.random() * 100)
     const newUser = await addUser(
       id,
       userName,
@@ -40,6 +40,7 @@ router.post("/signup", async (req, res, next) => {
       email,
       password
     );
+    console.log(newUser)
     res.send(newUser.Item);
   } catch (error) {
     console.error(error);
@@ -48,12 +49,11 @@ router.post("/signup", async (req, res, next) => {
 
 router.post("/login", async (req, res, next) => {
   try {
-    const user = await getSingleUserByEmail(req.body.email);
-    console.log('user', user)
+    const user = await getSingleUser(req.body.email);
     if (!user) {
       console.log('No such user found:', req.body.email)
       res.status(401).send('Wrong username and/or password')
-    } else if (req.body.password !== user.Item.password) {
+    } else if (!user.correctPassword(req.body.password)) {
       console.log('Incorrect password for user:', req.body.email)
       res.status(401).send('Wrong username and/or password')
       console.log("No such user found:", req.body.email);
@@ -65,7 +65,7 @@ router.post("/login", async (req, res, next) => {
       req.login(user, (err) => (err ? next(err) : res.json(user)));
     }
   } catch (err) {
-    console.log(err)
+    next(err)
   }
 });
 router.put("/:userId", async (req, res, next) => {
