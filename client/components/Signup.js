@@ -1,14 +1,10 @@
-<<<<<<< HEAD
 import React, { Component } from 'react';
-// import FormErrors from "../FormErrors";
-// import Validate from "../utility/FormValidation";
-// import { Auth } from 'aws-amplify'
-=======
+
 // import React, { Component } from 'react';
 // // import FormErrors from "../FormErrors";
 // // import Validate from "../utility/FormValidation";
 // // import Auth from '@aws-amplify/auth'
->>>>>>> 0605fcf28ab9adee2fa513aa98a390c1a1dbfcb4
+
 
 // export default class Signup extends Component {
 //     constructor() {

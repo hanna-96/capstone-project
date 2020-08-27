@@ -5,7 +5,6 @@ import App from './client/app'
 import './public/style.css'
 import { BrowserRouter as Router } from 'react-router-dom'
 
-
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     const wb = new Workbox("/sw.js");
