@@ -2,7 +2,7 @@ const router = require("express").Router();
 const {
   addUser,
   getAllUsers,
-  getSingleUser,
+  getSingleUserByEmail,
   updateUserName,
   deleteUser,
   updateUserIngredients,
@@ -40,18 +40,19 @@ router.post("/signup", async (req, res, next) => {
 
 router.post('/login', async (req, res, next) => {
   try {
-    const user = await getSingleUser(req.body.email);
+    const user = await getSingleUserByEmail(req.body.email);
+    console.log('user', user)
     if (!user) {
       console.log('No such user found:', req.body.email)
       res.status(401).send('Wrong username and/or password')
-    } else if (!user.correctPassword(req.body.password)) {
+    } else if (req.body.password !== user.Item.password) {
       console.log('Incorrect password for user:', req.body.email)
       res.status(401).send('Wrong username and/or password')
     } else {
       req.login(user, err => (err ? next(err) : res.json(user)))
     }
   } catch (err) {
-    next(err)
+    console.log(err)
   }
 })
 router.put("/:userId", async (req, res, next) => {
