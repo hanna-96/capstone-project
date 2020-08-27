@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use('/api/users', routes)
 app.use(redirectToHTTPS([/localhost:8080/], [], 301));
-
+const session = require('express-session')
 
 
 // This serves static files from the specified directory
@@ -29,6 +29,13 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).send(err.message || "Internal server error.");
 });
 
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'Capstone!',
+    resave: false,
+    saveUninitialized: false
+  })
+)
 
 const server = app.listen(8080, () => {
   console.log("App listening at port ", port);
