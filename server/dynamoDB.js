@@ -2,9 +2,9 @@ const AWS = require("aws-sdk");
 const { accessKeyId, secretAccessKey, endpoint } = require("../secrets");
 let awsConfig = {
   region: "us-east-2",
-  endpoint: endpoint,
-  accessKeyId,
-  secretAccessKey,
+  endpoint: process.env.AWS_ENDPOINT,
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY
 };
 AWS.config.update(awsConfig);
 //conecting to AWS DynamoDB
@@ -13,13 +13,13 @@ const DocumentClient = new AWS.DynamoDB.DocumentClient();
 //creating table
 async function createTable() {
   const params = {
-    TableName: "Users2",
+    TableName: "Users",
     KeySchema: [
-      { AttributeName: "email", KeyType: "HASH" },
+      { AttributeName: "userId", KeyType: "HASH" },
       // { AttributeName: "email", KeyType: "RANGE" },
     ],
     AttributeDefinitions: [
-      { AttributeName: "email", AttributeType: "S" },
+      { AttributeName: "userId", AttributeType: "N" },
       // { AttributeName: "email", AttributeType: "S" },
     ],
     ProvisionedThroughput: {
@@ -48,17 +48,17 @@ async function createTable() {
 
 //   return await DocumentClient.put(params).promise();
 // }
-//changed primary key to email
+//changed primary key to email !!!for another table
 async function addUser(userName, firstName, lastName, email, password) {
   const params = {
-    TableName: "Users2",
+    TableName: "Users",
     Item: {
       userName: userName,
       firstName: firstName,
       lastName: lastName,
       email: email,
       ingredients: [],
-      password: password
+      password: password,
     },
   };
 
@@ -91,6 +91,7 @@ async function getAllUsers() {
 //   );
 // })();
 
+
 //get single user
 // async function getSingleUser(id) {
 //   const params = {
@@ -101,6 +102,19 @@ async function getAllUsers() {
 //   };
 //   return await DocumentClient.get(params).promise();
 // }
+
+//get single user 
+async function getSingleUser(id) {
+  const params = {
+    TableName: "Users",
+    Key: {
+      userId: id,
+    },
+  };
+  return await DocumentClient.get(params).promise();
+}
+
+
 // async function getSingleUser(email) {
 //   const params = {
 //     TableName: "Users2",
@@ -110,6 +124,7 @@ async function getAllUsers() {
 //   };
 //   return await DocumentClient.get(params).promise();
 // }
+//get single user (for another table)!!!
 async function getSingleUserByEmail(email) {
   const params = {
     TableName: "Users2",
@@ -148,7 +163,7 @@ async function updateUserIngredients(id, newIngredient) {
   const userIngredients = user.Item.ingredients;
   // console.log('user ingredients',userIngredients)
   const updatedIngredients = [...userIngredients, ...newIngredient];
-  console.log('updatedingred',updatedIngredients)
+  console.log("updated ingred in DynamoDB", updatedIngredients);
   const params = {
     TableName: "Users",
     Key: {

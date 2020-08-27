@@ -1,4 +1,11 @@
 import { Workbox } from "workbox-window";
+<<<<<<< HEAD
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './client/app'
+import './public/style.css'
+import { BrowserRouter as Router } from 'react-router-dom'
+=======
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./client/app";
@@ -10,6 +17,7 @@ import store from './client/redux/store'
 // import Auth from '@aws-amplify/auth';
 // import config from './config.json'
 
+>>>>>>> ingredients-bug
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
@@ -34,12 +42,15 @@ if ("serviceWorker" in navigator) {
   });
 }
 
+<<<<<<< HEAD
+=======
 // Auth.configure({
 //     mandatorySignIn: true,
 //     region: config.cognito.REGION,
 //     userPoolId: config.cognito.USER_POOL_ID,
 //     userPoolWebClientId: config.cognito.APP_CLIENT_ID
 // })
+>>>>>>> ingredients-bug
 
 ReactDOM.render(
   <Provider store={store}>

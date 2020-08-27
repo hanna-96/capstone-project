@@ -10,7 +10,8 @@ const Request = () => {
   const [len, setLen] = useState([])
   
   const [skip, setSkip] = useState([])
-  const ingreds = ['lime_juice', 'sauce', 'tequila', 'gin', 'testt', 'vodka', 'blah', 'whiskey']
+  // let ingreds = ['lime_juice', 'sauce', 'tequila', 'gin', 'testt', 'vodka', 'blah', 'whiskey']
+  let ingreds = ['lime_juice', 'tequila', 'vodka']
 
   useEffect( () => {
     
@@ -23,12 +24,12 @@ const Request = () => {
           const {drinks} = data
           setDrinks(prevDrinks => [...prevDrinks,...drinks])
           setLen(prevLen => [...prevLen, drinks.length ])
+          setSkip(prev => [...prev, ing])
         }
         else {
           setDrinks(prevDrinks => [...prevDrinks])
           setLen(prevLen => [...prevLen])
-          setSkip(prev => [...prev,idx])
-          
+          setSkip(prev => [...prev])
         }
       } catch (error) {
         console.log(error);
@@ -53,7 +54,7 @@ const Request = () => {
       
       drinkList.length && len.length === ingreds.length ?
       <div>
-        <p><img src={drinkList[140].strDrinkThumb} /></p>
+        <p><img src={drinkList[130].strDrinkThumb} /></p>
         <h1>hi</h1>
         <p>Drink of the Day : {drinkList[0].strDrink}</p>
         {console.log(drinkList[140])}

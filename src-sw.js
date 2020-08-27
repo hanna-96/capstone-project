@@ -1,5 +1,7 @@
-// workbox.precaching.precacheAndRoute(self.__WB_MANIFEST)
 workbox.precaching.precacheAndRoute(self.__precacheManifest);
+<<<<<<< HEAD
+//cache the results from our cocktailDB API calls
+=======
 //^^^^ this is from smashing magazine tutorial
 
 // workbox.routing.registerRoute(
@@ -13,3 +15,4 @@ workbox.precaching.precacheAndRoute(self.__precacheManifest);
 //     ]
 //   })
 // );
+>>>>>>> ingredients-bug
