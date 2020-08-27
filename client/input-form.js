@@ -1,9 +1,8 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
-import Icon from '@material-ui/core/Icon';
 import RequestFilter from './request-filter'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -25,37 +24,27 @@ const InputForm = () => {
     
     const classes = useStyles();
     const [submitted, setSubmitted] = useState(false)
-    const [test, setTest] = useState([])
     const [inputs, setInputs] = useState([])
     const [clicked, setClicked] = useState(0)
     const [fields, setFields] = useState([1])
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e) => { // when user submits, set submitted status to be true and set input to be the value of the event
         e.preventDefault()
         setSubmitted(true)
-        // setInputs([event.target[clicked].value])
 
         fields.forEach( (val, idx) => setInputs(prev => [...prev, event.target[idx].value]))
 
     
     }
 
-    const handleChange = (e) => {
-        const event = {[e.target.name]: e.target.value}
-        setFields(prev => [...prev, 1])
-        // setTest(prev => [...prev, 1])
-        // } else {
-        //     setInputs(prevInput => [...prevInput])
-        // }
-        
-    }
-
-    const clearInput = () => {
+    const clearInput = () => { // clear input once the submit event occurs
        fields.forEach( (val, idx) => {if(event.target[idx]) event.target[idx].value = ''})
     }
 
 
-    const addField = () => {
+    const addField = () => { 
+        // adds a field with each click on the plus icon
+        //Each click increases length of the field array and the number of clicks
         console.log('clicked')
         setFields(prev => [...prev, 1])
         setClicked(clicked+1)
@@ -65,14 +54,11 @@ const InputForm = () => {
     <div className='submission'>
     <form onSubmit={handleSubmit}>
         <FormControl >
-
-        <FontAwesomeIcon icon={faPlusCircle} onClick={addField}/> Add another field
-
-        {/* <Input type='text' name='ing' placeholder="Enter an ingredient"  onChange={handleChange}/> */}
+            <FontAwesomeIcon icon={faPlusCircle} onClick={addField}/> Add another field
 
             
       {  
-
+        // Renders fields based on the current length of the `fields` array
               fields.map( (input, idx) => {
                 let ing = `ing${idx}`
 
@@ -85,7 +71,7 @@ const InputForm = () => {
           
         </FormControl>
 
-    {submitted? inputs.map((input) => <RequestFilter ingred={input} />): <div></div>}
+    {submitted? inputs.map((input) => <RequestFilter ingred={input} />): <div></div> // passes the ingredients on to be verified }
        {submitted ? clearInput() : <div></div>}
     </form> 
     </div>

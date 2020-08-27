@@ -4,11 +4,12 @@ import React, {useEffect, useState} from 'react'
 
 const RequestFilter = (props) => {
     let {ingred} = props
-     ingred = ingred.split(' ').join('_')
+     ingred = ingred.split(' ').join('_') // Handles ingredients with spaces 
     const [valid, setValid] = useState(false)
     useEffect( () => {
         const reqValidator = async (ing) => {
             try{
+                // makes call to API DB .. if there is a drinks object present, set to true otherwise set to false
                 const {data} =await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ing}`)
                 if(data.drinks) setValid(true)
                 else setValid(false)
@@ -17,7 +18,7 @@ const RequestFilter = (props) => {
             }
             
         }
-
+        
         reqValidator(ingred)
     })
 
