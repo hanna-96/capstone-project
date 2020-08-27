@@ -1,20 +1,45 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getAllIngredientsThunk} from "../redux/ingredients";
-// import { Link } from "react-router-dom";
-// import AddSpotForm from './AddSpotForm'
+import {
+  getAllIngredientsThunk,
+  addIngredientThunk,
+} from "../redux/ingredients";
+import AddIngredientForm from "./AddIngredientForm";
 
 class AllIngredients extends React.Component {
-  // componentDidMount() {
-  //   const id = this.props.match.params.userId;
-  //   this.props.getIngredients(id);
-  // }
+  componentDidMount() {
+    const id = this.props.match.params.userId;
+    console.log("id is", id);
+    this.props.getIngredients(id);
+    console.log("all ingredients before", this.props);
+  }
   render() {
-    
-    // const ingredients = this.props.ingredients;
-    // console.log('all ingredients are',ingredients)
+    const id = this.props.match.params.userId;
+    const ingredients = this.props.ingredients;
+    console.log("all ingredients after", ingredients);
+
     return (
-        <h1>Welcome to all ingredients page!</h1>
+      <div>
+        <h1>Here is the list of your ingredients!</h1>
+        {ingredients.map((ingredient) => {
+          return (
+            <div>
+              <ul>
+                <li>{ingredient}</li>
+              </ul>
+              <div>
+                {/* TODO: add a remove ingredient button later + delete route at the backend */}
+                {/* <button
+                        onClick={() => this.props.removeSpot(spot.id)}
+                      >
+                        Remove
+                      </button> */}
+              </div>
+            </div>
+          );
+        })}
+        <AddIngredientForm addIngredient={this.props.addIngredient} id={id} />
+      </div>
     );
   }
 }
@@ -28,8 +53,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     getIngredients: (id) => dispatch(getAllIngredientsThunk(id)),
-    // addSpot:(id,name,image,description)=>dispatch(addSpotThunk(id,name,image,description)),
-    // removeSpot:(id)=>dispatch(removeSpotThunk(id))
+    addIngredient: (id, ingredient) =>
+      dispatch(addIngredientThunk(id, ingredient)),
   };
 };
 

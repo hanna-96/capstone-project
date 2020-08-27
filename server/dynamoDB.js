@@ -48,7 +48,7 @@ async function createTable() {
 
 //   return await DocumentClient.put(params).promise();
 // }
-//changed primary key to email
+//changed primary key to email !!!for another table
 async function addUser(userName, firstName, lastName, email, password) {
   const params = {
     TableName: "Users",
@@ -58,7 +58,7 @@ async function addUser(userName, firstName, lastName, email, password) {
       lastName: lastName,
       email: email,
       ingredients: [],
-      password: password
+      password: password,
     },
   };
 
@@ -91,7 +91,7 @@ async function getAllUsers() {
 //   );
 // })();
 
-//get single user
+//get single user 
 async function getSingleUser(id) {
   const params = {
     TableName: "Users",
@@ -101,6 +101,7 @@ async function getSingleUser(id) {
   };
   return await DocumentClient.get(params).promise();
 }
+
 // async function getSingleUser(email) {
 //   const params = {
 //     TableName: "Users2",
@@ -110,6 +111,7 @@ async function getSingleUser(id) {
 //   };
 //   return await DocumentClient.get(params).promise();
 // }
+//get single user (for another table)!!!
 async function getSingleUserByEmail(email) {
   const params = {
     TableName: "Users2",
@@ -148,7 +150,7 @@ async function updateUserIngredients(id, newIngredient) {
   const userIngredients = user.Item.ingredients;
   // console.log('user ingredients',userIngredients)
   const updatedIngredients = [...userIngredients, ...newIngredient];
-  console.log('updatedingred',updatedIngredients)
+  console.log("updated ingred in DynamoDB", updatedIngredients);
   const params = {
     TableName: "Users",
     Key: {
