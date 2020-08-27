@@ -13,9 +13,12 @@ export default class Login extends React.Component {
       }
       async handleSubmit(event) {
         event.preventDefault()
-        const data = await axios.post("/api/users/login", this.state);
-        console.log(data, "hello")
-        // this.props.history.push('/') 
+        await axios.post("/api/users/login", this.state);
+        this.setState({
+          email: '',
+          password: ''
+        })
+        this.props.history.push('/') 
       }
       handleChange(event) {
         this.setState({
