@@ -33,7 +33,7 @@ const InputForm = () => {
         setSubmitted(true)
 
         fields.forEach( (val, idx) => setInputs(prev => [...prev, event.target[idx].value]))
-
+        setFields([1])
     
     }
 
@@ -72,7 +72,7 @@ const InputForm = () => {
         </FormControl>
 
             {submitted? inputs.map((input) => <RequestFilter ingred={input} />): <div></div>} 
-       {submitted ? clearInput() : <div></div>}
+       {submitted ? clearInput(): <div></div>}
     </form> 
     </div>
     )
