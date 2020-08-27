@@ -93,17 +93,6 @@ async function getAllUsers() {
 
 
 //get single user
-// async function getSingleUser(id) {
-//   const params = {
-//     TableName: "Users",
-//     Key: {
-//       userId: id,
-//     },
-//   };
-//   return await DocumentClient.get(params).promise();
-// }
-
-//get single user 
 async function getSingleUser(id) {
   const params = {
     TableName: "Users",
@@ -113,8 +102,6 @@ async function getSingleUser(id) {
   };
   return await DocumentClient.get(params).promise();
 }
-
-
 // async function getSingleUser(email) {
 //   const params = {
 //     TableName: "Users2",

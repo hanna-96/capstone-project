@@ -27,8 +27,8 @@ app.use(require('cookie-parser')());
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
-
 app.use('/api/users', routes)
+app.use(redirectToHTTPS([/localhost:8080/], [], 301));
 
 app.use(
   session({
@@ -67,7 +67,13 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).send(err.message || "Internal server error.");
 });
 
-
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'Capstone!',
+    resave: false,
+    saveUninitialized: false
+  })
+)
 
 const server = app.listen(PORT, () => {
   console.log("App listening at port ", PORT);
