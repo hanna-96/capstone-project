@@ -40,7 +40,7 @@ router.post("/signup", async (req, res, next) => {
       password
     );
     console.log(newUser)
-    res.send(newUser.Item);
+    req.login(newUser, err => (err ? next(err) : res.json(newUser)))
   } catch (error) {
     console.error(error);
   }
@@ -64,6 +64,13 @@ router.post("/login", async (req, res, next) => {
     next(err)
   }
 });
+
+router.post('/logout', (req, res) => {
+  req.logout()
+  req.session.destroy()
+  res.redirect('/')
+})
+
 router.put("/:userId", async (req, res, next) => {
   try {
     const id = +req.params.userId;

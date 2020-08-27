@@ -36,19 +36,9 @@ export default class Signup extends React.Component {
   }
 
   render() {
-    // console.log('signup state',this.state)
     return (
       // <div>
       <form onSubmit={this.handleSubmit}>
-        {/* <label>ID</label>
-              <input
-                name='id'
-                type='text'
-                placeholder='id'
-                required
-                onChange={this.handleChange}
-                value={this.state.id}
-              /> */}
         <p>
           <label>User Name</label>
           <input
