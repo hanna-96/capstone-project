@@ -49,10 +49,11 @@ async function createTable() {
 //   return await DocumentClient.put(params).promise();
 // }
 //changed primary key to email !!!for another table
-async function addUser(userName, firstName, lastName, email, password) {
+async function addUser(id, userName, firstName, lastName, email, password) {
   const params = {
     TableName: "Users2",
     Item: {
+      id: id,
       userName: userName,
       firstName: firstName,
       lastName: lastName,

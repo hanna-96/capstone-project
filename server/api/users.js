@@ -30,7 +30,9 @@ router.get("/:userId", async (req, res, next) => {
 router.post("/signup", async (req, res, next) => {
   try {
     const { userName, firstName, lastName, email, password } = req.body;
+    const id = Math.floor(Math.random() * 100)
     const newUser = await addUser(
+      id,
       userName,
       firstName,
       lastName,
