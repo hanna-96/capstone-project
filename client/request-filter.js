@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react'
 
 
 const RequestFilter = (props) => {
-
     let {ingred} = props
      ingred = ingred.split(' ').join('_')
     const [valid, setValid] = useState(false)

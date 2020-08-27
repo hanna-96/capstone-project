@@ -25,32 +25,39 @@ const InputForm = () => {
     
     const classes = useStyles();
     const [submitted, setSubmitted] = useState(false)
-
+    const [test, setTest] = useState([])
     const [inputs, setInputs] = useState([])
     const [clicked, setClicked] = useState(0)
-    const [fields, setFields] = useState(1)
+    const [fields, setFields] = useState([1])
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        // const ing1 = e.target.ing1.value
         setSubmitted(true)
-        // setInputs([e.target.ing1.value])
-        // console.log(e.target, e.target.value)
-        // e.target.ing2.value = ''
+        // setInputs([event.target[clicked].value])
+
+        fields.forEach( (val, idx) => setInputs(prev => [...prev, event.target[idx].value]))
+
+    
     }
 
     const handleChange = (e) => {
-        e.preventDefault()
-        setInputs(prevInput => [...prevInput,e.target.value])
-        console.log(e, e.target.value)
+        const event = {[e.target.name]: e.target.value}
+        setFields(prev => [...prev, 1])
+        // setTest(prev => [...prev, 1])
+        // } else {
+        //     setInputs(prevInput => [...prevInput])
+        // }
+        
     }
 
+    const clearInput = () => {
+       fields.forEach( (val, idx) => {if(event.target[idx]) event.target[idx].value = ''})
+    }
 
 
     const addField = () => {
         console.log('clicked')
-        setFields(fields + 1)
-        console.log(fields, clicked)
+        setFields(prev => [...prev, 1])
         setClicked(clicked+1)
     }
 
@@ -61,17 +68,17 @@ const InputForm = () => {
 
         <FontAwesomeIcon icon={faPlusCircle} onClick={addField}/> Add another field
 
-        <Input type='text' name='ing' placeholder="Enter an ingredient"  onChange={handleChange}/>
+        {/* <Input type='text' name='ing' placeholder="Enter an ingredient"  onChange={handleChange}/> */}
 
             
-      {  clicked > 0  && fields > clicked ?
+      {  
 
-              inputs.map( (input, idx) => {
+              fields.map( (input, idx) => {
                 let ing = `ing${idx}`
 
-               return (<Input type='text' name='ing2' placeholder="Enter an ingredient"  onChange={handleChange}/>)
+               return (<Input type='text' name={ing} placeholder="Enter an ingredient" id={idx}/>)
               }
-          ) : <div></div> }
+          )}
         
 
           <Button type='submit' value='Submit'>Submit Ingredient</Button>
@@ -79,7 +86,7 @@ const InputForm = () => {
         </FormControl>
 
     {submitted? inputs.map((input) => <RequestFilter ingred={input} />): <div></div>}
-       {console.log(inputs)}
+       {submitted ? clearInput() : <div></div>}
     </form> 
     </div>
     )
