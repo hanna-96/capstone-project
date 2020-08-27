@@ -1,6 +1,6 @@
 const AWS = require("aws-sdk");
-if (process.env.NODE_ENV === 'dev') require('../secrets')
-const awsConfig = {
+const { accessKeyId, secretAccessKey, endpoint } = require("../secrets");
+let awsConfig = {
   region: "us-east-2",
   endpoint: process.env.AWS_ENDPOINT,
   accessKeyId: process.env.ACCESS_KEY_ID,
@@ -16,11 +16,11 @@ async function createTable() {
     TableName: "Users",
     KeySchema: [
       { AttributeName: "userId", KeyType: "HASH" },
-      // { AttributeName: "ingredientId", KeyType: "RANGE" },
+      // { AttributeName: "email", KeyType: "RANGE" },
     ],
     AttributeDefinitions: [
       { AttributeName: "userId", AttributeType: "N" },
-      // { AttributeName: "ingredientId", AttributeType: "N" },
+      // { AttributeName: "email", AttributeType: "S" },
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 3,
@@ -32,50 +32,33 @@ async function createTable() {
 // (async ()=>{
 //   console.log('the func worked', await createTable());
 // })()
-
-//adding an item to the table(User)
-// async function addUser(id, userName, firstName, lastName, ingredient) {
+// async function addUser(id, userName, firstName, lastName, email, password) {
 //   const params = {
 //     TableName: "Users",
 //     Item: {
-//       userId: { N: id },
-//       userName: { S: userName },
-//       firstName: { S: firstName },
-//       lastName: { S: lastName },
-//       ingredients: {
-//         //L -array
-//         L: ingredient.map((item) => {
-//           return {
-//             M: {
-//               name: { S: item.name },
-//               image: { S: item.image },
-//             },
-//           };
-//         }),
-//       },
+//       userId: id,
+//       userName: userName,
+//       firstName: firstName,
+//       lastName: lastName,
+//       email: email,
+//       ingredients: [],
+//       password: password
 //     },
 //   };
 
-//   return await DynamoDB.putItem(params).promise();
+//   return await DocumentClient.put(params).promise();
 // }
-//WHEN ADDING A NEW USER WE DON'T NEED TO SPECIFY INGREDIENT
-async function addUser(id, userName, firstName, lastName,ingredient = '') {
+//changed primary key to email !!!for another table
+async function addUser(userName, firstName, lastName, email, password) {
   const params = {
     TableName: "Users",
     Item: {
-      userId: id,
       userName: userName,
       firstName: firstName,
       lastName: lastName,
-      ingredients: [ingredient],
-      // //L -array
-      //  ingredient.map((item) => {
-      //   return {
-      //       name:item.name,
-      //       image:item.image,
-
-      //   };
-      // }),
+      email: email,
+      ingredients: [],
+      password: password,
     },
   };
 
@@ -85,13 +68,15 @@ async function addUser(id, userName, firstName, lastName,ingredient = '') {
 //     console.log(
 //         "the func worked",
 //         await addUser(
-//             3,
-//             "irina_bareto",
-//             "Irina",
-//             "Bareto",
+//             "jfjbfurgh",
+//             "fvfbf",
+//             "bgbg",
+//             "sara@gmail.com",
+//             "lovecoding"
 //             )
 //             );
 //         })();
+
 // get allUsers (!!!expensive operation!!!)
 async function getAllUsers() {
   const params = {
@@ -106,20 +91,39 @@ async function getAllUsers() {
 //   );
 // })();
 
-//get single user
+//get single user 
 async function getSingleUser(id) {
   const params = {
     TableName: "Users",
     Key: {
-      // userId: { N: id },
       userId: id,
-      // ingredientId: ingredientId,
+    },
+  };
+  return await DocumentClient.get(params).promise();
+}
+
+// async function getSingleUser(email) {
+//   const params = {
+//     TableName: "Users2",
+//     Key: {
+//       email,
+//     },
+//   };
+//   return await DocumentClient.get(params).promise();
+// }
+//get single user (for another table)!!!
+async function getSingleUserByEmail(email) {
+  const params = {
+    TableName: "Users2",
+    Key: {
+      // userId:id,
+      email: email,
     },
   };
   return await DocumentClient.get(params).promise();
 }
 // (async () => {
-//   const user = await getSingleUser(2)
+//   const user = await getSingleUserByEmail("sara@gmail.com")
 //   // const ingredients = user.Item.ingredients.L;
 //   console.log(
 //     "the func worked ",
@@ -140,28 +144,32 @@ async function updateUserName(id, name) {
   return await DocumentClient.put(params).promise();
 }
 //update User by adding a new ingredient
-async function updateUserIngredients(id,userName,firstName,lastName, newIngredient) {
+async function updateUserIngredients(id, newIngredient) {
+  const user = await getSingleUser(id);
+  // console.log('user is',user.Item)
+  const userIngredients = user.Item.ingredients;
+  // console.log('user ingredients',userIngredients)
+  const updatedIngredients = [...userIngredients, ...newIngredient];
+  console.log("updated ingred in DynamoDB", updatedIngredients);
   const params = {
     TableName: "Users",
-    Item: {
+    Key: {
       userId: id,
-      userName,
-      firstName,
-      lastName,
-      ingredients:[newIngredient]
     },
-    ReturnConsumedCapacity: "TOTAL",
+    UpdateExpression: `set ingredients = :ingredients`,
+    ExpressionAttributeValues: {
+      ":ingredients": updatedIngredients,
+    },
   };
-  return await DocumentClient.put(params).promise();
+  return await DocumentClient.update(params).promise();
 }
 // //run in node
 // (async () => {
 //   console.log(
 //     "the func worked",
 //     await updateUserIngredients(
-//     3,
-//     "irina_bareto","Irina","Bareto",
-//       "champagne"
+//     2,
+//      ["champagne"]
 //     )
 //   );
 // })();

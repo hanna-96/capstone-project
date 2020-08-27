@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { Component } from 'react';
 
 // import React, { Component } from 'react';
@@ -72,6 +73,185 @@ import React, { Component } from 'react';
 //     }
 //   };
 
+=======
+import React from "react";
+import axios from "axios";
+
+export default class Signup extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      // id: '',
+      userName: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  }
+  async handleSubmit(event) {
+    event.preventDefault();
+    console.log('signup state before',this.state)
+    const data = await axios.post("/api/users/signup", this.state);
+    console.log('signup state after',this.state)
+    console.log("data from frontEnd", data);
+    // this.props.history.push('/')
+    this.setState({
+      // id: '',
+      userName: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+    });
+  }
+
+  render() {
+    // console.log('signup state',this.state)
+    return (
+      // <div>
+      <form onSubmit={this.handleSubmit}>
+        {/* <label>ID</label>
+              <input
+                name='id'
+                type='text'
+                placeholder='id'
+                required
+                onChange={this.handleChange}
+                value={this.state.id}
+              /> */}
+        <p>
+          <label>User Name</label>
+          <input
+            name="userName"
+            type="text"
+            required
+            onChange={this.handleChange}
+            value={this.state.userName}
+          />
+        </p>
+        <label>First Name</label>
+
+        <input
+          name="firstName"
+          type="text"
+          placeholder="First Name"
+          required
+          onChange={this.handleChange}
+          value={this.state.firstName}
+        />
+        <label>Last Name</label>
+        <input
+          name="lastName"
+          type="text"
+          placeholder="Last Name"
+          required
+          onChange={this.handleChange}
+          value={this.state.lastName}
+        />
+        <label>Email</label>
+        <input
+          name="email"
+          type="text"
+          required
+          onChange={this.handleChange}
+          value={this.state.email}
+        />
+        <p>
+          <label>Password</label>
+          <input
+            name="password"
+            type="text"
+            required
+            onChange={this.handleChange}
+            value={this.state.password}
+          />
+        </p>
+        <button type="submit">Sign up</button>
+      </form>
+    );
+  }
+}
+
+// import React, { Component } from 'react';
+// // import FormErrors from "../FormErrors";
+// // import Validate from "../utility/FormValidation";
+// import Auth from '@aws-amplify/auth';
+
+// export default class Signup extends Component {
+//     constructor() {
+//         super()
+//         this.state = {
+//           username: "",
+//           email: "",
+//           password: "",
+//           confirmpassword: "",
+//           errors: {
+//             cognito: null,
+//             blankfield: false,
+//             passwordmatch: false
+//           }
+//     }
+//     this.clearErrorState = this.clearErrorState.bind(this)
+//     this.handleSubmit = this.handleSubmit.bind(this)
+//     this.onInputChange = this.onInputChange.bind(this)
+//   }
+
+//   clearErrorState() {
+//     this.setState({
+//       errors: {
+//         cognito: null,
+//         blankfield: false,
+//         passwordmatch: false
+//       }
+//     });
+//   }
+
+//   async handleSubmit (event) {
+//     event.preventDefault();
+
+//     // Form validation
+//     this.clearErrorState();
+//     // const error = Validate(event, this.state);
+//     // if (error) {
+//     //   this.setState({
+//     //     errors: { ...this.state.errors, ...error }
+//     //   });
+//     // }
+
+//     // AWS Cognito integration here
+//     const {username, email, password} = this.state
+//     try {
+//         const signUpResponse = await Auth.signUp({
+//             username,
+//             password,
+//             attributes: {
+//                 email: email
+//             }
+//         }) //optional fields in attribute
+
+//         // this.props.history.push('/welcome') redirect
+//     } catch (error) {
+//         let err = null;
+//         !error.message ? err = { "message": error} : err = error
+//         console.log(error)
+//         this.setState({
+//             errors: {
+//                 ...this.state.errors,
+//                 cognito: err
+//             }
+//         })
+//     }
+//   };
+
+>>>>>>> ingredients-bug
 //   onInputChange(event) {
 //     this.setState({
 //       [event.target.id]: event.target.value
@@ -81,16 +261,27 @@ import React, { Component } from 'react';
 
 //   render() {
 //     return (
+<<<<<<< HEAD
 //       <section className="section auth">
 //         <div className="container">
+=======
+//       <section>
+//         <div>
+>>>>>>> ingredients-bug
 //           <h1>Signup</h1>
 //           {/* <FormErrors formerrors={this.state.errors} /> */}
 
 //           <form onSubmit={this.handleSubmit}>
+<<<<<<< HEAD
 //             <div className="field">
 //               <p className="control">
 //                 <input 
 //                   className="input" 
+=======
+//             <div>
+//               <p>
+//                 <input
+>>>>>>> ingredients-bug
 //                   type="text"
 //                   id="username"
 //                   aria-describedby="userNameHelp"
@@ -100,10 +291,16 @@ import React, { Component } from 'react';
 //                 />
 //               </p>
 //             </div>
+<<<<<<< HEAD
 //             <div className="field">
 //               <p className="control has-icons-left has-icons-right">
 //                 <input 
 //                   className="input" 
+=======
+//             <div>
+//               <p>
+//                 <input
+>>>>>>> ingredients-bug
 //                   type="email"
 //                   id="email"
 //                   aria-describedby="emailHelp"
@@ -111,6 +308,7 @@ import React, { Component } from 'react';
 //                   value={this.state.email}
 //                   onChange={this.onInputChange}
 //                 />
+<<<<<<< HEAD
 //                 <span className="icon is-small is-left">
 //                   <i className="fas fa-envelope"></i>
 //                 </span>
@@ -120,12 +318,23 @@ import React, { Component } from 'react';
 //               <p className="control has-icons-left">
 //                 <input 
 //                   className="input" 
+=======
+//                 <span>
+//                   <i></i>
+//                 </span>
+//               </p>
+//             </div>
+//             <div>
+//               <p>
+//                 <input
+>>>>>>> ingredients-bug
 //                   type="password"
 //                   id="password"
 //                   placeholder="Password"
 //                   value={this.state.password}
 //                   onChange={this.onInputChange}
 //                 />
+<<<<<<< HEAD
 //                 <span className="icon is-small is-left">
 //                   <i className="fas fa-lock"></i>
 //                 </span>
@@ -135,12 +344,24 @@ import React, { Component } from 'react';
 //               <p className="control has-icons-left">
 //                 <input 
 //                   className="input" 
+=======
+//                 <span>
+//                   <i></i>
+//                 </span>
+//               </p>
+//             </div>
+//             <div>
+//               <p>
+//               <input
+//                   className="input"
+>>>>>>> ingredients-bug
 //                   type="password"
 //                   id="confirmpassword"
 //                   placeholder="Confirm password"
 //                   value={this.state.confirmpassword}
 //                   onChange={this.onInputChange}
 //                 />
+<<<<<<< HEAD
 //                 <span className="icon is-small is-left">
 //                   <i className="fas fa-lock"></i>
 //                 </span>
@@ -154,6 +375,21 @@ import React, { Component } from 'react';
 //             <div className="field">
 //               <p className="control">
 //                 <button className="button is-success">
+=======
+//                 <span>
+//                   <i></i>
+//                 </span>
+//               </p>
+//             </div>
+//             <div>
+//               <p>
+//                 <a href="/forgotpassword">Forgot password?</a>
+//               </p>
+//             </div>
+//             <div>
+//               <p>
+//                 <button>
+>>>>>>> ingredients-bug
 //                   Signup
 //                 </button>
 //               </p>
@@ -163,4 +399,7 @@ import React, { Component } from 'react';
 //       </section>
 //     );
 //   }
+<<<<<<< HEAD
 // }
+=======
+>>>>>>> ingredients-bug

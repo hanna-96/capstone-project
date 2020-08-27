@@ -2,10 +2,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
 const path = require("path");
 const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
-
 module.exports = env => {
   const mode = env.mode ? env.mode : "production";
-
   return {
     mode,
     entry: {
@@ -50,8 +48,13 @@ module.exports = env => {
       swSrc: "./src-sw.js",
       swDest: "sw.js"
     })
-
     ],
     devtool: "source-map"
   };
+<<<<<<< HEAD
 };
+=======
+};
+// filename: "[name].[chunkhash].js",
+// chunkFilename: "[name].[chunkhash].bundle.js",
+>>>>>>> ingredients-bug

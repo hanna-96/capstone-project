@@ -44,11 +44,13 @@ const Request = () => {
  
 
   return (
-    // <div>Is working</div>
-   
-    <div> 
-       {console.log(ingreds, drinkList)} 
-       { 
+    
+    
+    <div>
+      {/* {console.log(len, skip, ingreds)} */}
+      {skip.length ? skip.forEach( (val) => ingreds.splice(val,1)) : ingreds}
+      {/* {console.log(ingreds)} */}
+      { 
       
       drinkList.length && len.length === ingreds.length ?
       <div>
