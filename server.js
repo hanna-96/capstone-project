@@ -31,7 +31,6 @@ app.use(bodyParser.json())
 
 app.use('/api/users', routes)
 app.use(redirectToHTTPS([/localhost:8080/], [], 301));
-const session = require('express-session')
 
 app.use(
   session({

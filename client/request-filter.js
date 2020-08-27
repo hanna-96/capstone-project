@@ -1,11 +1,13 @@
 import axios from 'axios'
 import React, {useEffect, useState} from 'react'
+import AllIngredients from './components/AllIngredients'
 
 
 const RequestFilter = (props) => {
     let {ingred} = props
      ingred = ingred.split(' ').join('_') // Handles ingredients with spaces 
     const [valid, setValid] = useState(false)
+    const [validInputs, setValidInputs] = useState(JSON.parse(localStorage.getItem('ingred'))|| [])
     localStorage.setItem('ingred', JSON.stringify([]))
     useEffect( () => {
         const reqValidator = async (ing) => {
@@ -16,7 +18,8 @@ const RequestFilter = (props) => {
                         setValid(true)
                         const prev = localStorage.getItem('ingred')
                         localStorage.setItem('ingred',JSON.stringify([ing]))
-    
+                        setValidInputs([prev])
+
 
                 }
             } catch(err) {
@@ -33,6 +36,7 @@ const RequestFilter = (props) => {
         
         <div>
     <p>{valid ? `${ingred.split('_').join(' ')} has been added. Click here to view drinks!` : `Sorry could not find ${ingred}`}</p>
+    {/* <p>{valid ? <AllIngredients ingred={ingred} />: <div></div>}</p> */}
     {console.log(JSON.parse(localStorage.getItem('ingred')),'just valid')}
     </div>
 

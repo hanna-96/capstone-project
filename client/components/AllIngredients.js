@@ -5,18 +5,27 @@ import {
   addIngredientThunk,
 } from "../redux/ingredients";
 import AddIngredientForm from "./AddIngredientForm";
+import InputForm from '../input-form'
 
 class AllIngredients extends React.Component {
+  constructor(props) {
+    super(props)
+
+    const {ingred} = props
+    console.log(ingred)
+
+  }
   componentDidMount() {
-    const id = this.props.match.params.userId;
-    console.log("id is", id);
-    this.props.getIngredients(id);
+    // const id = this.props.match.params.userId;
+
+    // console.log("id is", id);
+    // this.props.getIngredients(id);
     console.log("all ingredients before", this.props);
   }
   render() {
-    const id = this.props.match.params.userId;
+    // const id = this.props.match.params.userId;
     const ingredients = this.props.ingredients;
-    console.log("all ingredients after", ingredients);
+    // console.log("all ingredients after", ingredients);
 
     return (
       <div>
@@ -38,7 +47,6 @@ class AllIngredients extends React.Component {
             </div>
           );
         })}
-        <AddIngredientForm addIngredient={this.props.addIngredient} id={id} />
       </div>
     );
   }
