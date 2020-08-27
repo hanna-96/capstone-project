@@ -1,9 +1,10 @@
-import React, {Component} from 'react'
-import {Route, Switch} from 'react-router-dom'
+import React from 'react'
+import {Route, Switch,BrowserRouter} from 'react-router-dom'
 import Login from './Login'
 import Signup from './Signup'
 import Request from '../request-test'
 import AllIngredients from './AllIngredients'
+import AllUsers from './AllUsers'
 
 export default class Routes extends React.Component {
     render() {
@@ -13,7 +14,10 @@ export default class Routes extends React.Component {
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/signup" component={Signup} />
                     <Route exact path="/" component={Request} />
-                    <Route exact path="/users/:userId/allingredients" component={AllIngredients} />
+                    {/* <Route exact path="/users" component={AllUsers} /> */}
+
+                    <Route exact path="/:userId/allingredients" component={AllIngredients} />
+                    {/* <Route exact path="/allingredients" component={AllIngredients} /> */}
                 </Switch>
             </div>
         )

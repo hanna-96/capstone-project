@@ -17,7 +17,7 @@ const getIngredients = (ingredients) => ({
 /**
  * THUNK CREATORS
  */
-export const getAllIngredinetsThunk = (id) => {
+export const getAllIngredintesThunk = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`/api/users/${id}/allingredients`);

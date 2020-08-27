@@ -13,13 +13,13 @@ const DocumentClient = new AWS.DynamoDB.DocumentClient();
 //creating table
 async function createTable() {
   const params = {
-    TableName: "Users2",
+    TableName: "Users",
     KeySchema: [
-      { AttributeName: "email", KeyType: "HASH" },
+      { AttributeName: "userId", KeyType: "HASH" },
       // { AttributeName: "email", KeyType: "RANGE" },
     ],
     AttributeDefinitions: [
-      { AttributeName: "email", AttributeType: "S" },
+      { AttributeName: "userId", AttributeType: "N" },
       // { AttributeName: "email", AttributeType: "S" },
     ],
     ProvisionedThroughput: {
@@ -51,7 +51,7 @@ async function createTable() {
 //changed primary key to email
 async function addUser(userName, firstName, lastName, email, password) {
   const params = {
-    TableName: "Users2",
+    TableName: "Users",
     Item: {
       userName: userName,
       firstName: firstName,
