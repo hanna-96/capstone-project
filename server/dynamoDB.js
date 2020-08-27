@@ -4,25 +4,19 @@ let awsConfig = {
   region: "us-east-2",
   endpoint: process.env.AWS_ENDPOINT,
   accessKeyId: process.env.ACCESS_KEY_ID,
-  secretAccessKey: process.env.SECRET_ACCESS_KEY
+  secretAccessKey: process.env.SECRET_ACCESS_KEY,
 };
 
 AWS.config.update(awsConfig);
-//conecting to AWS DynamoDB
+//connecting to AWS DynamoDB
 const DynamoDB = new AWS.DynamoDB();
 const DocumentClient = new AWS.DynamoDB.DocumentClient();
 //creating table
 async function createTable() {
   const params = {
-    TableName: "Users2",
-    KeySchema: [
-      { AttributeName: "email", KeyType: "HASH" },
-      // { AttributeName: "email", KeyType: "RANGE" },
-    ],
-    AttributeDefinitions: [
-      { AttributeName: "email", AttributeType: "N" },
-      // { AttributeName: "email", AttributeType: "S" },
-    ],
+    TableName: "Users3",
+    KeySchema: [{ AttributeName: "userName", KeyType: "HASH" }],
+    AttributeDefinitions: [{ AttributeName: "userName", AttributeType: "S" }],
     ProvisionedThroughput: {
       ReadCapacityUnits: 3,
       WriteCapacityUnits: 3,
@@ -33,34 +27,17 @@ async function createTable() {
 // (async ()=>{
 //   console.log('the func worked', await createTable());
 // })()
-// async function addUser(id, userName, firstName, lastName, email, password) {
-//   const params = {
-//     TableName: "Users",
-//     Item: {
-//       userId: id,
-//       userName: userName,
-//       firstName: firstName,
-//       lastName: lastName,
-//       email: email,
-//       ingredients: [],
-//       password: password
-//     },
-//   };
-
-//   return await DocumentClient.put(params).promise();
-// }
 //changed primary key to email !!!for another table
-async function addUser(id, userName, firstName, lastName, email, password) {
+async function addUser(userName, firstName, lastName, email, password) {
   const params = {
-    TableName: "Users2",
+    TableName: "Users3",
     Item: {
-      id: id,
-      userName: userName,
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
+      userName,
+      firstName,
+      lastName,
+      email,
       ingredients: [],
-      password: password,
+      password,
     },
   };
 
@@ -70,11 +47,11 @@ async function addUser(id, userName, firstName, lastName, email, password) {
 //     console.log(
 //         "the func worked",
 //         await addUser(
-//             "jfjbfurgh",
-//             "fvfbf",
-//             "bgbg",
-//             "sara@gmail.com",
-//             "lovecoding"
+//             "anya_96",
+//             "Anna",
+//             "Rzheutskaya",
+//             "nuyta96@gmail.com",
+//             "123"
 //             )
 //             );
 //         })();
@@ -82,7 +59,7 @@ async function addUser(id, userName, firstName, lastName, email, password) {
 // get allUsers (!!!expensive operation!!!)
 async function getAllUsers() {
   const params = {
-    TableName: "Users2",
+    TableName: "Users3",
   };
   return await DocumentClient.scan(params).promise();
 }
@@ -93,31 +70,18 @@ async function getAllUsers() {
 //   );
 // })();
 
-//get single user 
-async function getSingleUser(id) {
-  const params = {
-    TableName: "Users",
-    Key: {
-      userId: id,
-    },
-  };
-  return await DocumentClient.get(params).promise();
-}
-
 //get single user (for another table)!!!
-async function getSingleUserByEmail(email) {
+async function getSingleUserByUserName(userName) {
   const params = {
-    TableName: "Users2",
+    TableName: "Users3",
     Key: {
-      // userId:id,
-      email: email,
+      userName,
     },
   };
   return await DocumentClient.get(params).promise();
 }
 // (async () => {
-//   const user = await getSingleUserByEmail("sara@gmail.com")
-//   // const ingredients = user.Item.ingredients.L;
+//   const user = await getSingleUserByUserName("anya_96")
 //   console.log(
 //     "the func worked ",
 //     user
@@ -125,29 +89,49 @@ async function getSingleUserByEmail(email) {
 // })();
 
 //update User (can update any attribute)
-async function updateUserName(email, name) {
+async function updateUserName(userName, name) {
   const params = {
-    TableName: "Users2",
+    TableName: "Users3",
     Item: {
-      email: email,
+      userName,
       name: name,
     },
     ReturnConsumedCapacity: "TOTAL",
   };
   return await DocumentClient.put(params).promise();
 }
+// //update User by adding a new ingredient
+// async function updateUserIngredients(id, newIngredient) {
+//   const user = await getSingleUser(id);
+//   // console.log('user is',user.Item)
+//   const userIngredients = user.Item.ingredients;
+//   // console.log('user ingredients',userIngredients)
+//   const updatedIngredients = [...userIngredients, ...newIngredient];
+//   console.log("updated ingred in DynamoDB", updatedIngredients);
+//   const params = {
+//     TableName: "Users",
+//     Key: {
+//       userId: id,
+//     },
+//     UpdateExpression: `set ingredients = :ingredients`,
+//     ExpressionAttributeValues: {
+//       ":ingredients": updatedIngredients,
+//     },
+//   };
+//   return await DocumentClient.update(params).promise();
+// }
 //update User by adding a new ingredient
-async function updateUserIngredients(id, newIngredient) {
-  const user = await getSingleUser(id);
+async function updateUserIngredients(userName, newIngredient) {
+  const user = await getSingleUserByUserName(userName);
   // console.log('user is',user.Item)
   const userIngredients = user.Item.ingredients;
   // console.log('user ingredients',userIngredients)
   const updatedIngredients = [...userIngredients, ...newIngredient];
   console.log("updated ingred in DynamoDB", updatedIngredients);
   const params = {
-    TableName: "Users",
+    TableName: "Users3",
     Key: {
-      userId: id,
+      userName,
     },
     UpdateExpression: `set ingredients = :ingredients`,
     ExpressionAttributeValues: {
@@ -161,18 +145,18 @@ async function updateUserIngredients(id, newIngredient) {
 //   console.log(
 //     "the func worked",
 //     await updateUserIngredients(
-//     2,
+//     "anya_96",
 //      ["champagne"]
 //     )
 //   );
 // })();
 
 //delete User
-async function deleteUser(email) {
+async function deleteUser(userName) {
   const params = {
-    TableName: "Users2",
+    TableName: "Users3",
     Key: {
-      email: email,
+      userName,
     },
   };
 
@@ -186,8 +170,7 @@ module.exports = {
   createTable,
   addUser,
   getAllUsers,
-  getSingleUser,
-  getSingleUserByEmail,
+  getSingleUserByUserName,
   updateUserName,
   updateUserIngredients,
   deleteUser,

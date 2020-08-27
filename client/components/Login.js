@@ -5,7 +5,7 @@ export default class Login extends React.Component {
     constructor() {
         super()
         this.state = {
-          email: '',
+          userName: '',
           password: ''
         }
         this.handleChange = this.handleChange.bind(this)
@@ -15,7 +15,7 @@ export default class Login extends React.Component {
         event.preventDefault()
         await axios.post("/api/users/login", this.state);
         this.setState({
-          email: '',
+          userName: '',
           password: ''
         })
         this.props.history.push('/') 
@@ -29,13 +29,13 @@ export default class Login extends React.Component {
           return (
             <div>
               <form onSubmit={this.handleSubmit}>
-                <label>Email</label>
+                <label>User name</label>
                 <input
-                  name='email'
+                  name='userName'
                   type='text'
                   required
                   onChange={this.handleChange}
-                  value={this.state.email}
+                  value={this.state.userName}
                 />
                 <p>
                   <label>Password</label>

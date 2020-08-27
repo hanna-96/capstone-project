@@ -5,9 +5,9 @@ const getSingleUser = (user)=>{
       user
     }
   }
-  export const getSingleUserThunk = id => async dispatch => {
+  export const getSingleUserThunk = userName => async dispatch => {
     try {
-      const {data} = await axios.get(`/api/users/${id}`)
+      const {data} = await axios.get(`/api/users/${userName}`)
       dispatch(getSingleUser(data))
     } catch (err) {
       console.error(err)
