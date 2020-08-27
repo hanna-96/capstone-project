@@ -17,7 +17,6 @@ const routes = require('./server/api/users')
 app.use(redirectToHTTPS([/localhost:8080/], [], 301));
 const session = require('express-session')
 const passport = require('passport')
-const { getSingleUserByEmail } = require('./server/dynamoDB')
 
 // This serves static files from the specified directory
 app.use(express.static(__dirname + "/public"));
@@ -30,8 +29,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.use('/api/users', routes)
-app.use(redirectToHTTPS([/localhost:8080/], [], 301));
-const session = require('express-session')
 
 app.use(
   session({
