@@ -31,5 +31,4 @@ if ("serviceWorker" in navigator) {
 }
 
 
-
 ReactDOM.render(<Router><App /></Router>, document.getElementById('root'));
