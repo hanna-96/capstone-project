@@ -9,7 +9,7 @@
     "dev": "webpack-dev-server --env.mode development --colors",
     "build-client": "webpack",
     "build-watch": "webpack --env.mode production -w",
-	"deploy": "deploy"
+    "deploy": "deploy"
   },
   "engines": {
     "node": "12.16.0"
