@@ -24,8 +24,6 @@ export default class Signup extends React.Component {
     event.preventDefault();
     console.log('signup state before',this.state)
     const data = await axios.post("/api/users/signup", this.state);
-    console.log('signup state after',this.state)
-    console.log("data from frontEnd", data);
     // this.props.history.push('/')
     this.setState({
       // id: '',

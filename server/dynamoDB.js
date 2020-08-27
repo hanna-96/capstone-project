@@ -51,7 +51,7 @@ async function createTable() {
 //changed primary key to email !!!for another table
 async function addUser(userName, firstName, lastName, email, password) {
   const params = {
-    TableName: "Users",
+    TableName: "Users2",
     Item: {
       userName: userName,
       firstName: firstName,
