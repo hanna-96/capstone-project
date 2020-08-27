@@ -71,7 +71,7 @@ const InputForm = () => {
           
         </FormControl>
 
-    {submitted? inputs.map((input) => <RequestFilter ingred={input} />): <div></div> // passes the ingredients on to be verified }
+            {submitted? inputs.map((input) => <RequestFilter ingred={input} />): <div></div>} 
        {submitted ? clearInput() : <div></div>}
     </form> 
     </div>
