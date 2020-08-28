@@ -33,25 +33,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.use('/api/users', routes)
-
-app.post('/gvision', async (req, res, next) => {
-  try {
-    //still need these console.logs for mobile tests
-    console.log('hi from the gvision route!')
-    console.log(req.files.img)
-    const client = new vision.ImageAnnotatorClient()
-    const fileName = req.files.img.data
-    //result is the full json object
-    const [result] = await client.documentTextDetection(fileName)
-    //result.fullTextAnnotation.text gives us one string with all transcribed text
-    const fullTextAnnotation = result.fullTextAnnotation
-    res.send(fullTextAnnotation.text.split('\n'))
-  } catch(e) { next(e) }
-})
-
-const session = require('express-session')
-
 app.use(
   session({
     secret: process.env.SESSION_SECRET || 'Capstone!',
@@ -75,7 +56,20 @@ passport.deserializeUser(function(user, done) {
 
 app.use('/api/users', routes)
 
-
+app.post('/gvision', async (req, res, next) => {
+  try {
+    //still need these console.logs for mobile tests
+    console.log('hi from the gvision route!')
+    console.log(req.files.img)
+    const client = new vision.ImageAnnotatorClient()
+    const fileName = req.files.img.data
+    //result is the full json object
+    const [result] = await client.documentTextDetection(fileName)
+    //result.fullTextAnnotation.text gives us one string with all transcribed text
+    const fullTextAnnotation = result.fullTextAnnotation
+    res.send(fullTextAnnotation.text.split('\n'))
+  } catch(e) { next(e) }
+})
 
 // sends index.html
 app.use("*", (req, res) => {
