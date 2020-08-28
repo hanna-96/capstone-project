@@ -6,6 +6,7 @@ import './public/style.css'
 import { BrowserRouter as Router} from 'react-router-dom'
 import store from './client/redux/store.js'
 import {Provider} from 'react-redux'
+import history from './client/history'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';  
 
 const theme = createMuiTheme({
@@ -56,12 +57,11 @@ if ("serviceWorker" in navigator) {
 
 ReactDOM.render(
   <Provider store={store}>
-  <MuiThemeProvider theme = { theme }>
-
-  <Router>
-    <App />
-  </Router>
-  </MuiThemeProvider>
+    <MuiThemeProvider theme = { theme }>
+      <Router history ={history}>
+        <App />
+      </Router>
+    </MuiThemeProvider>
   </Provider>,
   document.getElementById("root")
 );

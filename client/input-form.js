@@ -1,27 +1,23 @@
-import React, {useState} from 'react'
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
-import Input from '@material-ui/core/Input';
-import RequestFilter from './request-filter'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import FormControl from "@material-ui/core/FormControl";
+import Input from "@material-ui/core/Input";
+import RequestFilter from "./request-filter";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { faPlusCircle} from '@fortawesome/free-solid-svg-icons'
-
-
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '& > *': {
+    "& > *": {
       margin: theme.spacing(1),
-      width: '25ch',
+      width: "25ch",
     },
   },
 }));
 
-
 const InputForm = () => {
-    
     const classes = useStyles();
     const [submitted, setSubmitted] = useState(false)
     const [inputs, setInputs] = useState([])
@@ -74,7 +70,7 @@ const InputForm = () => {
        {submitted ? clearInput(): <div></div>}
     </form> 
     </div>
-    )
-}
+  );
+};
 
-export default InputForm
+export default InputForm;

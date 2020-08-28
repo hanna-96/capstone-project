@@ -5,7 +5,6 @@ export default class Signup extends React.Component {
   constructor() {
     super();
     this.state = {
-      // id: '',
       userName: "",
       firstName: "",
       lastName: "",
@@ -22,13 +21,9 @@ export default class Signup extends React.Component {
   }
   async handleSubmit(event) {
     event.preventDefault();
-    console.log('signup state before',this.state)
     const data = await axios.post("/api/users/signup", this.state);
-    console.log('signup state after',this.state)
-    console.log("data from frontEnd", data);
     // this.props.history.push('/')
     this.setState({
-      // id: '',
       userName: "",
       firstName: "",
       lastName: "",
@@ -38,19 +33,9 @@ export default class Signup extends React.Component {
   }
 
   render() {
-    // console.log('signup state',this.state)
     return (
       // <div>
       <form onSubmit={this.handleSubmit}>
-        {/* <label>ID</label>
-              <input
-                name='id'
-                type='text'
-                placeholder='id'
-                required
-                onChange={this.handleChange}
-                value={this.state.id}
-              /> */}
         <p>
           <label>User Name</label>
           <input
