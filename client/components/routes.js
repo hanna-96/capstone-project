@@ -4,6 +4,7 @@ import { Route, Switch, BrowserRouter } from "react-router-dom";
 import Login from "./Login";
 import InputForm from '../input-form'
 import Signup from "./Signup";
+import DrinkList from './drink-list'
 
 
 
@@ -15,7 +16,9 @@ export default class Routes extends React.Component {
         
           <Route exact path="/" component={Login} />
           <Route exact path="/signup" component={Signup} />
-          <Route exact path="/users/:userId" component={InputForm} />        </Switch>
+          <Route exact path="/users/:userId" component={InputForm} />
+          <Route exact path='/results' component={DrinkList} />
+          </Switch>
       </div>
     );
   }

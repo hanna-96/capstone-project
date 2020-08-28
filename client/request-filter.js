@@ -37,7 +37,7 @@ const RequestFilter = (props) => {
         
         <div>
 
-    <p>{validIng.map( (ingred) => <div>{ingred} has been added</div>)}</p>
+    <p>{validIng.map( (ingred) => <div>{ingred.split('_').join(' ')} has been added</div>)}</p>
     <p>See your results: </p>
   < Request ingreds={validIng} />
     

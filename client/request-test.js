@@ -1,10 +1,13 @@
 
 import axios from 'axios'
 import React, {useEffect, useState} from 'react'
-import RequestFilter from './request-filter'
+import {useHistory, Link} from 'react-router-dom'
+import DrinkList from './components/drink-list'
+import {Route} from 'react-router-dom'
 
 const Request = (props) => { 
 
+  const history = useHistory()
   const [drinkList, setDrinks] = useState([])
 
   const [len, setLen] = useState([])
@@ -39,11 +42,9 @@ const Request = (props) => {
       drinkList.length  ?
       
       <div>
-        {console.log(drinkList, 'the drinks')}
-      {/* {console.log(ingreds)} */}
-        <p><img src={drinkList[0].strDrinkThumb} /></p>
-        <h1>hi</h1>
-        <p>Drink of the Day : {drinkList[0].strDrink}</p>
+        <h2>{drinkList.length} Results</h2>
+        <Link to={{ pathname: '/results', state: {drinkList} }}>Go to results</Link>
+        <DrinkList drinks={drinkList} />
         </div>
  : <div> Bleh...
    </div>} 
