@@ -23,34 +23,26 @@ const addIngredient = (ingredient) => {
 /**
  * THUNK CREATORS
  */
-export const getAllIngredientsThunk = (id) => {
+export const getAllIngredientsThunk = (userName) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/users/${id}/allingredients`);
-      console.log("data allIngredients", data);
-      // const spots = data.map((spot) => {
-      //   return {
-      //     description: spot.description.S,
-      //     id: spot.id.S,
-      //     name: spot.name.S,
-      //     image: spot.image.S,
-      //   };
-      // });
+      const { data } = await axios.get(`/api/users/${userName}/allingredients`);
       dispatch(getIngredients(data));
     } catch (error) {
       console.error(error);
     }
   };
 };
-export const addIngredientThunk = (id, ingredient) => {
+export const addIngredientThunk = (userName, ingredient) => {
   return async (dispatch) => {
+   
     try {
-      let { data } = await axios.put(
-        `/api/users/${id}/ingredients`,
-        ingredient
-      );
-      console.log("data from add ingredient thunk", data);
-      dispatch(addIngredient(data));
+      if (ingredient) {
+        let { data } = await axios.put(
+          `/api/users/${userName}/allingredients`, {ingredient}
+        );
+        dispatch(addIngredient(data));
+      }
     } catch (error) {
       console.log(error);
     }
