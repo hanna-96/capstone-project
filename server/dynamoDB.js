@@ -1,5 +1,6 @@
 const AWS = require("aws-sdk");
-const { accessKeyId, secretAccessKey, endpoint } = require("../secrets");
+if (process.env.NODE_ENV === "dev") require("../secrets");
+
 let awsConfig = {
   region: "us-east-2",
   endpoint: process.env.AWS_ENDPOINT,
@@ -125,12 +126,11 @@ async function getSingleUser(id) {
 //   return await DocumentClient.get(params).promise();
 // }
 //get single user (for another table)!!!
-async function getSingleUserByEmail(email) {
+async function getSingleUserByEmail(id) {
   const params = {
-    TableName: "Users2",
+    TableName: "Users",
     Key: {
-      // userId:id,
-      email: email,
+      userId:id,
     },
   };
   return await DocumentClient.get(params).promise();
@@ -206,7 +206,7 @@ module.exports = {
   createTable,
   addUser,
   getAllUsers,
-  getSingleUserByEmail,
+  getSingleUser,
   updateUserName,
   updateUserIngredients,
   deleteUser,

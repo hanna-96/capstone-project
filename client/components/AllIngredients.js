@@ -1,55 +1,31 @@
 import React from "react";
 import { connect } from "react-redux";
+import {withRouter} from 'react-router-dom';
+
+
 import {
   getAllIngredientsThunk,
   addIngredientThunk,
 } from "../redux/ingredients";
-import AddIngredientForm from "./AddIngredientForm";
-import InputForm from '../input-form'
 
 class AllIngredients extends React.Component {
-  constructor(props) {
-    super(props)
-
-    const {ingred} = props
-    console.log(ingred)
-
-  }
   componentDidMount() {
-    // const id = this.props.match.params.userId;
+    const id = this.props.match.params.userId
+    this.props.addIngredient(id,this.props.ingred)
+    this.props.getIngredients(id);
 
-    // console.log("id is", id);
-    // this.props.getIngredients(id);
-    console.log("all ingredients before", this.props);
   }
   render() {
-    // const id = this.props.match.params.userId;
     const ingredients = this.props.ingredients;
-    // console.log("all ingredients after", ingredients);
-
+    {console.log(this.props)}
     return (
       <div>
-        <h1>Here is the list of your ingredients!</h1>
-        {ingredients.map((ingredient) => {
-          return (
-            <div>
-              <ul>
-                <li>{ingredient}</li>
-              </ul>
-              <div>
-                {/* TODO: add a remove ingredient button later + delete route at the backend */}
-                {/* <button
-                        onClick={() => this.props.removeSpot(spot.id)}
-                      >
-                        Remove
-                      </button> */}
-              </div>
-            </div>
-          );
-        })}
+
+        <div>{this.props.ingred}</div>
       </div>
     );
-  }
+}
+
 }
 
 const mapState = (state) => {
@@ -66,4 +42,4 @@ const mapDispatch = (dispatch) => {
   };
 };
 
-export default connect(mapState, mapDispatch)(AllIngredients);
+export default withRouter(connect(mapState, mapDispatch)(AllIngredients));

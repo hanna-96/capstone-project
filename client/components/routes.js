@@ -14,15 +14,9 @@ export default class Routes extends React.Component {
     return (
       <div>
         <Switch>
-          <Route exact path="/login" component={Login} />
+          <Route exact path="/" component={Login} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/users/:userId" component={InputForm} />
-          
-          <Route
-            exact
-            path="/users/:userId/allingredients"
-            component={AllIngredients}
-          />
         </Switch>
       </div>
     );

@@ -26,9 +26,7 @@ const addIngredient = (ingredient) => {
 export const getAllIngredientsThunk = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/users/${id}/allingredients`);
-      console.log("data allIngredients", data);
-      // const spots = data.map((spot) => {
+      const { data } = await axios.get(`/api/users/${id}/allingredients`);      // const spots = data.map((spot) => {
       //   return {
       //     description: spot.description.S,
       //     id: spot.id.S,
@@ -44,13 +42,14 @@ export const getAllIngredientsThunk = (id) => {
 };
 export const addIngredientThunk = (id, ingredient) => {
   return async (dispatch) => {
+   
     try {
-      let { data } = await axios.put(
-        `/api/users/${id}/ingredients`,
-        ingredient
-      );
-      console.log("data from add ingredient thunk", data);
-      dispatch(addIngredient(data));
+      if (ingredient) {
+        let { data } = await axios.put(
+          `/api/users/${id}/allingredients`, {ingredient}
+        );
+        dispatch(addIngredient(data));
+    }
     } catch (error) {
       console.log(error);
     }

@@ -7,7 +7,7 @@ const RequestFilter = (props) => {
     let {ingred} = props
      ingred = ingred.split(' ').join('_') // Handles ingredients with spaces 
     const [valid, setValid] = useState(false)
-    const [validInputs, setValidInputs] = useState(JSON.parse(localStorage.getItem('ingred'))|| [])
+    // const [validInputs, setValidInputs] = useState(JSON.parse(localStorage.getItem('ingred'))|| [])
     localStorage.setItem('ingred', JSON.stringify([]))
     useEffect( () => {
         const reqValidator = async (ing) => {
@@ -16,9 +16,9 @@ const RequestFilter = (props) => {
                 const {data} =await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ing}`)
                 if(data.drinks) {
                         setValid(true)
-                        const prev = localStorage.getItem('ingred')
-                        localStorage.setItem('ingred',JSON.stringify([ing]))
-                        setValidInputs([prev])
+                        // const prev = localStorage.getItem('ingred')
+                        // localStorage.setItem('ingred',JSON.stringify([ing]))
+                        // setValidInputs([prev])
 
 
                 }
@@ -36,8 +36,7 @@ const RequestFilter = (props) => {
         
         <div>
     <p>{valid ? `${ingred.split('_').join(' ')} has been added. Click here to view drinks!` : `Sorry could not find ${ingred}`}</p>
-    {/* <p>{valid ? <AllIngredients ingred={ingred} />: <div></div>}</p> */}
-    {console.log(JSON.parse(localStorage.getItem('ingred')),'just valid')}
+    <p>{valid ? <AllIngredients ingred={ingred} />: <div></div>}</p>
     </div>
 
     )
