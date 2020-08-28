@@ -17,7 +17,6 @@ const routes = require('./server/api/users')
 app.use(redirectToHTTPS([/localhost:8080/], [], 301));
 const session = require('express-session')
 const passport = require('passport')
-const { getSingleUserByEmail } = require('./server/dynamoDB')
 
 // This serves static files from the specified directory
 app.use(express.static(__dirname + "/public"));
@@ -29,9 +28,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.use('/api/users', routes)
 app.use(redirectToHTTPS([/localhost:8080/], [], 301));
-const session = require('express-session')
 
 app.use(
   session({
@@ -70,7 +67,13 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).send(err.message || "Internal server error.");
 });
 
-
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'Capstone!',
+    resave: false,
+    saveUninitialized: false
+  })
+)
 
 const server = app.listen(PORT, () => {
   console.log("App listening at port ", PORT);

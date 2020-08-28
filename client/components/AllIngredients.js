@@ -27,14 +27,7 @@ class AllIngredients extends React.Component {
               <ul>
                 <li>{ingredient}</li>
               </ul>
-              <div>
-                {/* TODO: add a remove ingredient button later + delete route at the backend */}
-                {/* <button
-                        onClick={() => this.props.removeSpot(spot.id)}
-                      >
-                        Remove
-                      </button> */}
-              </div>
+ 
             </div>
           );
         })}
