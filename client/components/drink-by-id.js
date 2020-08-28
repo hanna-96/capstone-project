@@ -1,13 +1,18 @@
 import axios from 'axios'
 import React, {useEffect, useState} from 'react'
+import Button from '@material-ui/core/Button'
 
 
 const DrinkId = (props) => {
     const id = history.state.state.id
-    console.log(id)
+    console.log(props)
     const [drinkDetails, setDrink] = useState({})
 
     const [didRun, setDidRun] = useState(false)
+
+    const results = () => {
+      props.history.goBack()
+    }
   
     useEffect( () => {
       const getDrinkDetails = async (id)  => {
@@ -38,6 +43,7 @@ const DrinkId = (props) => {
           { drinkDetails.strDrink ? <div>
             <p>{drinkDetails.strDrink}</p>
             <p>{drinkDetails.strMeasure1}</p>
+            <Button onClick={results}>Back to results</Button>
             </div>
      : <div></div>} 
             </div>
