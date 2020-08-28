@@ -1,6 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import {connect,withRouter} from 'react-redux'
+// import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
 // import {getSingleUserThunk} from '../redux/user'
 /**
  * COMPONENT
@@ -22,7 +22,7 @@ const UserHome = props => {
 const mapState = state => {
     console.log('userhome state',state)
   return {
-    userName: state.user.Item.userName
+    userName: state.user.userName
   };
 }
 

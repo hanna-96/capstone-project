@@ -46,10 +46,10 @@ router.post("/login", async (req, res, next) => {
   try {
     const user = await getSingleUserByUserName(req.body.userName);
     if (!user) {
-      console.log("No such user found:", req.body.userName);
+      // console.log("No such user found:", req.body.userName);
       res.status(401).send("Wrong username and/or password");
     } else if (req.body.password !== user.Item.password) {
-      console.log("Incorrect password for user:", req.body.userName);
+      // console.log("Incorrect password for user:", req.body.userName);
       res.status(401).send("Wrong username and/or password");
     } else {
       req.login(user, (err) => (err ? next(err) : res.json(user)));

@@ -26,14 +26,20 @@ export const authLogin = (userName, password) => async dispatch => {
       userName,
       password
     })
-    console.log('data from login thunk',res.data)
+    // console.log('data from login thunk',res.data)
   } catch (authError) {
     return dispatch(getUser({error: authError}))
   }
 
   try {
-    dispatch(getUser(res.data.Item))
-    history.push('/welcome')
+    // setTimeout(function(){
+    //   history.push('/welcome')
+    // },3000)
+     
+   dispatch(getUser(res.data.Item))
+    console.log('data from login thunk',res.data.Item)
+
+  
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }
