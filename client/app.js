@@ -14,8 +14,8 @@ function App() {
     <div className="App">
       {/* <NewDrawer /> */}
       <h2>Welcome to Mixologist</h2>
-      {/* <Request /> */}
       <Routes />
+      
     </div>
   );
 }

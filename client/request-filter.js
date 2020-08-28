@@ -1,9 +1,11 @@
 import axios from 'axios'
 import React, {useEffect, useState} from 'react'
 import AllIngredients from './components/AllIngredients'
+import Request from './request-test'
+import {Route, Link} from 'react-router-dom'
 
 const RequestFilter = (props) => {
-    let {ingreds} = props
+    let {ingreds, fields, inputLen} = props
       // Handles ingredients with spaces 
     const [valid, setValid] = useState(false)
     const [validIng, setValidIng] = useState([])
@@ -36,6 +38,8 @@ const RequestFilter = (props) => {
         <div>
 
     <p>{validIng.map( (ingred) => <div>{ingred} has been added</div>)}</p>
+    <p>See your results: </p>
+  < Request ingreds={validIng} />
     
     </div>
 

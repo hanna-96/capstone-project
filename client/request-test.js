@@ -3,38 +3,13 @@ import axios from 'axios'
 import React, {useEffect, useState} from 'react'
 import RequestFilter from './request-filter'
 
-const Request = () => { 
+const Request = (props) => { 
 
   const [drinkList, setDrinks] = useState([])
 
   const [len, setLen] = useState([])
-  const ingreds = ['lime_juice', 'tequila', 'gin', 'vodka']
-  const [validInputs, setValidInputs] = useState([])
-  const [valid, setValid] = useState(false)
-
-//   useEffect( () => {
-//     const reqValidator = async (ing) => {
-//         try{
-//           console.log('fires')
-//             // makes call to API DB .. if there is a drinks object present, set to true otherwise set to false
-//             const {data} =await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ing}`)
-//             if(data.drinks) {
-//               setValid(true)
-
-//             } else {
-//               setValid(false)
-//               let validationObj = {ing, valid}
-//               setValidInputs(validationObj)
-//             }
-//         } catch(err) {
-//             console.log(err)
-//         }
-//         console.log(valid)
-        
-//     }
-
-//     reqValidator(ingreds)
-// })
+  const {ingreds} = props
+  console.log('the ingreds', ingreds)
 
   useEffect( () => {
 
@@ -49,8 +24,11 @@ const Request = () => {
       }
 
     }
-    ingreds.forEach( async ing => await getDrinks(ing))
-}, [])
+    ingreds.forEach( async ing => {
+      console.log('in the forEach')
+      await getDrinks(ing)
+    })
+}, [ingreds])
 
 
   return (
@@ -58,13 +36,16 @@ const Request = () => {
 
     <div>
       { 
-      drinkList.length && len.length === ingreds.length ?
+      drinkList.length  ?
+      
       <div>
-        <p><img src={drinkList[140].strDrinkThumb} /></p>
+        {console.log(drinkList, 'the drinks')}
+      {/* {console.log(ingreds)} */}
+        <p><img src={drinkList[0].strDrinkThumb} /></p>
         <h1>hi</h1>
         <p>Drink of the Day : {drinkList[0].strDrink}</p>
         </div>
- : <div> Loading...
+ : <div> Bleh...
    </div>} 
         </div>
 

@@ -34,7 +34,6 @@ const InputForm = () => {
 
         fields.forEach( (val, idx) => setInputs(prev => [...prev, event.target[idx].value]))
         setFields([1])
-    
     }
 
     const clearInput = () => { // clear input once the submit event occurs
@@ -71,7 +70,7 @@ const InputForm = () => {
           
         </FormControl>
               {console.log(inputs, 'the inputs')}
-            {submitted? <RequestFilter ingreds={inputs} />: <div></div>} 
+            {submitted? <RequestFilter ingreds={inputs} inputLen={inputs.length} />: <div></div>} 
        {submitted ? clearInput(): <div></div>}
     </form> 
     </div>

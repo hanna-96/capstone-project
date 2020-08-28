@@ -22,11 +22,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ButtonAppBar(props) {
   const classes = useStyles();
-  console.log(props)
   const {toggleDrawer} = props
   return (
     <div className={classes.root}>
-      <AppBar color='primary' position="static">
+      <AppBar color='primary' position='sticky'>
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="secondary" aria-label="menu" onClick={toggleDrawer}>
             <MenuIcon />
