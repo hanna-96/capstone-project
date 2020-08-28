@@ -5,7 +5,7 @@ import Login from "./Login";
 import InputForm from '../input-form'
 import Signup from "./Signup";
 import DrinkList from './drink-list'
-
+import DrinkId from './drink-by-id'
 
 
 export default class Routes extends React.Component {
@@ -18,6 +18,8 @@ export default class Routes extends React.Component {
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/users/:userId" component={InputForm} />
           <Route exact path='/results' component={DrinkList} />
+          <Route exact path='/results' component={DrinkList} />
+          <Route exact path='/results/:id' component={DrinkId} />
           </Switch>
       </div>
     );

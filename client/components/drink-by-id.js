@@ -1,14 +1,16 @@
 import axios from 'axios'
 import React, {useEffect, useState} from 'react'
 
-const RequestId = (props) => {
-    const {id} = props
+
+const DrinkId = (props) => {
+    const id = history.state.state.id
+    console.log(id)
     const [drinkDetails, setDrink] = useState({})
 
     const [didRun, setDidRun] = useState(false)
   
     useEffect( () => {
-      const getDrinkDetails = async ()  => {
+      const getDrinkDetails = async (id)  => {
         try {
           const {data}= await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
           const {drinks} = data
@@ -22,7 +24,7 @@ const RequestId = (props) => {
   
 
       if(!didRun) {
-        getDrinkDetails()
+        getDrinkDetails(id)
         setDidRun(true)
         
       }
@@ -45,4 +47,4 @@ const RequestId = (props) => {
 
 
 
-export default RequestId
+export default DrinkId
