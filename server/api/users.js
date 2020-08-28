@@ -2,7 +2,7 @@ const router = require("express").Router();
 const {
   addUser,
   getAllUsers,
-  getSingleUser,
+  getSingleUserByUserName,
   updateUserName,
   deleteUser,
   updateUserIngredients,
@@ -18,8 +18,8 @@ router.get("/", async (req, res, next) => {
 });
 router.get("/:userName", async (req, res, next) => {
   try {
-    const id = +req.params.userId
-    const singleUser = await getSingleUser(id);
+    const userName = req.params.userName
+    const singleUser = await getSingleUserByUserName(userName);
     res.send(singleUser.Item);
   } catch (error) {
     next(error);
@@ -80,8 +80,8 @@ router.put("/:userName", async (req, res, next) => {
 });
 router.get("/:userName/allingredients", async (req, res, next) => {
   try {
-    const id = +req.params.userId
-    const singleUser = await getSingleUser(id);
+    const userName = req.params.userName
+    const singleUser = await getSingleUserByUserName(userName);
     const usersIngredients = singleUser.Item.ingredients;
     res.send(usersIngredients);
   } catch (error) {
@@ -92,12 +92,12 @@ router.get("/:userName/allingredients", async (req, res, next) => {
 
 router.put("/:userId/allingredients", async (req, res, next) => {
   try {
-    const id = +req.params.userId;
+    const userName = req.params.userName
     console.log("params", req.body.ingredient);
     // console.log("req.body isss", req.body);
     // TODO:destructure req.body depending on how much iingredinets will come from front-end(input)
     const { ingredient } = req.body;
-    const updatedIngredients = await updateUserIngredients(id, [ingredient]);
+    const updatedIngredients = await updateUserIngredients(userName, [ingredient]);
     console.log("the updated ingredients", updatedIngredients);
 
     //TODO:debug why updatedIngredients is an {}

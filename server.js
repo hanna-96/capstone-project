@@ -4,13 +4,17 @@ const PORT = process.env.PORT || 8080
 const path = require('path')
 const bodyParser = require('body-parser')
 const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
-
+const fileUpload = require('express-fileupload')
 const vision = require('@google-cloud/vision')
+const cors = require('cors')
 // This serves static files from the specified directory
 app.use(express.static(__dirname + "/public"));
 
-
 // app.use(redirectToHTTPS([/localhost:8080/], [], 301));
+
+//parser for multipart/form-data
+app.use(fileUpload())
+app.use(cors())
 
 const routes = require('./server/api/users')
 
@@ -27,8 +31,6 @@ app.use(require('cookie-parser')());
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
-
-app.use(redirectToHTTPS([/localhost:8080/], [], 301));
 
 app.use(
   session({
@@ -53,7 +55,20 @@ passport.deserializeUser(function(user, done) {
 
 app.use('/api/users', routes)
 
-
+app.post('/gvision', async (req, res, next) => {
+  try {
+    //still need these console.logs for mobile tests
+    console.log('hi from the gvision route!')
+    console.log(req.files.img)
+    const client = new vision.ImageAnnotatorClient()
+    const fileName = req.files.img.data
+    //result is the full json object
+    const [result] = await client.documentTextDetection(fileName)
+    //result.fullTextAnnotation.text gives us one string with all transcribed text
+    const fullTextAnnotation = result.fullTextAnnotation
+    res.send(fullTextAnnotation.text.split('\n'))
+  } catch(e) { next(e) }
+})
 
 // sends index.html
 app.use("*", (req, res) => {

@@ -1,52 +1,68 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import Button from '@material-ui/core/Button'
-if (process.env.NODE_ENV === 'dev') require('../../vision-secrets')
+// import readReceipt from '../../readReceipt'
+
+const blacklisted = {
+  total: true,
+  subtotal: true,
+  supermarket: true,
+  market: true,
+  ctown: true
+}
+
+const readReceipt = receipt => {
+  const isAWord = w => {
+    if (w in blacklisted) return false
+    return w ? w.length > 2 : false
+  }
+  receipt = receipt.map(word => {
+    return word.replace(/[^a-zA-Z]+/, '')
+  })
+  return receipt.filter(isAWord)
+}
 
 const CameraInput = () => {
-  const [text, setText] = useState('')
+  const [text, setText] = useState([])
+  const [hasScanned, setScanStatus] = useState(false)
 
-  const onSubmit = evt => {
-    evt.preventDefault()
-    let base64 = ''
-    const read = async img => {
-      const { data } = await axios.post(`${process.env.VISION_ENDPOINT}${process.env.VISION_KEY}`, {
-        "requests": [
-          {
-            "image": {
-              "content": img
-            },
-            "features": [
-              {
-                "type": "TEXT_DETECTION",
-                "maxResults": 1
-              }
-            ]
-          }
-        ]
-      })
-      setText(data.responses[0].fullTextAnnotation.text)
-    }
-    const file = evt.target.files[0]
-    const reader = new FileReader()
+  const handleInput = evt => {
+    try {
+      const read = async () => {
+        //file is our uploaded image, in a File object
+        const file = evt.target.files[0]
+        const formData = new FormData()
+        //we addend the File to formData so it can be sent to the server
+        formData.append('img', file)
+        const { data } = await axios.post(`/gvision`, formData)
+        const receipt = readReceipt(data)
+        setScanStatus(true)
+        setText(receipt)
+      }
+      read()
+    } catch (e) { console.error(e) }
+  }
 
-    reader.onload = function(e) {
-      base64 = e.target.result.slice(23, -1)
-      read(base64)
-    }
-
-    if (file) {
-      reader.readAsDataURL(file)
-    }
+  const handleRemove = word => {
+    const t = text
+    setText(t.filter(w => w !== word))
   }
 
   return (
     <div>
-      <form>
-        <input type="file" accept="image/*" capture="camera" onInput={onSubmit} />
-        <Button type='submit'>upload</Button>
+      <form action='/gvision' method='POST' onInput={handleInput}>
+        <input type='file' accept='image/*' />
       </form>
-      <p>{text || 'nothing yet'}</p>
+      <ul>
+        {text ? text.map(word =>
+          <li>
+            <div>
+            {word}
+            <button type='button' onClick={() => handleRemove(word)}>&times;</button>
+            </div>
+          </li>
+          ) : <li>nothing yet</li>}
+      </ul>
+      {hasScanned && <button type='submit'>All set?</button>}
     </div>
   )
 }

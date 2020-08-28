@@ -56,6 +56,17 @@ async function addUser(userName, firstName, lastName, email, password) {
 //             );
 //         })();
 
+//get single user (for another table)!!!
+async function getSingleUserByUserName(userName) {
+  const params = {
+    TableName: "Users3",
+    Key: {
+      userName,
+    },
+  };
+  return await DocumentClient.get(params).promise();
+}
+
 // get allUsers (!!!expensive operation!!!)
 async function getAllUsers() {
   const params = {
@@ -67,25 +78,6 @@ async function getAllUsers() {
 //   console.log(
 //     "the func worked ",
 //     await getAllUsers()
-//   );
-// })();
-
-//get single user (for another table)!!!
-
-async function getSingleUserByEmail(id) {
-  const params = {
-    TableName: "Users",
-    Key: {
-      userId:id,
-    },
-  };
-  return await DocumentClient.get(params).promise();
-}
-// (async () => {
-//   const user = await getSingleUserByUserName("anya_96")
-//   console.log(
-//     "the func worked ",
-//     user
 //   );
 // })();
 
@@ -171,7 +163,7 @@ module.exports = {
   createTable,
   addUser,
   getAllUsers,
-  getSingleUser,
+  getSingleUserByUserName,
   updateUserName,
   updateUserIngredients,
   deleteUser,

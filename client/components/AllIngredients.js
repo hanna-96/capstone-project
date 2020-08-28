@@ -10,9 +10,9 @@ import {
 
 class AllIngredients extends React.Component {
   componentDidMount() {
-    const id = this.props.match.params.userId
-    this.props.addIngredient(id,this.props.ingred)
-    this.props.getIngredients(id);
+    const userName = this.props.match.params.userName
+    this.props.addIngredient(userName, this.props.ingred)
+    this.props.getIngredients(userName);
 
   }
   render() {
@@ -24,17 +24,17 @@ class AllIngredients extends React.Component {
 
         <div>{this.props.ingred}</div>
 
-//         <h1>Here is the list of your ingredients!</h1>
-//         {ingredients.map((ingredient) => {
-//           return (
-//             <div>
-//               <ul>
-//                 <li>{ingredient}</li>
-//               </ul>
+         {/* <h1>Here is the list of your ingredients!</h1>
+         {ingredients.map((ingredient) => {
+           return (
+             <div>
+               <ul>
+                 <li>{ingredient}</li>
+               </ul>
  
-//             </div>
-//           );
-//         })}
+             </div>
+           );
+         })} */}
 
       </div>
     );
@@ -50,9 +50,9 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    getIngredients: (id) => dispatch(getAllIngredientsThunk(id)),
-    addIngredient: (id, ingredient) =>
-      dispatch(addIngredientThunk(id, ingredient)),
+    getIngredients: userName => dispatch(getAllIngredientsThunk(userName)),
+    addIngredient: (userName, ingredient) =>
+      dispatch(addIngredientThunk(userName, ingredient)),
   };
 };
 
