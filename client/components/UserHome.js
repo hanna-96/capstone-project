@@ -1,36 +1,36 @@
-// import React from 'react'
-// import PropTypes from 'prop-types'
-// import {connect} from 'react-redux'
-// // import user from '../store/users'
-// import {Link} from 'react-router-dom'
+import React from 'react'
+import PropTypes from 'prop-types'
+import {connect,withRouter} from 'react-redux'
+// import {getSingleUserThunk} from '../redux/user'
+/**
+ * COMPONENT
+ */
+const UserHome = props => {
+    console.log('USERHOME props',props)
+//   const {userName} = props
 
-// export const UserHome = props => {
-//   const {user} = props
+  return (
+    <div>
+      <h3>Welcome to User Home!!!!!!</h3>
+    </div>
+  )
+}
 
-//   return (
-//     <div >
-//       <br />
-//       <h3 >
-//         Welcome, {user} !
-//       </h3>
-//       {props.user.isAdmin && <Link to="/users"> View all Users</Link>}
-//       <img
-//         id="welcomeIMG"
-//         src="https://media3.giphy.com/media/3o6fJ0mUt4WWF1qox2/giphy.gif?cid=ecf05e47iq8ohvy8ghhvlb3e9tvum6rw76172vxpac1rw8dp&rid=giphy.gif"
-//       />
-//     </div>
-//   )
-// }
+/**
+ * CONTAINER
+ */
+const mapState = state => {
+    console.log('userhome state',state)
+  return {
+    userName: state.user.Item.userName
+  };
+}
 
-// const mapState = state => {
-//   return {
-//     userName: state.user.userName,
-//     user: state.user
-//   }
-// }
+export default connect(mapState,null)(UserHome)
 
-// export default connect(mapState)(UserHome)
-
+/**
+ * PROP TYPES
+ */
 // UserHome.propTypes = {
 //   userName: PropTypes.string
 // }

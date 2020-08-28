@@ -12,9 +12,9 @@ import RequestFilter from './request-filter'
 function App() {
   return (
     <div className="App">
-      <NewDrawer />
-      <h2>Welcome to Mixologist</h2>
-      <CameraInput />
+      {/* <NewDrawer /> */}
+      {/* <h2>Welcome to Mixologist</h2> */}
+      {/* <CameraInput /> */}
       {/* <Request /> */}
       <Routes />
     </div>

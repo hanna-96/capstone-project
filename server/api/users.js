@@ -45,8 +45,6 @@ router.post("/signup", async (req, res, next) => {
 router.post("/login", async (req, res, next) => {
   try {
     const user = await getSingleUserByUserName(req.body.userName);
-    console.log(user);
-    console.log(req.body.password === user.Item.password);
     if (!user) {
       console.log("No such user found:", req.body.userName);
       res.status(401).send("Wrong username and/or password");
@@ -66,6 +64,10 @@ router.post("/logout", (req, res) => {
   res.redirect("/");
 });
 
+router.get('/me', (req, res) => {
+  console.log('PATH GET /ME')
+  res.json(req.user)
+})
 router.put("/:userName", async (req, res, next) => {
   try {
     const userName = req.params.userName;
