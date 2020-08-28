@@ -3,6 +3,10 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import Login from "./Login";
 // import InputForm from "../input-form";
 import Signup from "./Signup";
+import DrinkList from './drink-list'
+import DrinkId from './drink-by-id'
+
+
 import PropTypes from "prop-types";
 // import Request from "../request-test";
 import UserHome from "./UserHome";
@@ -25,6 +29,7 @@ class Routes extends React.Component {
   //   }
   // }
 
+
   render() {
     const { isLoggedIn } = this.props;
     console.log("is logged in", isLoggedIn);
@@ -32,28 +37,14 @@ class Routes extends React.Component {
     return (
       <div>
         <Switch>
-          {/* <Route
-            exact
-            path="/welcome"
-            component={isLoggedIn ? UserHome : InputForm}
-          /> */}
-          <Route exact path="/login" component={Login} />
+        
+          <Route exact path="/" component={Login} />
           <Route exact path="/signup" component={Signup} />
-
-          <Route
-            exact
-            path="/users/:userId/allingredients"
-            component={AllIngredients}
-          />
-          {isLoggedIn && (
-            <Switch>
-              {/* Routes placed here are only available after logging in */}
-              <Route exact path="/welcome" component={UserHome} />
-            </Switch>
-          )}
-          <Route component={Login} />
-        </Switch>
-        {/* <UserHome /> */}
+          <Route exact path="/users/:userId" component={InputForm} />
+          <Route exact path='/results' component={DrinkList} />
+          <Route exact path='/results' component={DrinkList} />
+          <Route exact path='/results/:id' component={DrinkId} />
+          </Switch>
       </div>
     );
   }

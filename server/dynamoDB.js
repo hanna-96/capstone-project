@@ -71,11 +71,12 @@ async function getAllUsers() {
 // })();
 
 //get single user (for another table)!!!
-async function getSingleUserByUserName(userName) {
+
+async function getSingleUserByEmail(id) {
   const params = {
-    TableName: "Users3",
+    TableName: "Users",
     Key: {
-      userName,
+      userId:id,
     },
   };
   return await DocumentClient.get(params).promise();
@@ -170,7 +171,7 @@ module.exports = {
   createTable,
   addUser,
   getAllUsers,
-  getSingleUserByUserName,
+  getSingleUser,
   updateUserName,
   updateUserIngredients,
   deleteUser,

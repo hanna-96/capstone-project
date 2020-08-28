@@ -2,7 +2,7 @@ const router = require("express").Router();
 const {
   addUser,
   getAllUsers,
-  getSingleUserByUserName,
+  getSingleUser,
   updateUserName,
   deleteUser,
   updateUserIngredients,
@@ -18,8 +18,8 @@ router.get("/", async (req, res, next) => {
 });
 router.get("/:userName", async (req, res, next) => {
   try {
-    const userName = req.params.userName;
-    const singleUser = await getSingleUserByUserName(userName);
+    const id = +req.params.userId
+    const singleUser = await getSingleUser(id);
     res.send(singleUser.Item);
   } catch (error) {
     next(error);
@@ -80,8 +80,8 @@ router.put("/:userName", async (req, res, next) => {
 });
 router.get("/:userName/allingredients", async (req, res, next) => {
   try {
-    const userName = req.params.userName;
-    const singleUser = await getSingleUserByUserName(userName);
+    const id = +req.params.userId
+    const singleUser = await getSingleUser(id);
     const usersIngredients = singleUser.Item.ingredients;
     res.send(usersIngredients);
   } catch (error) {
@@ -89,14 +89,17 @@ router.get("/:userName/allingredients", async (req, res, next) => {
   }
 });
 //update User's ingredients by adding a new Ingredient
-router.put("/:userName/ingredients", async (req, res, next) => {
+
+router.put("/:userId/allingredients", async (req, res, next) => {
   try {
-    const userName = req.params.userName;
+    const id = +req.params.userId;
+    console.log("params", req.body.ingredient);
     // console.log("req.body isss", req.body);
     // TODO:destructure req.body depending on how much iingredinets will come from front-end(input)
-    const { name } = req.body;
-    const updatedIngredients = await updateUserIngredients(userName, [name]);
-    // console.log("the updated ingredients", updatedIngredients);
+    const { ingredient } = req.body;
+    const updatedIngredients = await updateUserIngredients(id, [ingredient]);
+    console.log("the updated ingredients", updatedIngredients);
+
     //TODO:debug why updatedIngredients is an {}
     res.send(updatedIngredients);
   } catch (error) {

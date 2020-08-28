@@ -1,22 +1,26 @@
 import axios from 'axios'
 import React, {useEffect, useState} from 'react'
-
+import AllIngredients from './components/AllIngredients'
+import Request from './request-test'
+import {Route, Link} from 'react-router-dom'
 
 const RequestFilter = (props) => {
-    let {ingred} = props
-     ingred = ingred.split(' ').join('_') // Handles ingredients with spaces 
+    let {ingreds, fields, inputLen} = props
+      // Handles ingredients with spaces 
     const [valid, setValid] = useState(false)
-    localStorage.setItem('ingred', JSON.stringify([]))
+    const [validIng, setValidIng] = useState([])
     useEffect( () => {
         const reqValidator = async (ing) => {
             try{
+                if(ing.includes(' ')) ing = ing.split(' ').join('_')
                 // makes call to API DB .. if there is a drinks object present, set to true otherwise set to false
                 const {data} =await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ing}`)
-                if(data.drinks) {
+                if(data.drinks && !validIng.includes(ing)) {
                         setValid(true)
-                        const prev = localStorage.getItem('ingred')
-                        localStorage.setItem('ingred',JSON.stringify([ing]))
-    
+                        setValidIng(prev => [...prev, ing])
+
+                } else {
+                    setValid(false)
 
                 }
             } catch(err) {
@@ -25,20 +29,22 @@ const RequestFilter = (props) => {
             
         }
 
-        reqValidator(ingred)
-    })
+        ingreds.forEach(async ing => await reqValidator(ing))
+    }, [])
 
     
     return (
         
         <div>
-    <p>{valid ? `${ingred.split('_').join(' ')} has been added. Click here to view drinks!` : `Sorry could not find ${ingred}`}</p>
-    {console.log(JSON.parse(localStorage.getItem('ingred')),'just valid')}
+
+    <p>{validIng.map( (ingred) => <div>{ingred.split('_').join(' ')} has been added</div>)}</p>
+    <p>See your results: </p>
+  < Request ingreds={validIng} />
+    
     </div>
 
-    )
-    
-}
+    )}
+
 
 export default RequestFilter
 

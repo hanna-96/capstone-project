@@ -18,71 +18,57 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const InputForm = () => {
-  const classes = useStyles();
-  const [submitted, setSubmitted] = useState(false);
-  const [inputs, setInputs] = useState([]);
-  const [clicked, setClicked] = useState(0);
-  const [fields, setFields] = useState([1]);
+    const classes = useStyles();
+    const [submitted, setSubmitted] = useState(false)
+    const [inputs, setInputs] = useState([])
+    const [clicked, setClicked] = useState(0)
+    const [fields, setFields] = useState([1])
 
-  const handleSubmit = (e) => {
-    // when user submits, set submitted status to be true and set input to be the value of the event
-    e.preventDefault();
-    setSubmitted(true);
+    const handleSubmit = (e) => { // when user submits, set submitted status to be true and set input to be the value of the event
+        e.preventDefault()
+        setSubmitted(true)
 
-    fields.forEach((val, idx) =>
-      setInputs((prev) => [...prev, event.target[idx].value])
-    );
-    setFields([1]);
-  };
+        fields.forEach( (val, idx) => setInputs(prev => [...prev, event.target[idx].value]))
+        setFields([1])
+    }
 
-  const clearInput = () => {
-    // clear input once the submit event occurs
-    fields.forEach((val, idx) => {
-      if (event.target[idx]) event.target[idx].value = "";
-    });
-  };
+    const clearInput = () => { // clear input once the submit event occurs
+       fields.forEach( (val, idx) => {if(event.target[idx]) event.target[idx].value = ''})
+    }
 
-  const addField = () => {
-    // adds a field with each click on the plus icon
-    //Each click increases length of the field array and the number of clicks
-    console.log("clicked");
-    setFields((prev) => [...prev, 1]);
-    setClicked(clicked + 1);
-  };
 
-  return (
-    <div className="submission">
-      <form onSubmit={handleSubmit}>
-        <FormControl>
-          <FontAwesomeIcon icon={faPlusCircle} onClick={addField} /> Add another
-          field
-          {
-            // Renders fields based on the current length of the `fields` array
-            fields.map((input, idx) => {
-              let ing = `ing${idx}`;
+    const addField = () => { 
+        // adds a field with each click on the plus icon
+        //Each click increases length of the field array and the number of clicks
+        console.log('clicked')
+        setFields(prev => [...prev, 1])
+        setClicked(clicked+1)
+    }
 
-              return (
-                <Input
-                  type="text"
-                  name={ing}
-                  placeholder="Enter an ingredient"
-                  id={idx}
-                />
-              );
-            })
-          }
-          <Button type="submit" value="Submit">
-            Submit Ingredient
-          </Button>
+    return (
+    <div className='submission'>
+    <form onSubmit={handleSubmit}>
+        <FormControl >
+            <FontAwesomeIcon icon={faPlusCircle} onClick={addField}/> Add another field
+
+            
+      {  
+        // Renders fields based on the current length of the `fields` array
+              fields.map( (input, idx) => {
+                let ing = `ing${idx}`
+
+               return (<Input type='text' name={ing} placeholder="Enter an ingredient" id={idx}/>)
+              }
+          )}
+        
+
+          <Button type='submit' value='Submit'>Submit Ingredient</Button>
+          
         </FormControl>
-
-        {submitted ? (
-          inputs.map((input) => <RequestFilter ingred={input} />)
-        ) : (
-          <div></div>
-        )}
-        {submitted ? clearInput() : <div></div>}
-      </form>
+              {console.log(inputs, 'the inputs')}
+            {submitted? <RequestFilter ingreds={inputs} inputLen={inputs.length} />: <div></div>} 
+       {submitted ? clearInput(): <div></div>}
+    </form> 
     </div>
   );
 };

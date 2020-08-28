@@ -1,71 +1,57 @@
+
 import axios from 'axios'
 import React, {useEffect, useState} from 'react'
-import RequestId from './request-id'
+import {useHistory, Link} from 'react-router-dom'
+import DrinkList from './components/drink-list'
+import {Route} from 'react-router-dom'
 
-const Request = () => { 
-  const allDrinks = []
+const Request = (props) => { 
+
+  const history = useHistory()
   const [drinkList, setDrinks] = useState([])
 
-
   const [len, setLen] = useState([])
-  
-  const [skip, setSkip] = useState([])
-  // let ingreds = ['lime_juice', 'sauce', 'tequila', 'gin', 'testt', 'vodka', 'blah', 'whiskey']
-  let ingreds = ['lime_juice', 'tequila', 'vodka']
+  const {ingreds} = props
+  console.log('the ingreds', ingreds)
 
   useEffect( () => {
-    
-    
-    const getDrinks = async (ing, idx)  => {
-      
+
+    const getDrinks = async (ing)  => {
       try {
-        const {data} =await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ing}`) || ''
-        if(typeof data !== 'string') {
-          const {drinks} = data
-          setDrinks(prevDrinks => [...prevDrinks,...drinks])
-          setLen(prevLen => [...prevLen, drinks.length ])
-          setSkip(prev => [...prev, ing])
-        }
-        else {
-          setDrinks(prevDrinks => [...prevDrinks])
-          setLen(prevLen => [...prevLen])
-          setSkip(prev => [...prev])
-        }
+        const {data} =await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ing}`)
+        const {drinks} = data
+        setDrinks(prevDrinks => [...prevDrinks,...drinks])
+        setLen(prevLen => [...prevLen, drinks.length ])
       } catch (error) {
         console.log(error);
       }
-      
-    }
-   
-    ingreds.forEach( async (ing, idx) => await getDrinks(ing, idx))
-    
-}, [])
 
- 
+    }
+    ingreds.forEach( async ing => {
+      console.log('in the forEach')
+      await getDrinks(ing)
+    })
+}, [ingreds])
+
 
   return (
-    
-    
+
+
     <div>
-      {/* {console.log(len, skip, ingreds)} */}
-      {skip.length ? skip.forEach( (val) => ingreds.splice(val,1)) : ingreds}
-      {/* {console.log(ingreds)} */}
       { 
+      drinkList.length  ?
       
-      drinkList.length && len.length === ingreds.length ?
       <div>
-        <p><img src={drinkList[130].strDrinkThumb} /></p>
-        <h1>hi</h1>
-        <p>Drink of the Day : {drinkList[0].strDrink}</p>
-        {console.log(drinkList[140])}
+        <h2>{drinkList.length} Results</h2>
+        <Link to={{ pathname: '/results', state: {drinkList} }}>Go to results</Link>
+        <DrinkList drinks={drinkList} />
         </div>
- : <div> Loading...
+ : <div> Bleh...
    </div>} 
         </div>
-    
+
   )
       }
 
 
 export default Request
-

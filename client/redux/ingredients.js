@@ -26,8 +26,7 @@ const addIngredient = (ingredient) => {
 export const getAllIngredientsThunk = (userName) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/users/${userName}/allingredients`);
-
+      const { data } = await axios.get(`/api/users/${id}/allingredients`);
       dispatch(getIngredients(data));
     } catch (error) {
       console.error(error);
@@ -36,12 +35,13 @@ export const getAllIngredientsThunk = (userName) => {
 };
 export const addIngredientThunk = (userName, ingredient) => {
   return async (dispatch) => {
+   
     try {
-      const { data } = await axios.put(
-        `/api/users/${userName}/ingredients`,
-        ingredient
-      );
-      dispatch(addIngredient(data));
+      if (ingredient) {
+        let { data } = await axios.put(
+          `/api/users/${id}/allingredients`, {ingredient}
+        );
+        dispatch(addIngredient(data));
     } catch (error) {
       console.log(error);
     }

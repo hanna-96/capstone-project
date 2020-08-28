@@ -1,16 +1,29 @@
 import { Workbox } from "workbox-window";
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./client/app";
-import "./public/style.css";
-// import '../public/manifest.json'
-import {BrowserRouter as Router} from "react-router-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './client/app'
+import './public/style.css'
+import { BrowserRouter as Router} from 'react-router-dom'
+import store from './client/redux/store.js'
 import {Provider} from 'react-redux'
-import store from './client/redux/store'
 import history from './client/history'
-// import Auth from '@aws-amplify/auth';
-// import config from './config.json'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';  
 
+const theme = createMuiTheme({
+  palette: {
+     primary: {
+        light: '#000',
+        main: '#e53935',
+        dark: '#000'
+     },
+     secondary: {
+       main: '#ffffff',
+     },
+  },
+  typography: { 
+     useNextVariants: true
+  }
+});
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
@@ -44,9 +57,11 @@ if ("serviceWorker" in navigator) {
 
 ReactDOM.render(
   <Provider store={store}>
-  <Router history ={history}>
-    <App />
-  </Router>
+    <MuiThemeProvider theme = { theme }>
+      <Router history ={history}>
+        <App />
+      </Router>
+    </MuiThemeProvider>
   </Provider>,
   document.getElementById("root")
 );
