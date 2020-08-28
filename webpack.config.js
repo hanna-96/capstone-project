@@ -50,11 +50,5 @@ module.exports = env => {
     })
     ],
     devtool: "source-map"
-  };
-<<<<<<< HEAD
-};
-=======
-};
-// filename: "[name].[chunkhash].js",
-// chunkFilename: "[name].[chunkhash].bundle.js",
->>>>>>> ingredients-bug
+  }
+}
