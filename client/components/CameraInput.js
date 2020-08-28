@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
+import Button from '@material-ui/core/Button'
 if (process.env.NODE_ENV === 'dev') require('../../vision-secrets')
 
 const CameraInput = () => {
@@ -43,7 +44,7 @@ const CameraInput = () => {
     <div>
       <form>
         <input type="file" accept="image/*" capture="camera" onInput={onSubmit} />
-        <button type='submit'>upload</button>
+        <Button type='submit'>upload</Button>
       </form>
       <p>{text || 'nothing yet'}</p>
     </div>

@@ -70,8 +70,8 @@ const InputForm = () => {
           <Button type='submit' value='Submit'>Submit Ingredient</Button>
           
         </FormControl>
-
-            {submitted? inputs.map((input) => <RequestFilter ingred={input} />): <div></div>} 
+              {console.log(inputs, 'the inputs')}
+            {submitted? <RequestFilter ingreds={inputs} />: <div></div>} 
        {submitted ? clearInput(): <div></div>}
     </form> 
     </div>

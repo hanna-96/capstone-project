@@ -1,71 +1,75 @@
+
 import axios from 'axios'
 import React, {useEffect, useState} from 'react'
-import RequestId from './request-id'
+import RequestFilter from './request-filter'
 
 const Request = () => { 
-  const allDrinks = []
+
   const [drinkList, setDrinks] = useState([])
 
-
   const [len, setLen] = useState([])
-  
-  const [skip, setSkip] = useState([])
-  // let ingreds = ['lime_juice', 'sauce', 'tequila', 'gin', 'testt', 'vodka', 'blah', 'whiskey']
-  let ingreds = ['lime_juice', 'tequila', 'vodka']
+  const ingreds = ['lime_juice', 'tequila', 'gin', 'vodka']
+  const [validInputs, setValidInputs] = useState([])
+  const [valid, setValid] = useState(false)
+
+//   useEffect( () => {
+//     const reqValidator = async (ing) => {
+//         try{
+//           console.log('fires')
+//             // makes call to API DB .. if there is a drinks object present, set to true otherwise set to false
+//             const {data} =await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ing}`)
+//             if(data.drinks) {
+//               setValid(true)
+
+//             } else {
+//               setValid(false)
+//               let validationObj = {ing, valid}
+//               setValidInputs(validationObj)
+//             }
+//         } catch(err) {
+//             console.log(err)
+//         }
+//         console.log(valid)
+        
+//     }
+
+//     reqValidator(ingreds)
+// })
 
   useEffect( () => {
-    
-    
-    const getDrinks = async (ing, idx)  => {
-      
+
+    const getDrinks = async (ing)  => {
       try {
-        const {data} =await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ing}`) || ''
-        if(typeof data !== 'string') {
-          const {drinks} = data
-          setDrinks(prevDrinks => [...prevDrinks,...drinks])
-          setLen(prevLen => [...prevLen, drinks.length ])
-          setSkip(prev => [...prev, ing])
-        }
-        else {
-          setDrinks(prevDrinks => [...prevDrinks])
-          setLen(prevLen => [...prevLen])
-          setSkip(prev => [...prev])
-        }
+        const {data} =await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ing}`)
+        const {drinks} = data
+        setDrinks(prevDrinks => [...prevDrinks,...drinks])
+        setLen(prevLen => [...prevLen, drinks.length ])
       } catch (error) {
         console.log(error);
       }
-      
+
     }
-   
-    ingreds.forEach( async (ing, idx) => await getDrinks(ing, idx))
-    
+    ingreds.forEach( async ing => await getDrinks(ing))
 }, [])
 
- 
 
   return (
-    
-    
+
+
     <div>
-      {/* {console.log(len, skip, ingreds)} */}
-      {skip.length ? skip.forEach( (val) => ingreds.splice(val,1)) : ingreds}
-      {/* {console.log(ingreds)} */}
       { 
-      
       drinkList.length && len.length === ingreds.length ?
       <div>
-        <p><img src={drinkList[130].strDrinkThumb} /></p>
+        <p><img src={drinkList[140].strDrinkThumb} /></p>
         <h1>hi</h1>
         <p>Drink of the Day : {drinkList[0].strDrink}</p>
-        {console.log(drinkList[140])}
         </div>
  : <div> Loading...
    </div>} 
         </div>
-    
+
   )
       }
 
 
 export default Request
-

@@ -6,6 +6,23 @@ import './public/style.css'
 import { BrowserRouter as Router} from 'react-router-dom'
 import store from './client/redux/store.js'
 import {Provider} from 'react-redux'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';  
+
+const theme = createMuiTheme({
+  palette: {
+     primary: {
+        light: '#000',
+        main: '#e53935',
+        dark: '#000'
+     },
+     secondary: {
+       main: '#ffffff',
+     },
+  },
+  typography: { 
+     useNextVariants: true
+  }
+});
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
@@ -39,9 +56,12 @@ if ("serviceWorker" in navigator) {
 
 ReactDOM.render(
   <Provider store={store}>
+  <MuiThemeProvider theme = { theme }>
+
   <Router>
     <App />
   </Router>
+  </MuiThemeProvider>
   </Provider>,
   document.getElementById("root")
 );
