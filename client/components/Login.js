@@ -1,8 +1,9 @@
 import React from "react";
 import axios from "axios";
-// import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { authLogin } from "../redux/user";
+
 class Login extends React.Component {
   constructor() {
     super();
@@ -30,7 +31,12 @@ class Login extends React.Component {
   }
   
   render() {
-    return (
+    const {isLoggedIn}  = this.props
+    //  if(isLoggedIn){
+    //   return  <Redirect to ="/welcome" /> 
+    //  }else{
+           return (
+     
       <div>
         <form onSubmit={this.handleSubmit}>
           <label>User name</label>
@@ -57,16 +63,20 @@ class Login extends React.Component {
         </form>
       </div>
     );
-  }
-}
+     }
+    }
+ 
+  // }
+
 const mapState = (state) => {
   return {
     user: state.user,
+    isLoggedIn:!!state.user.userName
   };
 };
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch,ownProps) => {
   return {
-    getUser: (userName, password) => dispatch(authLogin(userName, password)),
+    getUser: (userName, password) => dispatch(authLogin(userName, password,ownProps.history)),
   };
 };
 

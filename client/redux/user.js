@@ -19,7 +19,7 @@ export const me = () => async (dispatch) => {
     console.error(err);
   }
 };
-export const authLogin = (userName, password) => async dispatch => {
+export const authLogin = (userName, password,history) => async dispatch => {
   let res
   try {
     res = await axios.post('/api/users/login', {
@@ -30,13 +30,13 @@ export const authLogin = (userName, password) => async dispatch => {
   } catch (authError) {
     return dispatch(getUser({error: authError}))
   }
-
   try {
     // setTimeout(function(){
     //   history.push('/welcome')
     // },3000)
      
    dispatch(getUser(res.data.Item))
+   history.push('/welcome')
     console.log('data from login thunk',res.data.Item)
 
   
