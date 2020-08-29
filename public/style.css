@@ -72,3 +72,19 @@ body {
 .app-update.show {
   display: block;
 }
+
+
+.drink-page {
+  display: flex;
+}
+
+.drink-detail {
+  align-items: center;
+
+}
+
+.drink-img {
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+}
