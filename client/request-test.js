@@ -7,12 +7,10 @@ import {Route} from 'react-router-dom'
 
 const Request = (props) => { 
 
-  const history = useHistory()
   const [drinkList, setDrinks] = useState([])
 
   const [len, setLen] = useState([])
   const {ingreds} = props
-  console.log('the ingreds', ingreds)
 
   useEffect( () => {
 
