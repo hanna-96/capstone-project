@@ -7,7 +7,7 @@ const DrinkId = (props) => {
     const id = history.state.state.id
     console.log(props)
     const [drinkDetails, setDrink] = useState({})
-
+    const [ingred, setIngreds] = useState([])
     const [didRun, setDidRun] = useState(false)
 
     const results = () => {
@@ -35,6 +35,13 @@ const DrinkId = (props) => {
       }
       
     } )
+
+    // const getIngredients = () => {
+    //   const drinkProps = Object.keys(drinkDetails)
+    //   drinkProps.forEach((prop) => {
+    //     if (prop.includes('strIngredient') && drinkProps[prop] !== null) setIngreds(prev => [...prev, drinkProps[prop]])
+    //   })
+    // }
   
     return (
     
