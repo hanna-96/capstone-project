@@ -1,83 +1,131 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
-import { connect } from "react-redux";
 import { authLogin } from "../redux/user";
+import { useDispatch } from "react-redux";
 
-class Login extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      userName: "",
-      password: "",
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  async handleSubmit(event) {
-    event.preventDefault();
-    this.props.getUser(this.state.userName,this.state.password);
-    // await axios.post("/api/users/login", this.state);
-    this.setState({
-      userName: "",
-      password: "",
-    });
-    // this.props.history.push('/welcome')
-  }
-  handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
-  }
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="https://material-ui.com/">
+        Your Website
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
+
+function Login () {
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+
+  const dispatch = useDispatch()
+  const classes = useStyles()
   
-  render() {
-    const {isLoggedIn}  = this.props
-    //  if(isLoggedIn){
-    //   return  <Redirect to ="/welcome" /> 
-    //  }else{
-           return (
-     
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <label>User name</label>
-          <input
-            name="userName"
-            type="text"
-            required
-            onChange={this.handleChange}
-            value={this.state.userName}
-          />
-          <p>
-            <label>Password</label>
-            <input
-              name="password"
-              type="text"
+
+   const handleSubmit = event => {
+    event.preventDefault();
+    dispatch(authLogin(userName, password));
+    setUserName('')
+    setPassword('')
+  }
+  const handleChange = event => {
+    setUserName(event.target.value)
+    setPassword(event.target.value)
+  }
+    return (
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form className={classes.form} noValidate onSubmit={handleSubmit}>
+            <TextField
+              variant="outlined"
+              margin="normal"
               required
-              onChange={this.handleChange}
-              value={this.state.password}
+              fullWidth
+              id="userName"
+              label="Username"
+              name="userName"
+              // autoComplete="userName"
+              onChange={handleChange}
+              value={userName}
+              // autoFocus
             />
-          </p>
-          <button type="submit">
-            {/* <Link to="/welcome">Log In</Link> */}
-          </button>
-        </form>
-      </div>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="text"
+              id="password"
+              onChange={handleChange}
+              value={password}
+              // autoComplete="current-password"
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign In
+            </Button>
+          </form>
+        </div>
+        <Box mt={8}>
+          <Copyright />
+        </Box>
+      </Container>
     );
-     }
-    }
- 
-  // }
+  }
 
-const mapState = (state) => {
-  return {
-    user: state.user,
-    isLoggedIn:!!state.user.userName
-  };
-};
-const mapDispatch = (dispatch,ownProps) => {
-  return {
-    getUser: (userName, password) => dispatch(authLogin(userName, password,ownProps.history)),
-  };
-};
-
-export default connect(mapState, mapDispatch)(Login);
+export default Login

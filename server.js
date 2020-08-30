@@ -7,9 +7,14 @@ const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
 const fileUpload = require('express-fileupload')
 const vision = require('@google-cloud/vision')
 const cors = require('cors')
-const LocalStrategy   = require('passport-local').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 const AWS = require("aws-sdk");
-const bcrypt   = require('bcrypt-nodejs');
+const bcrypt = require('bcrypt-nodejs');
+const flash = require('connect-flash');
+app.use(flash());
+const {getSingleUserByUserName} = require('./server/dynamoDB')
+
+
 if (process.env.NODE_ENV === "dev") require("./secrets");
 let awsConfig = {
   region: "us-east-2",
@@ -21,7 +26,7 @@ let awsConfig = {
 AWS.config.update(awsConfig);
 //connecting to AWS DynamoDB
 const DynamoDB = new AWS.DynamoDB();
-
+const DocumentClient = new AWS.DynamoDB.DocumentClient();
 // This serves static files from the specified directory
 app.use(express.static(__dirname + "/public"));
 
@@ -64,20 +69,29 @@ app.use(passport.session())
   // =========================================================================
   // required for persistent login sessions
   // passport needs ability to serialize and unserialize users out of session
+// passport.serializeUser(function(user, done) {
+//   done(null, user);
+// });
 
+// passport.deserializeUser(function(user, done) {
+//   done(null, user);
+// });
   // used to serialize the user for the session
   passport.serializeUser(function(user, done) {
-    // done(null, user.userName.S);
-    done(null, user);
+    console.log('inside serialize user', user)
+    done(null, user.Item.userName);
+    // done(null, user);
   });
 
   // used to deserialize the user
   passport.deserializeUser(function(userName, done) {
-    dd.getItem({"TableName":"Users3","Key": {"userName":{"S":userName}}}, function(err,data){
+    DocumentClient.get({"TableName":"Users3","Key": {"userName":userName}}, function(err,data){
+      console.log('data before of des', data)
       if (err){
         done(err,data);
       }
-      done(err,{"userName": data.Item.userName.S, "password": data.Item.password.S});
+      console.log('data after of des', data)
+      done(err,{"userName": data.Item.userName, "password": data.Item.password});
     })
   });
 
@@ -86,6 +100,8 @@ app.use(passport.session())
   // =========================================================================
   // we are using named strategies since we have one for login and one for signup
   // by default, if there was no name, it would just be called 'local'
+
+
 
   passport.use('local-signup', new LocalStrategy({
     // by default, local strategy uses username and password, we will override with email
@@ -109,7 +125,7 @@ app.use(passport.session())
 
     // find a user whose email is the same as the forms email
     // we are checking to see if the user trying to login already exists
-    DynamoDB.query(params, function(err,data){
+    DocumentClient.query(params, function(err,data){
       // if there are any errors, return the error
       if (err){
         return done(err);
@@ -123,12 +139,12 @@ app.use(passport.session())
         var params = {
           "TableName":"Users3",
           "Item" : {
-            "id":{"N":(Math.floor(Math.random() * 4294967296)).toString()},
-            "userName":{"S":userName},
-            "password":{"S":bcrypt.hashSync(password)}
+            "id":(Math.floor(Math.random() * 4294967296)).toString(),
+            "userName":userName,
+            "password":bcrypt.hashSync(password)
           }
         }
-        DynamoDB.putItem(params, function(err,data){
+        DocumentClient.put(params, function(err,data){
           if (err){
             return done(null, false, req.flash('signupMessage', "Apologies, please try again now. ("+err+")"));
           }else{
@@ -150,29 +166,29 @@ app.use(passport.session())
 
   passport.use('local-login', new LocalStrategy({
     // by default, local strategy uses username and password, we will override with email
-    userName : 'email',
+    userName : 'userName',
     password : 'password',
     passReqToCallback : true // allows us to pass back the entire request to the callback
   },
-  function(req, email, password, done) { // callback with email and password from our form
+  function(req, userName, password, done) { // callback with email and password from our form
     var params = {
       "TableName":"Users3",
       // "IndexName":"email-index",
       "KeyConditions":{
         "userName":{
           "ComparisonOperator":"EQ",
-          "AttributeValueList":[{"S":"userName"}]
+          "AttributeValueList":["userName"]
         }
       }
     }
-    DynamoDB.query(params, function(err,data){
+    DocumentClient.query(params, function(err,data){
       if (err){
         return done(err);
       }
       if (data.Items.length == 0){
         return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
       }
-      DynamoDB.getItem({"TableName":"Users3","Key": {"userName":data.Items[0]["userName"]}}, function(err,data){
+      DocumentClient.get({"TableName":"Users3","Key": {"userName":data.Items[0]["userName"]}}, function(err,data){
         if (err){
           return done(err);
         }
@@ -185,13 +201,29 @@ app.use(passport.session())
     });
   }));
 
+//   app.post('/login',
+//   passport.authenticate('local-login', { successRedirect: '/',
+//                                    failureRedirect: '/login',
+//                                    failureFlash: true }),
+//                                    async (req, res, next) => {
+//                                     try {
+//                                       const user = await getSingleUserByUserName(req.body.userName);
+//                                       if (!user) {
+//                                         // console.log("No such user found:", req.body.userName);
+//                                         res.status(401).send("Wrong username and/or password");
+//                                       } else if (req.body.password !== user.Item.password) {
+//                                         // console.log("Incorrect password for user:", req.body.userName);
+//                                         res.status(401).send("Wrong username and/or password");
+//                                       } else {
+//                                         req.login(user, (err) => (err ? next(err) : res.json(user)));
+//                                       }
+//                                     } catch (err) {
+//                                       next(err);
+//                                     }}
+                                  
+// );
+//   function(req,res,next){
 
-// passport.serializeUser(function(user, done) {
-//   done(null, user);
-// });
-
-// passport.deserializeUser(function(user, done) {
-//   done(null, user);
 // });
 
 
@@ -224,13 +256,13 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).send(err.message || "Internal server error.");
 });
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || 'Capstone!',
-    resave: false,
-    saveUninitialized: false
-  })
-)
+// app.use(
+//   session({
+//     secret: process.env.SESSION_SECRET || 'Capstone!',
+//     resave: false,
+//     saveUninitialized: false
+//   })
+// )
 
 const server = app.listen(PORT, () => {
   console.log("App listening at port ", PORT);
