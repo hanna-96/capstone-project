@@ -16,7 +16,7 @@ function App() {
       <NewDrawer />
       {/* <Request /> */}
       {/* <Navbar /> */}
-      {/* <Routes /> */}
+      <Routes />
       
     </div>
   );
