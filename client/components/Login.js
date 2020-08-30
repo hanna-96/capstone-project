@@ -88,10 +88,10 @@ function Login () {
               id="userName"
               label="Username"
               name="userName"
-              // autoComplete="userName"
+              autoComplete="userName"
               onChange={handleChange}
               value={userName}
-              // autoFocus
+              autoFocus
             />
             <TextField
               variant="outlined"

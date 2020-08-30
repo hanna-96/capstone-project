@@ -5,16 +5,17 @@ import InputForm from "../input-form";
 import Signup from "./Signup";
 import DrinkList from './drink-list'
 import DrinkId from './drink-by-id'
-
-
+import Cabinet from './Cabinet'
+import CameraInput from './CameraInput'
 import PropTypes from "prop-types";
-// import Request from "../request-test";
+import Request from "../request-test";
 import UserHome from "./UserHome";
-import AllIngredients from "./AllIngredients";
+// import AllIngredients from "./AllIngredients";
 // import AllUsers from "./AllUsers";
 import { connect } from "react-redux";
 import { me } from "../redux/user";
-import history from '../history'
+// import history from '../history'
+import Navbar from "./Navbar";
 
 class Routes extends React.Component {
 
@@ -32,23 +33,28 @@ class Routes extends React.Component {
 
   render() {
     const { isLoggedIn } = this.props;
-    console.log("is logged in", isLoggedIn);
-    console.log(" props route", this.props);
+    // console.log("is logged in", isLoggedIn);
+    // console.log(" props route", this.props);
     return (
       <div>
+       
         <Switch>
+        <Route exact path="/" component={Signup} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
-          <Route exact path="/users/:userId" component={InputForm} />
+          <Route exact path="/users/:userName" component={InputForm} />
           <Route exact path='/results' component={DrinkList} />
           <Route exact path='/results/:id' component={DrinkId} />
+          <Route exact path='/cabinet' component={Cabinet} />
+          <Route exact path='/camera' component={CameraInput} />
+          <Route exact path='/request' component={Request} />
           {isLoggedIn && (
             <Switch>
               {/* Routes placed here are only available after logging in */}
               <Route exact path="/welcome" component={UserHome} />
             </Switch>
           )}
-          <Route component={Login} />
+          {/* <Route component={Login} /> */}
           </Switch>
       </div>
     );
@@ -58,7 +64,6 @@ class Routes extends React.Component {
  * CONTAINER
  */
 const mapState = (state) => {
-  console.log("routes state", state);
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey

@@ -18,7 +18,7 @@ router.get("/", async (req, res, next) => {
 });
 router.get("/:userName", async (req, res, next) => {
   try {
-    const userName = req.params.userName
+    const userName = req.params.userName;
     const singleUser = await getSingleUserByUserName(userName);
     res.send(singleUser.Item);
   } catch (error) {
@@ -76,7 +76,7 @@ router.put("/:userName", async (req, res, next) => {
   try {
     const userName = req.params.userName;
     const { name } = req.body;
-    const updatedUser = await updateUserName(id, name);
+    const updatedUser = await updateUserName(userName, name);
     res.send(updatedUser.Item);
   } catch (error) {
     console.log(next);
@@ -84,7 +84,7 @@ router.put("/:userName", async (req, res, next) => {
 });
 router.get("/:userName/allingredients", async (req, res, next) => {
   try {
-    const userName = req.params.userName
+    const userName = req.params.userName;
     const singleUser = await getSingleUserByUserName(userName);
     const usersIngredients = singleUser.Item.ingredients;
     res.send(usersIngredients);
@@ -96,15 +96,11 @@ router.get("/:userName/allingredients", async (req, res, next) => {
 
 router.put("/:userName/allingredients", async (req, res, next) => {
   try {
-    const userName = req.params.userName
-    console.log("params", req.body.ingredient);
-    // console.log("req.body isss", req.body);
-    // TODO:destructure req.body depending on how much iingredinets will come from front-end(input)
+    const userName = req.params.userName;
     const { ingredient } = req.body;
-    const updatedIngredients = await updateUserIngredients(userName, [ingredient]);
-    console.log("the updated ingredients", updatedIngredients);
-
-    //TODO:debug why updatedIngredients is an {}
+    const updatedIngredients = await updateUserIngredients(userName, [
+      ingredient,
+    ]);
     res.send(updatedIngredients);
   } catch (error) {
     console.error(error);
@@ -114,7 +110,7 @@ router.put("/:userName/allingredients", async (req, res, next) => {
 router.delete("/:userName", async (req, res, next) => {
   try {
     const userName = req.params.userName;
-    const deletedUser = await deleteUser(userName);
+    await deleteUser(userName);
     res.sendStatus(204);
   } catch (error) {
     console.error(next);
