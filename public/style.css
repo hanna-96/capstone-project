@@ -106,4 +106,9 @@ body {
   padding-right: 1vw;
 }
 
+#after-scan-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
 /************ scan view end ************/

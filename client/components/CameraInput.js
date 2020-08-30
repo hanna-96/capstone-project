@@ -1,11 +1,12 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import { makeStyles } from '@material-ui/core/styles'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import PhotoCamera from '@material-ui/icons/PhotoCamera'
-import DeleteIcon from '@material-ui/icons/Delete'
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
+import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 // import readReceipt from '../../readReceipt'
 
 const useStyles = makeStyles((theme) => ({
@@ -39,15 +40,18 @@ const readReceipt = receipt => {
 }
 
 const CameraInput = () => {
-  const [loading, isLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [hasScanned, setScanStatus] = useState(false)
+  const [error, setError] = useState(false)
   const [text, setText] = useState([])
+
   //useStyles() is material ui
   const classes = useStyles()
   const handleInput = evt => {
     isLoading(true)
-    try {
-      const read = async () => {
+    const read = async () => {
+      try {
+        // lines 56-61 are for fetching real data from vision api
         // file is our uploaded image, in a File object
         const file = evt.target.files[0]
         const formData = new FormData()
@@ -56,7 +60,7 @@ const CameraInput = () => {
         const { data } = await axios.post(`/gvision`, formData)
         const receipt = readReceipt(data)
 
-        //fake data to prevent loads of api calls
+        //fake data for testing so we don't use up loads of api calls
         // const receipt = [
         //   'apples',
         //   'avocado',
@@ -65,15 +69,18 @@ const CameraInput = () => {
         //   'orange liquer'
         // ]
 
-        if (!receipt) throw new Error('Something went wrong with the scan')
+        setLoading(false)
         setScanStatus(true)
+        //if data comes back empty, throws an error
+        if (!receipt) throw new Error('Something went wrong')
         setText(receipt)
-        isLoading(false)
+      } catch (e) {
+        //set error state so that an error message is displayed to user
+        setError(true)
+        console.error(e)
       }
-      read()
-    } catch (e) { 
-      console.error(e)
     }
+    read()
   }
 
   const handleRemove = word => {
@@ -83,14 +90,15 @@ const CameraInput = () => {
   //can currently only accept one file at a time
   return (
     <div id='file-input-container-all'>
-      { loading ? <CircularProgress /> : 
+      { loading ? <CircularProgress /> :
       <div id='file-input'>
+        { error ? <h2>something went wrong!</h2> : ''}
         <ul id='input-text-list'>
           { text && text.map(word =>
           <li className='scanned-item'>
             <span>{word}</span>
             <IconButton aria-label="delete">
-              <DeleteIcon onClick={() => handleRemove(word)} />
+              <DeleteForeverIcon onClick={() => handleRemove(word)} size="small" />
             </IconButton>
           </li>
           ) }
@@ -104,20 +112,20 @@ const CameraInput = () => {
             onInput={handleInput}
           />
           <label htmlFor="contained-button-file">
-            <Button variant="contained" color="primary" component="span">
+            <Button variant="contained" color="primary" component="span" size="large" startIcon={<CloudUploadIcon />}>
               { hasScanned ? 'Scan Again' : 'Scan Receipt' }
             </Button>
           </label>
           <input accept="image/*" className={classes.input} id="icon-button-file" type="file" capture="camera" onInput={handleInput} />
           <label htmlFor="icon-button-file">
-            <IconButton color="primary" aria-label="upload picture" component="span">
+          <IconButton color="primary" aria-label="upload picture" component="span">
               <PhotoCamera />
             </IconButton>
           </label>
         </div>
         { hasScanned && 
           <div id='after-scan-buttons'>
-            <button type='submit'>Add All to Cabinet</button>
+            { !error && <button type='submit'>Add All to Cabinet</button> }
             <button type='submit'>Add Items with Text Input</button>
           </div>
         }
