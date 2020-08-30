@@ -36,7 +36,8 @@ router.post("/signup", async (req, res, next) => {
       email,
       password
     );
-    req.login(newUser, (err) => (err ? next(err) : res.json(newUser)));
+    console.log(newUser)
+    req.login(newUser, err => (err ? next(err) : res.json(newUser)))
   } catch (error) {
     console.error(error);
   }
@@ -58,16 +59,19 @@ router.post("/login", async (req, res, next) => {
     next(err);
   }
 });
-router.post("/logout", (req, res) => {
-  req.logout();
-  req.session.destroy();
-  res.redirect("/");
-});
 
-router.get("/me", (req, res) => {
-  console.log("PATH GET /ME");
-  res.json(req.user);
-});
+
+router.post('/logout', (req, res) => {
+  req.logout()
+  req.session.destroy()
+  res.redirect('/')
+})
+
+router.get('/me', (req, res) => {
+  console.log('PATH GET /ME')
+  res.json(req.user)
+})
+
 router.put("/:userName", async (req, res, next) => {
   try {
     const userName = req.params.userName;
@@ -90,7 +94,7 @@ router.get("/:userName/allingredients", async (req, res, next) => {
 });
 //update User's ingredients by adding a new Ingredient
 
-router.put("/:userId/allingredients", async (req, res, next) => {
+router.put("/:userName/allingredients", async (req, res, next) => {
   try {
     const userName = req.params.userName;
     const { ingredient } = req.body;
