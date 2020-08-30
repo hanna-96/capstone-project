@@ -1,6 +1,4 @@
 import React from "react";
-import axios from "axios";
-import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { authLogin } from "../redux/user";
 
@@ -16,27 +14,20 @@ class Login extends React.Component {
   }
   async handleSubmit(event) {
     event.preventDefault();
-    this.props.getUser(this.state.userName,this.state.password);
-    // await axios.post("/api/users/login", this.state);
+    this.props.getUser(this.state.userName, this.state.password);
     this.setState({
       userName: "",
       password: "",
     });
-    // this.props.history.push('/welcome')
   }
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value,
     });
   }
-  
+
   render() {
-    const {isLoggedIn}  = this.props
-    //  if(isLoggedIn){
-    //   return  <Redirect to ="/welcome" /> 
-    //  }else{
-           return (
-     
+    return (
       <div>
         <form onSubmit={this.handleSubmit}>
           <label>User name</label>
@@ -57,26 +48,23 @@ class Login extends React.Component {
               value={this.state.password}
             />
           </p>
-          <button type="submit">
-            {/* <Link to="/welcome">Log In</Link> */}
-          </button>
+          <button type="submit">Log In</button>
         </form>
       </div>
     );
-     }
-    }
- 
-  // }
+  }
+}
 
 const mapState = (state) => {
   return {
     user: state.user,
-    isLoggedIn:!!state.user.userName
+    isLoggedIn: !!state.user.userName,
   };
 };
-const mapDispatch = (dispatch,ownProps) => {
+const mapDispatch = (dispatch, ownProps) => {
   return {
-    getUser: (userName, password) => dispatch(authLogin(userName, password,ownProps.history)),
+    getUser: (userName, password) =>
+      dispatch(authLogin(userName, password, ownProps.history)),
   };
 };
 
