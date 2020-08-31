@@ -11,6 +11,7 @@ AWS.config.update(awsConfig);
 //connecting to AWS DynamoDB
 const DynamoDB = new AWS.DynamoDB();
 const DocumentClient = new AWS.DynamoDB.DocumentClient();
+
 //creating table
 async function createTable() {
   const params = {
@@ -25,7 +26,7 @@ async function createTable() {
   return await DynamoDB.createTable(params).promise();
 }
 // (async ()=>{
-//   console.log('the func worked', await createTable());
+//   console.log('table is created', await createTable());
 // })()
 //changed primary key to email !!!for another table
 async function addUser(userName, firstName, lastName, email, password) {
@@ -66,6 +67,12 @@ async function getSingleUserByUserName(userName) {
   };
   return await DocumentClient.get(params).promise();
 }
+// (async () => {
+//   console.log(
+//     "the func worked ",
+//     await getAllUsers()
+//   );
+// })();
 
 // get allUsers (!!!expensive operation!!!)
 async function getAllUsers() {
@@ -87,32 +94,12 @@ async function updateUserName(userName, name) {
     TableName: "Users3",
     Item: {
       userName,
-      name: name,
+      name,
     },
     ReturnConsumedCapacity: "TOTAL",
   };
   return await DocumentClient.put(params).promise();
 }
-// //update User by adding a new ingredient
-// async function updateUserIngredients(id, newIngredient) {
-//   const user = await getSingleUser(id);
-//   // console.log('user is',user.Item)
-//   const userIngredients = user.Item.ingredients;
-//   // console.log('user ingredients',userIngredients)
-//   const updatedIngredients = [...userIngredients, ...newIngredient];
-//   console.log("updated ingred in DynamoDB", updatedIngredients);
-//   const params = {
-//     TableName: "Users",
-//     Key: {
-//       userId: id,
-//     },
-//     UpdateExpression: `set ingredients = :ingredients`,
-//     ExpressionAttributeValues: {
-//       ":ingredients": updatedIngredients,
-//     },
-//   };
-//   return await DocumentClient.update(params).promise();
-// }
 //update User by adding a new ingredient
 async function updateUserIngredients(userName, newIngredient) {
   const user = await getSingleUserByUserName(userName);

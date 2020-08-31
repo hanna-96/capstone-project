@@ -18,7 +18,7 @@ router.get("/", async (req, res, next) => {
 });
 router.get("/:userName", async (req, res, next) => {
   try {
-    const userName = req.params.userName
+    const userName = req.params.userName;
     const singleUser = await getSingleUserByUserName(userName);
     res.send(singleUser.Item);
   } catch (error) {
@@ -36,7 +36,8 @@ router.post("/signup", async (req, res, next) => {
       email,
       password
     );
-    req.login(newUser, (err) => (err ? next(err) : res.json(newUser)));
+    console.log(newUser)
+    req.login(newUser, err => (err ? next(err) : res.json(newUser)))
   } catch (error) {
     console.error(error);
   }
@@ -58,21 +59,24 @@ router.post("/login", async (req, res, next) => {
     next(err);
   }
 });
-router.post("/logout", (req, res) => {
-  req.logout();
-  req.session.destroy();
-  res.redirect("/");
-});
+
+
+router.post('/logout', (req, res) => {
+  req.logout()
+  req.session.destroy()
+  res.redirect('/')
+})
 
 router.get('/me', (req, res) => {
   console.log('PATH GET /ME')
   res.json(req.user)
 })
+
 router.put("/:userName", async (req, res, next) => {
   try {
     const userName = req.params.userName;
     const { name } = req.body;
-    const updatedUser = await updateUserName(id, name);
+    const updatedUser = await updateUserName(userName, name);
     res.send(updatedUser.Item);
   } catch (error) {
     console.log(next);
@@ -80,7 +84,7 @@ router.put("/:userName", async (req, res, next) => {
 });
 router.get("/:userName/allingredients", async (req, res, next) => {
   try {
-    const userName = req.params.userName
+    const userName = req.params.userName;
     const singleUser = await getSingleUserByUserName(userName);
     console.log(singleUser)
     const usersIngredients = singleUser.Item.ingredients;
@@ -102,10 +106,9 @@ router.put("/:userName/allingredients", async (req, res, next) => {
     // console.log("req.body isss", req.body);
     // TODO:destructure req.body depending on how much iingredinets will come from front-end(input)
     const { ingredient } = req.body;
-    const updatedIngredients = await updateUserIngredients(userName, [ingredient]);
-    console.log("the updated ingredients", updatedIngredients);
-
-    //TODO:debug why updatedIngredients is an {}
+    const updatedIngredients = await updateUserIngredients(userName, [
+      ingredient,
+    ]);
     res.send(updatedIngredients);
   } catch (error) {
     console.error(error);
@@ -115,7 +118,7 @@ router.put("/:userName/allingredients", async (req, res, next) => {
 router.delete("/:userName", async (req, res, next) => {
   try {
     const userName = req.params.userName;
-    const deletedUser = await deleteUser(userName);
+    await deleteUser(userName);
     res.sendStatus(204);
   } catch (error) {
     console.error(next);
