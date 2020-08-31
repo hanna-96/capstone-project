@@ -15,6 +15,7 @@ import AllIngredients from "./AllIngredients";
 import { connect } from "react-redux";
 import { me } from "../redux/user";
 import history from '../history'
+import CameraInput from "./CameraInput";
 
 class Routes extends React.Component {
 
@@ -42,6 +43,7 @@ class Routes extends React.Component {
           <Route exact path="/users/:userName" component={InputForm} />
           <Route exact path='/results' component={DrinkList} />
           <Route exact path='/results/:id' component={DrinkId} />
+          <Route exact path='/scan' component={CameraInput} />
           {isLoggedIn && (
             <Switch>
               {/* Routes placed here are only available after logging in */}
