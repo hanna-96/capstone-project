@@ -30,7 +30,7 @@ const RequestFilter = (props) => {
         }
 
         ingreds.forEach(async ing => await reqValidator(ing))
-    }, [])
+    }, [inputLen])
 
     
     return (
