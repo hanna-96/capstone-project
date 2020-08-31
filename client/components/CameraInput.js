@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
 import axios from 'axios'
 import { makeStyles } from '@material-ui/core/styles'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -7,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton'
 import PhotoCamera from '@material-ui/icons/PhotoCamera'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
+import { Link } from 'react-router-dom'
 // import readReceipt from '../../readReceipt'
 
 const useStyles = makeStyles((theme) => ({
@@ -18,6 +20,18 @@ const useStyles = makeStyles((theme) => ({
   input: {
     display: 'none',
   },
+  scrollBar: {
+    '&::-webkit-scrollbar': {
+      width: '0.4em'
+    },
+    '&::-webkit-scrollbar-track': {
+      '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: 'rgba(0,0,0,.3)',
+      outline: '1px solid slategrey'
+    }
+  }
 }));
 
 const blacklisted = {
@@ -25,7 +39,12 @@ const blacklisted = {
   subtotal: true,
   supermarket: true,
   market: true,
-  ctown: true
+  ctown: true,
+  tare: true,
+  visa: true,
+  mastercard: true,
+  card: true,
+  cash: true
 }
 
 const readReceipt = receipt => {
@@ -39,7 +58,7 @@ const readReceipt = receipt => {
   return receipt.filter(isAWord)
 }
 
-const CameraInput = () => {
+const CameraInput = props => {
   const [loading, setLoading] = useState(false)
   const [hasScanned, setScanStatus] = useState(false)
   const [error, setError] = useState(false)
@@ -48,31 +67,37 @@ const CameraInput = () => {
   //useStyles() is material ui
   const classes = useStyles()
   const handleInput = evt => {
-    isLoading(true)
+    setLoading(true)
     const read = async () => {
       try {
-        // lines 56-61 are for fetching real data from vision api
+        // lines 74-80 are for fetching real data from vision api
         // file is our uploaded image, in a File object
-        const file = evt.target.files[0]
-        const formData = new FormData()
-        //append the File to formData so it can be sent to the server
-        formData.append('img', file)
-        const { data } = await axios.post(`/gvision`, formData)
-        const receipt = readReceipt(data)
+        // const file = evt.target.files[0]
+        // const formData = new FormData()
+        // //append the File to formData so it can be sent to the server
+        // formData.append('img', file)
+        // const { data } = await axios.post(`/gvision`, formData)
+        // const receipt = readReceipt(data)
 
         //fake data for testing so we don't use up loads of api calls
-        // const receipt = [
-        //   'apples',
-        //   'avocado',
-        //   'white rum',
-        //   'lime',
-        //   'orange liquer'
-        // ]
+        const receipt = [
+          'apples',
+          'avocado',
+          'white rum',
+          'lime',
+          'orange liquer',
+          'cake',
+          'lemon',
+          'whiskey',
+          'ice cream',
+          'bacon',
+          'chocolate'
+        ]
 
         setLoading(false)
         setScanStatus(true)
-        //if data comes back empty, throws an error
-        if (!receipt) throw new Error('Something went wrong')
+        //if data comes back empty, throws an error without setting text in state
+        if (!receipt) throw new Error('Could not read text')
         setText(receipt)
       } catch (e) {
         //set error state so that an error message is displayed to user
@@ -92,8 +117,8 @@ const CameraInput = () => {
     <div id='file-input-container-all'>
       { loading ? <CircularProgress /> :
       <div id='file-input'>
-        { error ? <h2>something went wrong!</h2> : ''}
-        <ul id='input-text-list'>
+        { error ? <h2>Could not read text</h2> : ''}
+        <ul id='input-text-list' className={classes.scrollBar}>
           { text && text.map(word =>
           <li className='scanned-item'>
             <span>{word}</span>
@@ -116,17 +141,19 @@ const CameraInput = () => {
               { hasScanned ? 'Scan Again' : 'Scan Receipt' }
             </Button>
           </label>
-          <input accept="image/*" className={classes.input} id="icon-button-file" type="file" capture="camera" onInput={handleInput} />
+          {/* <input accept="image/*" className={classes.input} id="icon-button-file" type="file" capture="camera" onInput={handleInput} />
           <label htmlFor="icon-button-file">
-          <IconButton color="primary" aria-label="upload picture" component="span">
+            <IconButton color="primary" aria-label="upload picture" component="span">
               <PhotoCamera />
             </IconButton>
-          </label>
+          </label> */}
         </div>
         { hasScanned && 
           <div id='after-scan-buttons'>
-            { !error && <button type='submit'>Add All to Cabinet</button> }
-            <button type='submit'>Add Items with Text Input</button>
+            { !error && <Button variant="outlined" color="primary" size='small'>Add All to Cabinet</Button> }
+            <Link to={`users/${props.user.id}`}>
+              <Button variant="outlined" color="primary" size='small'>Add Items with Text Input</Button>
+            </Link>
           </div>
         }
       </div>
@@ -135,4 +162,8 @@ const CameraInput = () => {
   )
 }
 
-export default CameraInput
+const mapState = state => ({
+  user: state.user
+})
+
+export default connect(mapState)(CameraInput)
