@@ -58,6 +58,7 @@ function Login () {
   const dispatch = useDispatch()
   const classes = useStyles()
   
+
    const handleSubmit = event => {
     event.preventDefault();
     dispatch(authLogin(userName, password));
@@ -65,8 +66,8 @@ function Login () {
     setPassword('')
   }
   const handleChange = event => {
-    setUserName(event.target.userName)
-    setPassword(event.target.password)
+    setUserName(event.target.value)
+    setPassword(event.target.value)
   }
     return (
       <Container component="main" maxWidth="xs">
@@ -78,7 +79,7 @@ function Login () {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate onSubmit={(event) => handleSubmit(event)}>
+          <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -88,7 +89,7 @@ function Login () {
               label="Username"
               name="userName"
               autoComplete="userName"
-              onChange={(event) => handleChange(event)}
+              onChange={handleChange}
               value={userName}
               autoFocus
             />
@@ -101,7 +102,7 @@ function Login () {
               label="Password"
               type="text"
               id="password"
-              onChange={(event) => handleChange(event)}
+              onChange={handleChange}
               value={password}
               // autoComplete="current-password"
             />
