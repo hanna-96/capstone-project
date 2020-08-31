@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 
 const expressSession = require("express-session");
-// const DynamoStore = require('connect-dynamodb')({session: session});
 const DynamoStore = require("dynamodb-store");
 const PORT = process.env.PORT || 8080;
 const path = require("path");
@@ -12,7 +11,7 @@ const fileUpload = require("express-fileupload");
 const vision = require("@google-cloud/vision");
 const cors = require("cors");
 const passport = require("passport");
-// const LocalStrategy   = require('passport-local').Strategy;
+const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt-nodejs");
 const routes = require("./server/api/users");
 const expressValidator = require("express-validator");
@@ -40,14 +39,69 @@ app.use(bodyParser.json());
 
 const secrets = require("./secrets");
 
-// passport registration
+// passport registration original
 passport.serializeUser(function (user, done) {
   done(null, user);
 });
 
 passport.deserializeUser(function (user, done) {
-  done(null, user);
+  const AWS = require("aws-sdk");
+  if (process.env.NODE_ENV === "dev") require("./secrets");
+  let awsConfig = {
+    region: "us-east-2",
+    endpoint: process.env.AWS_ENDPOINT,
+    accessKeyId: process.env.ACCESS_KEY_ID,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY,
+  };
+
+  AWS.config.update(awsConfig);
+  //connecting to AWS DynamoDB
+  const DynamoDB = new AWS.DynamoDB();
+  //return user by login
+  console.log("user",user)
+  // DynamoDB.getItem("user", user.Item.userName, null, {}, function (err, item, cap) {
+  //   console.log("Hey!!!!")
+  //   done(err, item);
+  // });
+  done(null, user.Item);
 });
+
+passport.use(
+  new LocalStrategy(function (user, pass, done) {
+    //Conect to Dynamodb
+    const AWS = require("aws-sdk");
+    if (process.env.NODE_ENV === "dev") require("./secrets");
+    let awsConfig = {
+      region: "us-east-2",
+      endpoint: process.env.AWS_ENDPOINT,
+      accessKeyId: process.env.ACCESS_KEY_ID,
+      secretAccessKey: process.env.SECRET_ACCESS_KEY,
+    };
+
+    AWS.config.update(awsConfig);
+    //connecting to AWS DynamoDB
+    const DynamoDB = new AWS.DynamoDB();
+
+    //return user by login
+    DynamoDB.getItem("user", user.Item.userName, null, {}, function (err, item, cap) {
+      console.log("Hey 2!!!!")
+      if (err) {
+        //return the response from callback when an error happen
+        return done(err);
+      } else {
+        if (item) {
+          //return the response from callback when the login is ok
+          return done(null, item);
+        } else {
+          //return the response from callback when the login is invalid
+          return done(null, false, {
+            message: "Login Invalid",
+          });
+        }
+      }
+    });
+  })
+);
 
 const session = {
   cookie: { maxAge },
@@ -64,7 +118,7 @@ const session = {
     },
     dynamoConfig: {
       accessKeyId: process.env.ACCESS_KEY_ID,
-      secretAccessKey:process.env.SECRET_ACCESS_KEY,
+      secretAccessKey: process.env.SECRET_ACCESS_KEY,
       region: "us-east-2",
     },
   }),
@@ -86,8 +140,6 @@ app.use(expressSession(session));
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-
 
 app.use("/api/users", routes);
 

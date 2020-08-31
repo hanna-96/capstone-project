@@ -147,6 +147,7 @@ async function deleteUser(userName) {
 // })();
 
 module.exports = {
+  DynamoDB,
   createTable,
   addUser,
   getAllUsers,
