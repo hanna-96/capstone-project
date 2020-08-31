@@ -10,6 +10,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    boxShadow: 'none'
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -25,7 +26,7 @@ export default function ButtonAppBar(props) {
   const {toggleDrawer} = props
   return (
     <div className={classes.root}>
-      <AppBar color='primary' position='sticky'>
+      <AppBar color='primary' position='sticky' id='app-bar'>
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="secondary" aria-label="menu" onClick={toggleDrawer}>
             <MenuIcon />

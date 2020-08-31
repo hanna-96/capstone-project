@@ -6,7 +6,6 @@ import Signup from "./Signup";
 import DrinkList from './drink-list'
 import DrinkId from './drink-by-id'
 import Cabinet from './Cabinet'
-import CameraInput from './CameraInput'
 import PropTypes from "prop-types";
 import Request from "../request-test";
 import UserHome from "./UserHome";
