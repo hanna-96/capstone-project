@@ -15,6 +15,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt-nodejs");
 const routes = require("./server/api/users");
 const expressValidator = require("express-validator");
+const {  getSingleUserByUserName} = require("./server/dynamoDB")
 //users will be kept logged in 1 week in dynamoDb
 const maxAge = 604800000;
 app.use(expressValidator());
@@ -38,83 +39,104 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const secrets = require("./secrets");
+//when the function is called only the userName is stored in sessions table
 // const passportFunc = require('./passport')
 // app.use(passport.initialize());
 // app.use(passport.session());
 // passportFunc(passport)
-// // // passport registration original
-passport.serializeUser(function (user, done) {
+
+
+// passport registration original
+
+passport.serializeUser(function(user, done) {
   done(null, user);
 });
 
-passport.deserializeUser(function (user, done) {
-  const AWS = require("aws-sdk");
-  if (process.env.NODE_ENV === "dev") require("./secrets");
-  let awsConfig = {
-    region: "us-east-2",
-    endpoint: process.env.AWS_ENDPOINT,
-    accessKeyId: process.env.ACCESS_KEY_ID,
-    secretAccessKey: process.env.SECRET_ACCESS_KEY,
-  };
-
-  AWS.config.update(awsConfig);
-  //connecting to AWS DynamoDB
-  const DynamoDB = new AWS.DynamoDB();
-  //return user by login
-  console.log("user",user)
-  DynamoDB.getItem("user", user.userName, null, {}, function (err, item, cap) {
-    console.log("Hey!!!!")
-    done(err, item);
-  });
-  done(null, user.Item);
+passport.deserializeUser(function(user, done) {
+  done(null, user);
 });
+//also tried this:((
+// passport.serializeUser(function (user, done) {
+//   console.log("User is in deserialize",user)
+//   done(null, user.userName);
+// });
+// passport.deserializeUser(async (userName, done) => {
+//   try {
+//     const user = await getSingleUserByUserName(userName)
+//     // console.log("User is in deserialize",user)
+//     done(null, user)
+//   } catch (err) {
+//     done(err)
+//   }
+// })
+// passport.deserializeUser(function (user, done) {
+//   const AWS = require("aws-sdk");
+//   if (process.env.NODE_ENV === "dev") require("./secrets");
+//   let awsConfig = {
+//     region: "us-east-2",
+//     endpoint: process.env.AWS_ENDPOINT,
+//     accessKeyId: process.env.ACCESS_KEY_ID,
+//     secretAccessKey: process.env.SECRET_ACCESS_KEY,
+//   };
+
+//   AWS.config.update(awsConfig);
+//   //connecting to AWS DynamoDB
+//   const DynamoDB = new AWS.DynamoDB();
+//   //return user by login
+//   console.log("user",user)
+//   DynamoDB.getItem("user", user.userName, null, {}, function (err, item, cap) {
+//     console.log("Hey!!!!")
+//     done(err, item);
+//   });
+//   done(null, user.Item);
+// });
 
 
-passport.use(
-  new LocalStrategy(function (user, pass, done) {
-    //Conect to Dynamodb
-    const AWS = require("aws-sdk");
-    if (process.env.NODE_ENV === "dev") require("./secrets");
-    let awsConfig = {
-      region: "us-east-2",
-      endpoint: process.env.AWS_ENDPOINT,
-      accessKeyId: process.env.ACCESS_KEY_ID,
-      secretAccessKey: process.env.SECRET_ACCESS_KEY,
-    };
+// passport.use(
+//   new LocalStrategy(function (user, pass, done) {
+//     //Conect to Dynamodb
+//     const AWS = require("aws-sdk");
+//     if (process.env.NODE_ENV === "dev") require("./secrets");
+//     let awsConfig = {
+//       region: "us-east-2",
+//       endpoint: process.env.AWS_ENDPOINT,
+//       accessKeyId: process.env.ACCESS_KEY_ID,
+//       secretAccessKey: process.env.SECRET_ACCESS_KEY,
+//     };
 
-    AWS.config.update(awsConfig);
-    //connecting to AWS DynamoDB
-    const DynamoDB = new AWS.DynamoDB();
+//     AWS.config.update(awsConfig);
+//     //connecting to AWS DynamoDB
+//     const DynamoDB = new AWS.DynamoDB();
 
-    //return user by login
-    DynamoDB.getItem("user", user.Item.userName, null, {}, function (err, item, cap) {
-      console.log("Hey 2!!!!")
-      if (err) {
-        //return the response from callback when an error happen
-        return done(err);
-      } else {
-        if (item) {
-          //return the response from callback when the login is ok
-          return done(null, item);
-        } else {
-          //return the response from callback when the login is invalid
-          return done(null, false, {
-            message: "Login Invalid",
-          });
-        }
-      }
-    });
-  })
-);
+//     //return user by login
+//     DynamoDB.getItem("user", user.Item.userName, null, {}, function (err, item, cap) {
+//       console.log("Hey 2!!!!")
+//       if (err) {
+//         //return the response from callback when an error happen
+//         return done(err);
+//       } else {
+//         if (item) {
+//           //return the response from callback when the login is ok
+//           return done(null, item);
+//         } else {
+//           //return the response from callback when the login is invalid
+//           return done(null, false, {
+//             message: "Login Invalid",
+//           });
+//         }
+//       }
+//     });
+//   })
+// );
 
 const session = {
   cookie: { maxAge },
-  secret: "Capstone", //change later for safety
+  secret: "Capstone", //add later to secrets.js
   resave: false,
   saveUninitialized: true,
   store: new DynamoStore({
     table: {
-      name: "Sessions", //might be wrong
+      name: "Sessions", 
       hashKey: "id",
       hashPrefix: "",
       readCapacityUnits: 5,
