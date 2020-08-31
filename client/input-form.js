@@ -36,16 +36,6 @@ const InputForm = () => {
        fields.forEach( (val, idx) => {if(event.target[idx]) event.target[idx].value = ''})
     }
 
-    // useEffect (() => {
-    //     const rerender = () => {
-    //         if(submitted) {
-    //             setSubmitted(false)
-    //         }
-    //     }
-
-    //     rerender()
-    // }, [submitted])
-
 
     const addField = () => { 
         // adds a field with each click on the plus icon

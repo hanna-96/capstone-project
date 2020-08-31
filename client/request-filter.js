@@ -40,7 +40,7 @@ const RequestFilter = (props) => {
     <p>{validIng.map( (ingred) => 
     <div>
     <div>{ingred.split('_').join(' ')} has been added</div>
-    {/* <p> <AllIngredients ingred={ingred} /></p> */}
+    <p> <AllIngredients ingred={ingred} /></p>
       </div>
     )}</p>
     <p>See your results: </p>
