@@ -82,17 +82,22 @@ router.get("/:userName/allingredients", async (req, res, next) => {
   try {
     const userName = req.params.userName
     const singleUser = await getSingleUserByUserName(userName);
+    console.log(singleUser)
     const usersIngredients = singleUser.Item.ingredients;
+    console.log(singleUser)
     res.send(usersIngredients);
   } catch (error) {
     console.error(error);
   }
 });
-//update User's ingredients by adding a new Ingredient
+// update User's ingredients by adding a new Ingredient
 
-router.put("/:userId/allingredients", async (req, res, next) => {
+router.put("/:userName/allingredients", async (req, res, next) => {
   try {
     const userName = req.params.userName
+    console.log(req.body, 'body')
+    console.log(req.params, 'params')
+
     console.log("params", req.body.ingredient);
     // console.log("req.body isss", req.body);
     // TODO:destructure req.body depending on how much iingredinets will come from front-end(input)
