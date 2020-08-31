@@ -123,6 +123,7 @@ body {
 #after-scan-buttons * {
   margin: .4em 0;
   text-decoration: none;
+  text-align: center;
 }
 
 #after-scan-buttons {

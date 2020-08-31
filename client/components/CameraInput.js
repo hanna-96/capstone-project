@@ -119,7 +119,7 @@ const CameraInput = props => {
   const handleRemove = word => {
     setText(text.filter(w => w !== word))
   }
-  
+
   //can currently only accept one file at a time
   return (
     <div id='file-input-container-all'>
@@ -160,7 +160,7 @@ const CameraInput = props => {
         submitted ? <RequestFilter ingreds={text} /> :
         <div id='after-scan-buttons'>
           { hasScanned && 
-            <div>
+            <div id='add-to-cabinet-btn'>
               { !error && <Button variant="outlined" color="primary" size='small' onClick={() => setSubmitStatus(true)}>Add All to Cabinet</Button> }
             </div>
           }
