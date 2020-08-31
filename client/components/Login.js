@@ -6,8 +6,8 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import Checkbox from '@material-ui/core/Checkbox';
 // import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -138,65 +138,3 @@ class Login extends React.Component {
   };
   
   export default connect(null, mapDispatch)(withStyles(styles)(Login))
-  // (withStyles(styles)
-
-           {/* <button type="submit">
-           {/* <Link to="/welcome">Log In</Link> */}
-         {/* </button> */} 
-       {/* </form>
-     </div> */}
-      {/* // <Container component="main" maxWidth="xs">
-      //   <CssBaseline />
-      //   <div >
-      //     <Avatar >
-      //       <LockOutlinedIcon />
-      //     </Avatar>
-      //     <Typography component="h1" variant="h5">
-      //       Sign in
-      //     </Typography>
-      //     <form  noValidate onSubmit={this.handleSubmit}>
-      //       <TextField */}
-      {/* //         variant="outlined"
-      //         margin="normal"
-      //         required
-      //         fullWidth
-      //         id="userName"
-      //         label="Username"
-      //         name="userName"
-      //         autoComplete="userName"
-      //         onChange={this.handleChange}
-      //         value={this.state.userName}
-      //         autoFocus
-      //       />
-      //       <TextField */}
-      {/* //         variant="outlined"
-      //         margin="normal"
-      //         required
-      //         fullWidth
-      //         name="password"
-      //         label="Password"
-      //         type="text"
-      //         id="password"
-      //         onChange={this.handleChange}
-      //         value={this.state.password}
-      //         // autoComplete="current-password"
-      //       />
-      //       <FormControlLabel */}
-      {/* //         control={<Checkbox value="remember" color="primary" />}
-      //         label="Remember me"
-      //       />
-      //       <Button */}
-      {/* //         type="submit"
-      //         fullWidth
-      //         variant="contained"
-      //         color="primary"
-      //         // className={classes.submit}
-      //       >
-      //         Sign In
-      //       </Button> */}
-      {/* //     </form> */}
-      {/* //   </div> */}
-      //   {/* <Box mt={8}>
-      //     <Copyright />
-      //   </Box> */}
-      {/* // </Container> */}
