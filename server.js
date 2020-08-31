@@ -38,8 +38,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const secrets = require("./secrets");
-
-// passport registration original
+// const passportFunc = require('./passport')
+// app.use(passport.initialize());
+// app.use(passport.session());
+// passportFunc(passport)
+// // // passport registration original
 passport.serializeUser(function (user, done) {
   done(null, user);
 });
@@ -59,12 +62,13 @@ passport.deserializeUser(function (user, done) {
   const DynamoDB = new AWS.DynamoDB();
   //return user by login
   console.log("user",user)
-  // DynamoDB.getItem("user", user.Item.userName, null, {}, function (err, item, cap) {
-  //   console.log("Hey!!!!")
-  //   done(err, item);
-  // });
+  DynamoDB.getItem("user", user.userName, null, {}, function (err, item, cap) {
+    console.log("Hey!!!!")
+    done(err, item);
+  });
   done(null, user.Item);
 });
+
 
 passport.use(
   new LocalStrategy(function (user, pass, done) {
