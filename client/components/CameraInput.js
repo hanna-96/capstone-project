@@ -53,7 +53,7 @@ const CameraInput = () => {
         <input type='file' accept='image/*' />
       </form>
       <ul>
-        {text ? text.map(word =>
+        {text.length ? text.map(word =>
           <li>
             <div>
             {word}

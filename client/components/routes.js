@@ -39,7 +39,7 @@ class Routes extends React.Component {
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
-          <Route exact path="/users/:userId" component={InputForm} />
+          <Route exact path="/users/:userName" component={InputForm} />
           <Route exact path='/results' component={DrinkList} />
           <Route exact path='/results/:id' component={DrinkId} />
           {isLoggedIn && (
