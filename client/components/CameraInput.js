@@ -74,8 +74,9 @@ const CameraInput = props => {
 
   //useStyles() is material ui
   const classes = useStyles()
-  const handleInput = evt => {
+  const handleInput = () => {
     setLoading(true)
+    setSubmitStatus(false)
     const read = async () => {
       try {
         // lines 74-80 are for fetching real data from vision api
@@ -88,12 +89,12 @@ const CameraInput = props => {
         // const receipt = readReceipt(data)
 
         //fake data for testing so we don't use up loads of api calls
-        const receipt = [
+        let receipt = [
           'apples',
           'avocado',
           'white rum',
           'lime',
-          'orange liquer',
+          'orange liqueur',
           'cake',
           'lemon',
           'whiskey',
@@ -106,6 +107,7 @@ const CameraInput = props => {
         setScanStatus(true)
         //if data comes back empty, throws an error without setting text in state
         if (!receipt) throw new Error('Could not read text')
+        //set the transcribed text
         setText(receipt)
       } catch (e) {
         //set error state so that an error message is displayed to user
@@ -145,7 +147,7 @@ const CameraInput = props => {
             onInput={handleInput}
           />
           <label htmlFor="contained-button-file">
-            <Button variant="contained" color="primary" component="span" size="large" onClick={() => setSubmitStatus(false)} startIcon={<CloudUploadIcon />}>
+            <Button variant="contained" color="primary" component="span" size="large" startIcon={<CloudUploadIcon />}>
               { hasScanned ? 'Scan Again' : 'Scan Receipt' }
             </Button>
           </label>
@@ -161,7 +163,7 @@ const CameraInput = props => {
         <div id='after-scan-buttons'>
           { hasScanned && 
             <div id='add-to-cabinet-btn'>
-              { !error && <Button variant="outlined" color="primary" size='small' onClick={() => setSubmitStatus(true)}>Add All to Cabinet</Button> }
+              { !error && <Button variant="outlined" color="primary" size='small' onClick={() => setSubmitStatus(true)}>Get Recipes!</Button> }
             </div>
           }
           <Link to={`users/${props.user.id}`}>
