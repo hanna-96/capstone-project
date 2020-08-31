@@ -74,7 +74,7 @@ const CameraInput = props => {
 
   //useStyles() is material ui
   const classes = useStyles()
-  const handleInput = () => {
+  const handleInput = evt => {
     setLoading(true)
     setSubmitStatus(false)
     const read = async () => {
