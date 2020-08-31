@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
@@ -35,6 +35,16 @@ const InputForm = () => {
     const clearInput = () => { // clear input once the submit event occurs
        fields.forEach( (val, idx) => {if(event.target[idx]) event.target[idx].value = ''})
     }
+
+    // useEffect (() => {
+    //     const rerender = () => {
+    //         if(submitted) {
+    //             setSubmitted(false)
+    //         }
+    //     }
+
+    //     rerender()
+    // }, [submitted])
 
 
     const addField = () => { 
