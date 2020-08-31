@@ -47,14 +47,14 @@ class Routes extends React.Component {
           <Route exact path='/results/:id' component={DrinkId} />
           <Route exact path='/cabinet' component={Cabinet} />
           <Route exact path='/camera' component={CameraInput} />
-          <Route exact path='/request' component={Request} />
+          {/* <Route exact path='/request' component={Request} />  */}
           {isLoggedIn && (
             <Switch>
               {/* Routes placed here are only available after logging in */}
               <Route exact path="/welcome" component={UserHome} />
             </Switch>
           )}
-          {/* <Route component={Login} /> */}
+          <Route component={Login} />
           </Switch>
       </div>
     );
