@@ -9,6 +9,8 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import { Link } from 'react-router-dom'
+import RequestFilter from '../request-filter'
+import InputForm from '../input-form'
 // import readReceipt from '../../readReceipt'
 
 const useStyles = makeStyles((theme) => ({
@@ -44,7 +46,12 @@ const blacklisted = {
   visa: true,
   mastercard: true,
   card: true,
-  cash: true
+  cash: true,
+  lb: true,
+}
+
+const editedWords = {
+  lemons: 'lemon'
 }
 
 const readReceipt = receipt => {
@@ -62,6 +69,7 @@ const CameraInput = props => {
   const [loading, setLoading] = useState(false)
   const [hasScanned, setScanStatus] = useState(false)
   const [error, setError] = useState(false)
+  const [submitted, setSubmitStatus] = useState(false)
   const [text, setText] = useState([])
 
   //useStyles() is material ui
@@ -111,7 +119,7 @@ const CameraInput = props => {
   const handleRemove = word => {
     setText(text.filter(w => w !== word))
   }
-
+  
   //can currently only accept one file at a time
   return (
     <div id='file-input-container-all'>
@@ -137,7 +145,7 @@ const CameraInput = props => {
             onInput={handleInput}
           />
           <label htmlFor="contained-button-file">
-            <Button variant="contained" color="primary" component="span" size="large" startIcon={<CloudUploadIcon />}>
+            <Button variant="contained" color="primary" component="span" size="large" onClick={() => setSubmitStatus(false)} startIcon={<CloudUploadIcon />}>
               { hasScanned ? 'Scan Again' : 'Scan Receipt' }
             </Button>
           </label>
@@ -148,13 +156,18 @@ const CameraInput = props => {
             </IconButton>
           </label> */}
         </div>
-        { hasScanned && 
-          <div id='after-scan-buttons'>
-            { !error && <Button variant="outlined" color="primary" size='small'>Add All to Cabinet</Button> }
-            <Link to={`users/${props.user.id}`}>
-              <Button variant="outlined" color="primary" size='small'>Add Items with Text Input</Button>
-            </Link>
-          </div>
+        {
+        submitted ? <RequestFilter ingreds={text} /> :
+        <div id='after-scan-buttons'>
+          { hasScanned && 
+            <div>
+              { !error && <Button variant="outlined" color="primary" size='small' onClick={() => setSubmitStatus(true)}>Add All to Cabinet</Button> }
+            </div>
+          }
+          <Link to={`users/${props.user.id}`}>
+            <Button variant="outlined" color="primary" size='small'>Add Items with Text Input</Button>
+          </Link>
+        </div>
         }
       </div>
       }
