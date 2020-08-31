@@ -163,11 +163,11 @@ const CameraInput = props => {
         <div id='after-scan-buttons'>
           { hasScanned && 
             <div id='add-to-cabinet-btn'>
-              { !error && <Button variant="outlined" color="primary" size='small' onClick={() => setSubmitStatus(true)}>Get Recipes!</Button> }
+              { !error && <Button variant="outlined" color="secondary" size='small' onClick={() => setSubmitStatus(true)}>Get Recipes!</Button> }
             </div>
           }
           <Link to={`users/${props.user.id}`}>
-            <Button variant="outlined" color="primary" size='small'>Add Items with Text Input</Button>
+            <Button variant="outlined" color="secondary" size='small'>Add Items with Text Input</Button>
           </Link>
         </div>
         }
