@@ -7,8 +7,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {Link} from 'react-router-dom'
-import {logout} from '../redux/user'
-import {connect} from 'react-redux'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +33,6 @@ function ButtonAppBar(props) {
           <IconButton edge="start" className={classes.menuButton} color="secondary" aria-label="menu" onClick={toggleDrawer}>
             <MenuIcon />
           </IconButton>
-          <button onClick={props.handleClick}>Logout</button>
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
@@ -42,12 +40,4 @@ function ButtonAppBar(props) {
   );
 }
 
-const mapDispatch = dispatch => {
-  return {
-    handleClick() {
-      dispatch(logout())
-    }
-  }
-}
-
-export default connect(null, mapDispatch)(ButtonAppBar)
+export default ButtonAppBar
