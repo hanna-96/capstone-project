@@ -33,7 +33,6 @@ function ButtonAppBar(props) {
           <IconButton edge="start" className={classes.menuButton} color="secondary" aria-label="menu" onClick={toggleDrawer}>
             <MenuIcon />
           </IconButton>
-          <Button onClick={props.handleClick}>Logout</Button>
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
