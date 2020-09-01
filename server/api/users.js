@@ -19,6 +19,7 @@ router.get("/", async (req, res, next) => {
 router.get("/:userName", async (req, res, next) => {
   try {
     const userName = req.params.userName;
+    console.log('req user', req.user)
     const singleUser = await getSingleUserByUserName(userName);
     res.send(singleUser.Item);
   } catch (error) {
@@ -60,17 +61,18 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-
 router.post('/logout', (req, res) => {
   req.logout()
+  console.log(req.session, 'inside req session')
   req.session.destroy()
   res.redirect('/')
 })
 
-router.get('/me', (req, res) => {
-  console.log('PATH GET /ME')
-  res.json(req.user)
-})
+//this route was blocked from the frontend for some reason. Didn't even get the console.log
+// router.get('/me', (req, res) => {
+//   console.log('from get me: ', req.user)
+//   res.json(req.user)
+// })
 
 router.put("/:userName", async (req, res, next) => {
   try {
