@@ -11,7 +11,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import AppBar from './AppBar'
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 
 import {logout} from '../redux/user'
 import {connect} from 'react-redux'
@@ -64,7 +65,7 @@ const useStyles = makeStyles({
             <ListItemText primary='Your Cabinet' />
           </ListItem>
         </Link>
-        <Link to='/scan'>
+          <Link to='/scan'>
           <ListItem button key='scan'>
             <ListItemText primary='Scan Items' />
           </ListItem>
@@ -72,12 +73,11 @@ const useStyles = makeStyles({
       </List>
       <Divider />
       <List>
-        {['Logout'].map((text, index) => (
-          <ListItem button key={text} onClick={props.handleClick}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        {props.isLoggedIn && (
+          <ListItem button key="logout" onClick={props.handleClick}>
+            <ListItemText primary="Logout" />
+          </ListItem>)
+      }
       </List>
     </div>
   );
@@ -92,6 +92,14 @@ const useStyles = makeStyles({
         </React.Fragment>
     </div>
   );
+}
+
+const mapState = (state) => {
+  return {
+    // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
+    // Otherwise, state.user will be an empty object, and state.user.id will be falsey
+    isLoggedIn: !!state.user.userName,
+  };
 }
 
 const mapDispatch = dispatch => {
