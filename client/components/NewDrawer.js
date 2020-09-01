@@ -11,7 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import AppBar from './AppBar'
-import Link from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 import {logout} from '../redux/user'
 import {connect} from 'react-redux'
@@ -54,11 +54,21 @@ const useStyles = makeStyles({
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['Home', 'Your Cabinet', 'Scan Items'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemText primary={text} />
+        <Link to='/welcome'>
+          <ListItem button key='home'>
+            <ListItemText primary='Home' />
           </ListItem>
-        ))}
+        </Link>
+        <Link to="/users/:userName/cabinet">
+          <ListItem button key='cabinet'>
+            <ListItemText primary='Your Cabinet' />
+          </ListItem>
+        </Link>
+        <Link to='/scan'>
+          <ListItem button key='scan'>
+            <ListItemText primary='Scan Items' />
+          </ListItem>
+        </Link>
       </List>
       <Divider />
       <List>
