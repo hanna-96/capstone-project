@@ -102,7 +102,6 @@ const CameraInput = props => {
           'bacon',
           'chocolate'
         ]
-
         setLoading(false)
         setScanStatus(true)
         //if data comes back empty, throws an error without setting text in state
@@ -125,7 +124,7 @@ const CameraInput = props => {
   //can currently only accept one file at a time
   return (
     <div id='file-input-container-all'>
-      { loading ? <CircularProgress /> :
+      { loading ? <CircularProgress id='loading-circle' /> :
       <div id='file-input'>
         { error ? <h2>Could not read text</h2> : ''}
         <ul id='input-text-list' className={classes.scrollBar}>
@@ -147,7 +146,7 @@ const CameraInput = props => {
             onInput={handleInput}
           />
           <label htmlFor="contained-button-file">
-            <Button variant="contained" color="primary" component="span" size="large" startIcon={<CloudUploadIcon />}>
+            <Button variant="contained" id='scan-btn' color="primary" component="span" size="large" startIcon={<CloudUploadIcon />}>
               { hasScanned ? 'Scan Again' : 'Scan Receipt' }
             </Button>
           </label>

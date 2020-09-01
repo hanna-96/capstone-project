@@ -9,9 +9,20 @@
 
 /************ scan view styles ************/
 
+#loading-circle {
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+}
+
 #file-input-container-all {
   display: flex;
   justify-content: center;
+}
+
+#scan-btn:hover {
+  transition: color .2s;
+  color: #ffffff;
 }
 
 #file-input {

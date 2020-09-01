@@ -1,5 +1,6 @@
 import React from "react";
 import { authLogin } from "../redux/user";
+import { Redirect } from "react-router";
 // import { withStyles } from 'material-ui/styles';
 import { withStyles } from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar';
@@ -74,6 +75,7 @@ class Login extends React.Component {
   }
   
   render() {
+    if (this.props.isLoggedIn) return <Redirect to='/welcome' />
     const {classes} = this.props
     return (
        <Container component="main" maxWidth="xs">
