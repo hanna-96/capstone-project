@@ -38,13 +38,15 @@ class Routes extends React.Component {
       <div>
        
         <Switch>
-        <Route exact path="/" component={Signup} />
-          <Route exact path="/login" component={Login} />
+        <Route exact path="/" component={Login} />
+          <Route exact path="/login" component= {Signup}/>
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/users/:userName" component={InputForm} />
           <Route exact path='/results' component={DrinkList} />
           <Route exact path='/results/:id' component={DrinkId} />
           <Route exact path='/scan' component={CameraInput} />
+          <Route exact path='/cabinet' component={Cabinet} />
+
           {isLoggedIn && (
             <Switch>
               {/* Routes placed here are only available after logging in */}
