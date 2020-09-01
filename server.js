@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-
+// const session = require('express-session');
 const expressSession = require("express-session");
 const DynamoStore = require("dynamodb-store");
 const PORT = process.env.PORT || 8080;
@@ -54,39 +54,39 @@ const DynamoDB = new AWS.DynamoDB()
 
 //when the function is called only the userName is stored in sessions table
 
-// const session = {
-//   cookie: { maxAge },
-//   secret: "Capstone", //add later to secrets.js
-//   resave: false,
-//   saveUninitialized: true,
-//   store: new DynamoStore({
-//     table: {
-//       name: "Sessions", 
-//       hashKey: "id",
-//       hashPrefix: "",
-//       readCapacityUnits: 5,
-//       writeCapacityUnits: 5,
-//     },
-//     dynamoConfig: {
-//       accessKeyId: process.env.ACCESS_KEY_ID,
-//       secretAccessKey: process.env.SECRET_ACCESS_KEY,
-//       region: "us-east-2",
-//     },
-//   }),
-// };
-// if (process.env.PORT) {
-//   session.cookie.secure = true;
-// }
-// app.use(expressSession(session));
+const session = {
+  cookie: { maxAge },
+  secret: "Capstone", //add later to secrets.js
+  resave: false,
+  saveUninitialized: true,
+  store: new DynamoStore({
+    table: {
+      name: "Sessions", 
+      hashKey: "id",
+      hashPrefix: "",
+      readCapacityUnits: 5,
+      writeCapacityUnits: 5,
+    },
+    dynamoConfig: {
+      accessKeyId: process.env.ACCESS_KEY_ID,
+      secretAccessKey: process.env.SECRET_ACCESS_KEY,
+      region: "us-east-2",
+    },
+  }),
+};
+if (process.env.PORT) {
+  session.cookie.secure = true;
+}
+app.use(expressSession(session));
 
 // ORIGINAL
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || 'Capstone!',
-    resave: false,
-    saveUninitialized: false
-  })
-)
+// app.use(
+//   session({
+//     secret: process.env.SESSION_SECRET || 'Capstone!',
+//     resave: false,
+//     saveUninitialized: false
+//   })
+// )
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -107,7 +107,6 @@ passport.serializeUser(function (user, done) {
 })
 passport.deserializeUser(async (userName, done) => {
   try {
-    console.log('wtf: ', getSingleUserByUserName)
     const user = await getSingleUserByUserName(userName)
     done(null, user.Item)
   } catch (err) {
