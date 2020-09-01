@@ -13,6 +13,9 @@ import MailIcon from '@material-ui/icons/Mail';
 import AppBar from './AppBar'
 import { Link } from 'react-router-dom';
 
+import {logout} from '../redux/user'
+import {connect} from 'react-redux'
+
 const useStyles = makeStyles({
   list: {
     width: 250,
@@ -22,7 +25,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function NewDrawer() {
+ function NewDrawer(props) {
   const classes = useStyles();
   const [state, setState] = React.useState({
     top: false,
@@ -40,7 +43,7 @@ export default function NewDrawer() {
 
     setState({ ...state, [anchor]: open });
   };
-
+ 
   const list = (anchor) => (
     <div
       className={clsx(classes.list, {
@@ -70,7 +73,7 @@ export default function NewDrawer() {
       <Divider />
       <List>
         {['Logout'].map((text, index) => (
-          <ListItem button key={text}>
+          <ListItem button key={text} onClick={props.handleClick}>
             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
@@ -90,3 +93,13 @@ export default function NewDrawer() {
     </div>
   );
 }
+
+const mapDispatch = dispatch => {
+  return {
+    handleClick() {
+      dispatch(logout())
+    }
+  }
+}
+
+export default connect(null, mapDispatch)(NewDrawer)
