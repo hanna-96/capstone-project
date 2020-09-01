@@ -5,10 +5,14 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import ingredients from './ingredients'
 import users from './users'
 import user from './user'
-const reducer = combineReducers({ingredients,users,user})
+import singleUser from './singleUser'
+
+const reducer = combineReducers({ ingredients, users, user, singleUser })
+
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
+
 const store = createStore(reducer, middleware)
 
 export default store
