@@ -84,3 +84,26 @@
   justify-content: center;
   width: 50%;
 }
+
+#submission {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#field-top {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+#field-add { 
+  justify-content: center;
+  flex-wrap: wrap;
+  
+}
+
+#inputs {
+  display: flex;
+  justify-content: space-between;
+  align-content: space-around;
+  flex-direction: column;
+}
