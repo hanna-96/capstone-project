@@ -19,6 +19,7 @@ router.get("/", async (req, res, next) => {
 router.get("/:userName", async (req, res, next) => {
   try {
     const userName = req.params.userName;
+    console.log('req user', req.user)
     const singleUser = await getSingleUserByUserName(userName);
     res.send(singleUser.Item);
   } catch (error) {
@@ -62,7 +63,7 @@ router.post("/login", async (req, res, next) => {
 
 router.post('/logout', (req, res) => {
   req.logout()
-  console.log('req session',req.session)
+  // console.log('req session',req.session)
   req.session.destroy()
   res.redirect('/')
 })

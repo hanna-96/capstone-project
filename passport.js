@@ -14,7 +14,7 @@ let awsConfig = {
 };
 
 AWS.config.update(awsConfig);
-//connecting to AWS DynamoDB
+// connecting to AWS DynamoDB
 const DynamoDB = new AWS.DynamoDB();
 // var tableName = "Users3";
 const DocumentClient = new AWS.DynamoDB.DocumentClient();
