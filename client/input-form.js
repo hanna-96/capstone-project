@@ -46,24 +46,30 @@ const InputForm = () => {
     }
 
     return (
-    <div className='submission'>
+    <div id='submission'>
     <form onSubmit={handleSubmit}>
         <FormControl >
-            <FontAwesomeIcon icon={faPlusCircle} onClick={addField}/> Add another field
+          <div id='inputs'>
+            <h3>Search for a drink by ingredient</h3>
+            <div id='field-top'>
+            <FontAwesomeIcon icon={faPlusCircle} onClick={addField}/>
 
-            
-      {  
+      {     
         // Renders fields based on the current length of the `fields` array
               fields.map( (input, idx) => {
                 let ing = `ing${idx}`
-
-               return (<Input type='text' name={ing} placeholder="Enter an ingredient" id={idx}/>)
+              
+               return (
+               <div id='field-add'>
+                 <Input type='text' name={ing} placeholder="Enter an ingredient" id={idx}/>
+               </div>)
               }
           )}
+          </div>
         
 
-          <Button type='submit' value='Submit'>Submit Ingredient</Button>
-          
+          <Button type='submit' value='Submit'>Submit Ingredients</Button>
+          </div>
         </FormControl>
               {console.log(inputs, 'the inputs')}
             {submitted? <RequestFilter ingreds={inputs} inputLen={inputs.length} />: <div></div>} 
