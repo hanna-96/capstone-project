@@ -4,13 +4,21 @@ import React, {useEffect, useState} from 'react'
 import {useHistory, Link} from 'react-router-dom'
 import DrinkList from './components/drink-list'
 import {Route} from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux'
+import {fetchSearches} from "./redux/searches";
 
 const Request = (props) => { 
 
   const [drinkList, setDrinks] = useState([])
+  const dispatch = useDispatch()
+  const drinks = useSelector(state => state.drinks)
 
   const [len, setLen] = useState([])
   const {ingreds} = props
+
+  useEffect(()=> {
+    dispatch(fetchSearches(drinkList))
+}, [drinkList])
 
   useEffect( () => {
 

@@ -5,7 +5,8 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import ingredients from './ingredients'
 import users from './users'
 import user from './user'
-const reducer = combineReducers({ingredients,users,user})
+import searches from './searches'
+const reducer = combineReducers({ingredients,users,user, searches})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
