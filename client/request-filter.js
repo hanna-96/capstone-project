@@ -30,16 +30,23 @@ const RequestFilter = (props) => {
         }
 
         ingreds.forEach(async ing => await reqValidator(ing))
-    }, [])
+    }, [inputLen])
 
     
     return (
         
         <div>
 
-    <p>{validIng.map( (ingred) => <div>{ingred.split('_').join(' ')} has been added</div>)}</p>
+    <p>{validIng.map( (ingred) => 
+    <div>
+    <div>{ingred.split('_').join(' ')} has been added</div>
+    <p> <AllIngredients ingred={ingred} /></p>
+      </div>
+    )}</p>
     <p>See your results: </p>
-  < Request ingreds={validIng} />
+  <Request ingreds={validIng} />
+
+
     
     </div>
 

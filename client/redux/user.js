@@ -22,6 +22,10 @@ export const me = () => async (dispatch) => {
 export const authLogin = (userName, password,history) => async dispatch => {
   let res
   try {
+    // res = await axios.post('/api/users/login', {
+    //   userName,
+    //   password
+    // })
     res = await axios.post('/api/users/login', {
       userName,
       password
@@ -36,6 +40,7 @@ export const authLogin = (userName, password,history) => async dispatch => {
     // },3000)
      
    dispatch(getUser(res.data.Item))
+
    history.push('/welcome')
     console.log('data from login thunk',res.data.Item)
 
