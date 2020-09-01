@@ -20,6 +20,10 @@ export const me = () => async (dispatch) => {
 export const authLogin = (userName, password, history) => async dispatch => {
   let res
   try {
+    // res = await axios.post('/api/users/login', {
+    //   userName,
+    //   password
+    // })
     res = await axios.post('/api/users/login', {
       userName,
       password
@@ -29,6 +33,7 @@ export const authLogin = (userName, password, history) => async dispatch => {
   }
   try {
    dispatch(getUser(res.data.Item))
+
    history.push('/welcome')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)

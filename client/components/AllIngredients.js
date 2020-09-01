@@ -21,21 +21,6 @@ class AllIngredients extends React.Component {
     return (
       <div>
 
-
-        <div>{this.props.ingred}</div>
-
-         {/* <h1>Here is the list of your ingredients!</h1>
-         {ingredients.map((ingredient) => {
-           return (
-             <div>
-               <ul>
-                 <li>{ingredient}</li>
-               </ul>
- 
-             </div>
-           );
-         })} */}
-
       </div>
     );
 }
