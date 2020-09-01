@@ -1,7 +1,9 @@
 import React from "react";
 import axios from "axios";
+import { Redirect } from 'react-router'
+import { connect } from 'react-redux'
 
-export default class Signup extends React.Component {
+class Signup extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -33,6 +35,7 @@ export default class Signup extends React.Component {
   }
 
   render() {
+    if (this.props.isLoggedIn) return <Redirect to='/welcome' />
     return (
       // <div>
       <form onSubmit={this.handleSubmit}>
@@ -88,3 +91,7 @@ export default class Signup extends React.Component {
     );
   }
 }
+
+const mapState = state => ({ isLoggedIn: !!state.user.userName })
+
+export default connect(mapState)(Signup)

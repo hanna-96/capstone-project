@@ -60,17 +60,17 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-
 router.post('/logout', (req, res) => {
   req.logout()
   req.session.destroy()
   res.redirect('/')
 })
 
-router.get('/me', (req, res) => {
-  console.log('PATH GET /ME')
-  res.json(req.user)
-})
+//this route was blocked from the frontend for some reason. Didn't even get the console.log
+// router.get('/me', (req, res) => {
+//   console.log('from get me: ', req.user)
+//   res.json(req.user)
+// })
 
 router.put("/:userName", async (req, res, next) => {
   try {

@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { authLogin } from "../redux/user";
+import { Redirect } from "react-router";
 
 class Login extends React.Component {
   constructor() {
@@ -27,6 +28,7 @@ class Login extends React.Component {
   }
 
   render() {
+    if (this.props.isLoggedIn) return <Redirect to='/welcome' />
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
