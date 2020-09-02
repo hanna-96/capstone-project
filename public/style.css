@@ -118,3 +118,6 @@
   align-content: space-around;
   flex-direction: column;
 }
+.scanItemsButton{
+  color:#57ada0;
+}

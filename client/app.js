@@ -5,12 +5,10 @@ import Container from "@material-ui/core/Container";
 
 function App() {
   return (
-      <Container fixed>
         <div className="App">
           <NewDrawer />
           <Routes />
         </div>
-      </Container>
   );
 }
 

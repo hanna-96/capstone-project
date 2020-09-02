@@ -48,6 +48,7 @@ router.post("/signup", async (req, res, next) => {
 router.post("/login", async (req, res, next) => {
   try {
     const user = await getSingleUserByUserName(req.body.userName);
+    console.log('logged in user',user)
     if (!user) {
       res.status(401).send("Wrong username and/or password");
     } else if (req.body.password !== user.Item.password) {
