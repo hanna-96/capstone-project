@@ -141,7 +141,7 @@ const CameraInput = props => {
               { !error && <Button variant="outlined" color="secondary" size='small' onClick={() => setSubmitStatus(true)}>Get Recipes!</Button> }
             </div>
           }
-          <Link to={`users/${props.user.id}`}>
+          <Link to={`users/${props.user.userName}`}>
             <Button variant="outlined" color="secondary" size='small'>Add Items with Text Input</Button>
           </Link>
         </div>
