@@ -11,8 +11,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import AppBar from './AppBar'
-// import { Link } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
+import { Link } from 'react-router-dom';
+// import Link from '@material-ui/core/Link';
+import { Redirect } from 'react-router-dom'
 
 import {logout} from '../redux/user'
 import {connect} from 'react-redux'
@@ -74,14 +75,15 @@ const useStyles = makeStyles({
       <Divider />
       <List>
         {props.isLoggedIn && (
-          <ListItem button key="logout" onClick={props.handleClick}>
+          <ListItem button key="logout" href="/login" onClick={props.handleClick} >
+            {/* <Redirect to='/login' /> */}
             <ListItemText primary="Logout" />
           </ListItem>)
       }
       </List>
     </div>
   );
-
+  console.log('is it logged in?', props.isLoggedIn)
   return (
     <div>
         <React.Fragment key={anchor}>
