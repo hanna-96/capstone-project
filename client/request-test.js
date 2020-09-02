@@ -12,9 +12,11 @@ const Request = (props) => {
   const [drinkList, setDrinks] = useState([])
   const dispatch = useDispatch()
   const drinks = useSelector(state => state.drinks)
+  
 
   const [len, setLen] = useState([])
   const {ingreds} = props
+
 
   useEffect(()=> {
     dispatch(fetchSearches(drinkList))

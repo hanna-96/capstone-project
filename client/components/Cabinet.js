@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {getAllIngredientsThunk,addIngredientThunk, deleteIngredientThunk} from "../redux/ingredients";
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 import Card from '@material-ui/core/Card'
 import Button from '@material-ui/core/Button'
   
@@ -14,7 +14,7 @@ const Cabinet = (props) => {
 
     const handleClick = (e) => {
         e.preventDefault()
-        const idx = Number(e.target.value)
+        const idx =Number(e.currentTarget.value)
         console.log('idx', idx)
         
         dispatch(deleteIngredientThunk(userName, ingredients, idx))
@@ -34,7 +34,6 @@ const Cabinet = (props) => {
 
         return (
             <div>
-                {console.log(ingredArr, ingredients)}
             <h1>Welcome to cabinet</h1>
             {/* <p>{ 
               ingredArr.map((ingred, idx) => <div>
@@ -42,11 +41,15 @@ const Cabinet = (props) => {
                 <button variant='primary' type='button' value={`${idx}`} onClick={handleClick}>delete</button>
                 {console.log(ingred, ingredArr)}
             </Card></div>)} </p>  */}
-            {
+            {console.log(ingredArr)}
+            <Button ><Link to={`/users/${userName}`}>Add to your Cabinet</Link> </Button>
+            { ingredArr.length? 
+                
                 ingredients.map((ingred, idx) => <div>
-                    {ingred}
-                    <button variant='primary' type='button' value={`${idx}`} onClick={handleClick}>delete</button>
-                    </div>)
+                    <Card>
+                        {ingred} <img src={`https://www.thecocktaildb.com/images/ingredients/${ingred}-small.png`} />
+                    <Button variant='primary' type='button' value={`${idx}`} onClick={handleClick}>delete</Button>
+                    </Card></div>) : <div>No ingredients yet!  <Link to={`/users/${userName}`}>Add to your Cabinet</Link></div>
             }
             </div>
         )

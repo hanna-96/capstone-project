@@ -9,15 +9,17 @@ import {
 } from "../redux/ingredients";
 
 class AllIngredients extends React.Component {
-  componentDidMount() {
+  async componentDidMount() {
     const userName = this.props.match.params.userName
+    const ingredients = await this.props.ingredients
+    console.log(this.props.ingred, this.props.ingredients, 'all ingreds')
     this.props.addIngredient(userName, this.props.ingred)
     this.props.getIngredients(userName);
 
   }
   render() {
     const ingredients = this.props.ingredients;
-    {console.log(this.props)}
+    {console.log(ingredients)}
     return (
       <div>
 
