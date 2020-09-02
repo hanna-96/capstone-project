@@ -4,6 +4,7 @@ import axios from "axios";
  */
 const GET_INGREDIENTS = "GET_INGREDIENTS";
 const ADD_INGREDIENT = "ADD_INGREDIENT";
+const DELETE_INGREDIENT = "DELETE_INGREDIENT" 
 
 const initialState = [];
 
@@ -20,6 +21,14 @@ const addIngredient = (ingredient) => {
     ingredient,
   };
 };
+
+const deleteIngredient = (ingredients,idx) => {
+  return {
+    type: DELETE_INGREDIENT,
+    ingredients,
+    idx
+  }
+}
 /**
  * THUNK CREATORS
  */
@@ -41,6 +50,7 @@ export const addIngredientThunk = (userName, ingredient) => {
         let { data } = await axios.put(
           `/api/users/${userName}/allingredients`, {ingredient}
         );
+        
         dispatch(addIngredient(data));
       }
     } catch (error) {
@@ -48,6 +58,19 @@ export const addIngredientThunk = (userName, ingredient) => {
     }
   };
 };
+
+export const deleteIngredientThunk = (userName, ingredients, idx) => {
+  return async (dispatch) => {
+
+  try {
+      console.log("idx", idx)
+       await axios.delete(`/api/users/${userName}/allingredients`, {ingredients,idx})
+        dispatch(deleteIngredient(ingredients,idx))
+  } catch(err) {
+    console.log(err)
+  } 
+}
+}
 /**
  * REDUCER
  */
@@ -56,7 +79,9 @@ export default function (state = initialState, action) {
     case GET_INGREDIENTS:
       return action.ingredients;
     case ADD_INGREDIENT:
-      return [...state, action.ingredient];
+      return action.ingredient;
+    case DELETE_INGREDIENT:
+      return action.ingredients.filter((ing, idx) => idx!== action.idx)
     default:
       return state;
   }
