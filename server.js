@@ -23,6 +23,8 @@ const expressSession = require("express-session");
 const passport = require("passport");
 const { getSingleUserByUserName } = require("./server/dynamoDB");
 app.use(require("cookie-parser")());
+
+//need to add
 const DynamoStore = require("dynamodb-store");
 
 const AWS = require("aws-sdk");
