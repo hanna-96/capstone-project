@@ -1,13 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-// import {Link} from 'react-router-dom'
-// import {logout} from '../store'
+import {Link} from 'react-router-dom'
+import {logout} from '../redux/user'
+
 import AppBar from './AppBar'
 const Navbar = () => (
   <div>
     <h1>Mixologist</h1>
     <nav>
+      {/* <button onClick={this.props.handleClick}>Logout</button> */}
     <AppBar />
     </nav>
     <hr />
