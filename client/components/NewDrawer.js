@@ -11,8 +11,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import AppBar from './AppBar'
-import { Link } from 'react-router-dom';
-// import Link from '@material-ui/core/Link';
+// import { Link } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 import { Redirect } from 'react-router-dom'
 
 import {logout} from '../redux/user'
@@ -56,29 +56,31 @@ const useStyles = makeStyles({
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        <Link to='/welcome'>
+        <Link href='/welcome'>
           <ListItem button key='home'>
             <ListItemText primary='Home' />
           </ListItem>
         </Link>
-        <Link to="/users/:userName/cabinet">
+        <Link href="/users/:userName/cabinet">
           <ListItem button key='cabinet'>
             <ListItemText primary='Your Cabinet' />
           </ListItem>
         </Link>
-          <Link to='/scan'>
-          <ListItem button key='scan'>
+          {/* <Link href='/scan'> */}
+          <ListItem button key='scan' to="/scan" component={Link}>
             <ListItemText primary='Scan Items' />
           </ListItem>
-        </Link>
+        {/* </Link> */}
       </List>
       <Divider />
       <List>
         {props.isLoggedIn && (
-          <ListItem button key="logout" href="/login" onClick={props.handleClick} >
+          <Link href='/login'>
+          <ListItem button key="logout" onClick={props.handleClick} >
             {/* <Redirect to='/login' /> */}
             <ListItemText primary="Logout" />
-          </ListItem>)
+          </ListItem>
+          </Link>)
       }
       </List>
     </div>
