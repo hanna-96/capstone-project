@@ -11,7 +11,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import AppBar from './AppBar'
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
+import { Redirect } from 'react-router-dom'
 
 import {logout} from '../redux/user'
 import {connect} from 'react-redux'
@@ -54,34 +56,36 @@ const useStyles = makeStyles({
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        <Link to='/welcome'>
+        <Link href='/welcome'>
           <ListItem button key='home'>
             <ListItemText primary='Home' />
           </ListItem>
         </Link>
-        <Link to="/users/:userName/cabinet">
+        <Link href="/users/:userName/cabinet">
           <ListItem button key='cabinet'>
             <ListItemText primary='Your Cabinet' />
           </ListItem>
         </Link>
-        <Link to='/scan'>
-          <ListItem button key='scan'>
+          {/* <Link href='/scan'> */}
+          <ListItem button key='scan' to="/scan" component={Link}>
             <ListItemText primary='Scan Items' />
           </ListItem>
-        </Link>
+        {/* </Link> */}
       </List>
       <Divider />
       <List>
-        {['Logout'].map((text, index) => (
-          <ListItem button key={text} onClick={props.handleClick}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
+        {props.isLoggedIn && (
+          <Link href='/login'>
+          <ListItem button key="logout" onClick={props.handleClick} >
+            {/* <Redirect to='/login' /> */}
+            <ListItemText primary="Logout" />
           </ListItem>
-        ))}
+          </Link>)
+      }
       </List>
     </div>
   );
-
+  console.log('is it logged in?', props.isLoggedIn)
   return (
     <div>
         <React.Fragment key={anchor}>
@@ -94,6 +98,14 @@ const useStyles = makeStyles({
   );
 }
 
+const mapState = (state) => {
+  return {
+    // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
+    // Otherwise, state.user will be an empty object, and state.user.id will be falsey
+    isLoggedIn: !!state.user.userName,
+  };
+}
+
 const mapDispatch = dispatch => {
   return {
     handleClick() {
@@ -102,4 +114,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(null, mapDispatch)(NewDrawer)
+export default connect(mapState, mapDispatch)(NewDrawer)
