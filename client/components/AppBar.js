@@ -34,6 +34,7 @@ function ButtonAppBar(props) {
             <MenuIcon />
           </IconButton>
           {!isLoggedIn && (<Button color="inherit" href="/login">Login</Button>)}
+          <Button color="inherit" href="/">Main</Button>
         </Toolbar>
       </AppBar>
     </div>

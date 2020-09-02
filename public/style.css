@@ -118,3 +118,7 @@
   align-content: space-around;
   flex-direction: column;
 }
+
+.mainPic {
+  width: 100%;
+}
