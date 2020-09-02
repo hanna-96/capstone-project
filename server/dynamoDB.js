@@ -118,11 +118,12 @@ async function updateUserIngredients(userName, newIngredient) {
   return await DocumentClient.update(params).promise();
 }
 
-async function deleteUserIngredients(userName, ingredients, deleteIdx) {
-  console.log('the removed', deleteIdx, ingredients)
+async function deleteUserIngredients(userName, deleteIdx) {
   const user = await getSingleUserByUserName(userName);
   const userIngredients = user.Item.ingredients;
-  const removedUserIngredients = [...userIngredients.filter((ingred, idx) => idx!== deleteIdx)];
+  const numIdx = Number(...deleteIdx)
+  const removedUserIngredients = [...userIngredients.filter((ingred, idx) => idx!== numIdx)];
+  console.log(numIdx, removedUserIngredients, 'after removal')
   const params = {
     TableName: "Users3",
     Key: {

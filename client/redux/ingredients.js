@@ -64,7 +64,7 @@ export const deleteIngredientThunk = (userName, ingredients, idx) => {
 
   try {
       console.log("idx", idx)
-       await axios.delete(`/api/users/${userName}/allingredients`, {ingredients,idx})
+       await axios.delete(`/api/users/${userName}/allingredients/${idx.toString()}`, {ingredients,idx})
         dispatch(deleteIngredient(ingredients,idx))
   } catch(err) {
     console.log(err)

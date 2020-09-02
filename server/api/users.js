@@ -143,7 +143,7 @@ router.delete("/:userName", async (req, res, next) => {
   }
 });
 
-router.delete("/:userName/allingredients", async (req, res, next) => {
+router.delete("/:userName/allingredients/", async (req, res, next) => {
   try {
     const userName = req.params.userName
     const { ingredients, idx } = req.body;
@@ -161,23 +161,25 @@ router.delete("/:userName/allingredients", async (req, res, next) => {
   }
 });
 
-// router.delete("/:userName/allingredients/:idx", async (req, res, next) => {
-//   try {
-//     const userName = req.params.userName
-//     const idx = req.params.idx
-//     console.log(idx, 'the index')
-//     console.log(req.params, 'the params')
-//     console.log(req.body, 'the body in router delete')
-//     const deletedIngredients = await deleteUserIngredients(userName, [
-//       ingredients, idx
-//     ]);
-//     console.log(deletedIngredients, 'deleted')
-//     console.log('testing')
-//     res.send(deletedIngredients);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// });
+router.delete("/:userName/allingredients/:idx", async (req, res, next) => {
+  try {
+    const userName = req.params.userName
+    const idx = req.params.idx
+    const singleUser = await getSingleUserByUserName(userName)
+    const ingredients = singleUser.Item.ingredients
+    console.log(idx, 'the index')
+    console.log(req.params, 'the params')
+    console.log(req.body, 'the body in router delete')
+    const deletedIngredients = await deleteUserIngredients(userName, 
+      [idx]
+    );
+    console.log(deletedIngredients, 'deleted')
+    console.log('testing')
+    res.send(deletedIngredients);
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 
 
