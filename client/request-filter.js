@@ -73,7 +73,7 @@ const RequestFilter = (props) => {
   </div>
   : 
   
-  <div>NA</div>
+  <div></div>
 }
     </div>
 
