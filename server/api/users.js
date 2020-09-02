@@ -6,6 +6,7 @@ const {
   updateUserName,
   deleteUser,
   updateUserIngredients,
+  deleteUserIngredients
 } = require("../dynamoDB");
 
 router.get("/", async (req, res, next) => {
@@ -96,7 +97,23 @@ router.get("/:userName/allingredients", async (req, res, next) => {
     console.error(error);
   }
 });
+
+router.get("/:userName/allingredients/:idx", async (req, res, next) => {
+  try {
+    const userName = req.params.userName;
+    const idx = req.params.idx
+    const singleUser = await getSingleUserByUserName(userName);
+    console.log(singleUser)
+    const usersIngredients = singleUser.Item.ingredients[idx];
+    console.log(usersIngredients)
+    res.send(usersIngredients);
+  } catch (error) {
+    console.error(error);
+  }
+});
 // update User's ingredients by adding a new Ingredient
+
+
 
 router.put("/:userName/allingredients", async (req, res, next) => {
   try {
@@ -117,6 +134,7 @@ router.put("/:userName/allingredients", async (req, res, next) => {
   }
 });
 
+
 router.delete("/:userName", async (req, res, next) => {
   try {
     const userName = req.params.userName;
@@ -126,6 +144,46 @@ router.delete("/:userName", async (req, res, next) => {
     console.error(next);
   }
 });
+
+router.delete("/:userName/allingredients/", async (req, res, next) => {
+  try {
+    const userName = req.params.userName
+    const { ingredients, idx } = req.body;
+    
+    const singleUser = await getSingleUserByUserName(userName)
+    const userIngred = singleUser.Item.ingredients
+    console.log(userIngred, 'in delete')
+    console.log(req.params, req.body, 'params')
+    const deletedIngredients = await deleteUserIngredients(userName, [
+      userIngred[idx]
+    ]);
+    res.send(deletedIngredients);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+router.delete("/:userName/allingredients/:idx", async (req, res, next) => {
+  try {
+    const userName = req.params.userName
+    const idx = req.params.idx
+    const singleUser = await getSingleUserByUserName(userName)
+    const ingredients = singleUser.Item.ingredients
+    console.log(idx, 'the index')
+    console.log(req.params, 'the params')
+    console.log(req.body, 'the body in router delete')
+    const deletedIngredients = await deleteUserIngredients(userName, 
+      [idx]
+    );
+    console.log(deletedIngredients, 'deleted')
+    console.log('testing')
+    res.send(deletedIngredients);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+
 
 router.use((req, res, next) => {
   const err = new Error("API route not found!");
