@@ -142,7 +142,21 @@ async function deleteUserIngredients(userName, deleteIdx) {
   return await DocumentClient.update(params).promise();
 }
 
-
+//add to or remove from user favorites
+//user object's favorites are updated on the frontent before being sent here
+async function updateUserFavorites(userName, favorites) {
+  const params = {
+    TableName: "Users3",
+    Key: {
+      userName,
+    },
+    UpdateExpression: `set favorites = :f`,
+    ExpressionAttributeValues: {
+      ":f": favorites
+    }
+  }
+  return await DocumentClient.update(params).promise()
+}
 
 // //run in node
 // (async () => {
@@ -179,5 +193,6 @@ module.exports = {
   updateUserName,
   updateUserIngredients,
   deleteUser,
-  deleteUserIngredients
+  deleteUserIngredients,
+  updateUserFavorites
 };

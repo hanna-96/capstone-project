@@ -6,7 +6,8 @@ const {
   updateUserName,
   deleteUser,
   updateUserIngredients,
-  deleteUserIngredients
+  deleteUserIngredients,
+  updateUserFavorites
 } = require("../dynamoDB");
 
 router.get("/", async (req, res, next) => {
@@ -182,9 +183,14 @@ router.delete("/:userName/allingredients/:idx", async (req, res, next) => {
   } catch (error) {
     console.error(error);
   }
-});
+})
 
-
+router.put("/:userName/favorites", async (req, res, next) => {
+  try {
+    await updateUserFavorites(req.params.userName, req.body)
+    res.send('favorites updated')
+  } catch(e) { next(e) }
+})
 
 router.use((req, res, next) => {
   err.status = 404;
