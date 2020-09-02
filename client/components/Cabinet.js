@@ -48,7 +48,7 @@ const Cabinet = (props) => {
                 ingredients.map((ingred, idx) => <div>
                     <Card>
                         {ingred} <img src={`https://www.thecocktaildb.com/images/ingredients/${ingred}-small.png`} />
-                    <Button variant='primary' type='button' value={`${idx}`} onClick={handleClick}>delete</Button>
+                    <Button color='primary' variant="contained" type='button' value={`${idx}`} onClick={handleClick}>delete</Button>
                     </Card></div>) : <div>No ingredients yet!  <Link to={`/users/${userName}`}>Add to your Cabinet</Link></div>
             }
             </div>
