@@ -108,6 +108,7 @@ async function updateUserIngredients(userName, newIngredient) {
   // console.log('user ingredients',userIngredients)
   const updatedIngredients = [...userIngredients, ...newIngredient];
   // console.log("updated ingred in DynamoDB", updatedIngredients);
+
   const params = {
     TableName: "Users3",
     Key: {
@@ -120,6 +121,28 @@ async function updateUserIngredients(userName, newIngredient) {
   };
   return await DocumentClient.update(params).promise();
 }
+
+async function deleteUserIngredients(userName, deleteIdx) {
+  const user = await getSingleUserByUserName(userName);
+  const userIngredients = user.Item.ingredients;
+  const numIdx = Number(...deleteIdx)
+  const removedUserIngredients = [...userIngredients.filter((ingred, idx) => idx!== numIdx)];
+  console.log(numIdx, removedUserIngredients, 'after removal')
+  const params = {
+    TableName: "Users3",
+    Key: {
+      userName,
+    },
+    UpdateExpression: `set ingredients = :allingredients`,
+    ExpressionAttributeValues: {
+      ":allingredients": removedUserIngredients,
+    },
+  };
+  return await DocumentClient.update(params).promise();
+}
+
+
+
 // //run in node
 // (async () => {
 //   console.log(
@@ -155,4 +178,5 @@ module.exports = {
   updateUserName,
   updateUserIngredients,
   deleteUser,
+  deleteUserIngredients
 };
