@@ -118,6 +118,26 @@
   align-content: space-around;
   flex-direction: column;
 }
+
+#cabinet-page {
+  margin-left: 5rem;
+  margin-right: 5rem;
+  padding-top: 1rem;
+}
+
+#cabinet-shelf {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding-top: 1rem;
+
+}
+/* 
+#cabinet-item {
+  padding: 1rem;
+} */
+
 .scanItemsButton{
   color:#57ada0;
 }
