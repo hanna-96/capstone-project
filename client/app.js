@@ -1,24 +1,14 @@
-import React from 'react';
-import CameraInput from './components/CameraInput'
-// import {Route} from 'react-router-dom'
-// import Login from './Login'
-// import Signup from './Signup'
+import React from "react";
 import Routes from "./components/routes";
-import  NewDrawer from './components/NewDrawer'
-import  AppBar from './components/AppBar'
-import Request from './request-test'
-import RequestFilter from './request-filter'
-import Navbar from './components/Navbar';
+import NewDrawer from "./components/NewDrawer";
+import Container from "@material-ui/core/Container";
 
 function App() {
   return (
-    <div className="App">
-      <NewDrawer />
-      {/* <Request /> */}
-      {/* <Navbar /> */}
-      <Routes />
-      
-    </div>
+        <div className="App">
+          <NewDrawer />
+          <Routes />
+        </div>
   );
 }
 

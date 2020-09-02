@@ -29,7 +29,7 @@ async function createTable() {
 //   console.log('table is created', await createTable());
 // })()
 //changed primary key to email !!!for another table
-async function addUser(userName, firstName, lastName, email, password) {
+async function addUser(userName, firstName, lastName, email, password,googleId="") {
   const params = {
     TableName: "Users3",
     Item: {
@@ -38,7 +38,9 @@ async function addUser(userName, firstName, lastName, email, password) {
       lastName,
       email,
       ingredients: [],
+      favouriteDrink:[],
       password,
+      googleId
     },
   };
 
@@ -48,11 +50,11 @@ async function addUser(userName, firstName, lastName, email, password) {
 //     console.log(
 //         "the func worked",
 //         await addUser(
-//             "anya_96",
-//             "Anna",
-//             "Rzheutskaya",
+//             "ann_96",
+//             "Ann",
+//             "Rz",
 //             "nuyta96@gmail.com",
-//             "123"
+//             "123",
 //             )
 //             );
 //         })();
@@ -62,7 +64,7 @@ async function getSingleUserByUserName(userName) {
   const params = {
     TableName: "Users3",
     Key: {
-      userName
+      userName,
     },
   };
   return await DocumentClient.get(params).promise();
@@ -123,7 +125,6 @@ async function deleteUserIngredients(userName, deleteIdx) {
   const userIngredients = user.Item.ingredients;
   const numIdx = Number(...deleteIdx)
   const removedUserIngredients = [...userIngredients.filter((ingred, idx) => idx!== numIdx)];
-  console.log(numIdx, removedUserIngredients, 'after removal')
   const params = {
     TableName: "Users3",
     Key: {
@@ -136,8 +137,6 @@ async function deleteUserIngredients(userName, deleteIdx) {
   };
   return await DocumentClient.update(params).promise();
 }
-
-
 
 // //run in node
 // (async () => {

@@ -1,18 +1,34 @@
 import React from "react";
 // import PropTypes from 'prop-types'
 import { connect } from "react-redux";
-import CameraInput from './CameraInput'
-import {Link} from 'react-router-dom'
+// import { Link} from "react-router-dom";
+import Link from "@material-ui/core/Link";
+
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+
+import SwipeableTextMobileStepper from "./Carousel";
+
+// import classNames from 'classnames';
 const UserHome = (props) => {
   return (
-    <div>
-      <h3>Welcome {props.userName}!</h3>
-      {/* button is not working */}
+    <div align="center" className = "userHome"> 
+      <Typography variant="h3" component="h3" >
+        Welcome {props.userName}!
+      </Typography>
       <div>
-          <Link to="/cabinet">Recently made drinks</Link>
+        <br />
+        {/* <Link to={`/users/${props.userName}/cabinet`}>Recently made drinks</Link> */}
+        <Typography variant="h6" component="h6" >
+  <Link href={`/users/${props.userName}/cabinet`} >
+  Recently made drinks
+  </Link>
+</Typography>
       </div>
-      <img src="https://www.theflavorbender.com/wp-content/uploads/2015/10/Witch-Heart-Halloween-Cocktail-The-Flavor-Bender-Featured-Image-SQ-3-500x375.jpg"></img>
-      <button type ="submit" onSubmit={<CameraInput/>}>Scan Items</button>
+      <SwipeableTextMobileStepper />
+      <Button variant="contained" href="/scan" align="center" className="scanItemsButton" color="57ada0">
+        Scan items
+      </Button>
     </div>
   );
 };
@@ -24,10 +40,10 @@ const mapState = (state) => {
 };
 
 export default connect(mapState, null)(UserHome);
-
+// export default connect(mapState, null)(withStyles(styles)(UserHome))
 /**
  * PROP TYPES
  */
 // UserHome.propTypes = {
-//   userName: PropTypes.string
-// }
+//   classes: PropTypes.object.isRequired,
+// };
