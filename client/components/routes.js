@@ -40,6 +40,7 @@ class Routes extends React.Component {
           <Route exact path="/login" component= {Login}/>
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/users/:userName" component={InputForm} />
+          <Route exact path= "/users/:userName/cabinet" component={Cabinet} />
           <Route exact path='/results' component={DrinkList} />
           <Route exact path='/results/:id' component={DrinkId} />
           <Route exact path='/scan' component={CameraInput} />

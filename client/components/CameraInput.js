@@ -11,6 +11,7 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import { Link } from 'react-router-dom'
 import RequestFilter from '../request-filter'
 import InputForm from '../input-form'
+import { readReceipt } from '../util/fruits'
 // import readReceipt from '../../readReceipt'
 
 const useStyles = makeStyles((theme) => ({
@@ -36,35 +37,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const blacklisted = {
-  total: true,
-  subtotal: true,
-  supermarket: true,
-  market: true,
-  ctown: true,
-  tare: true,
-  visa: true,
-  mastercard: true,
-  card: true,
-  cash: true,
-  lb: true,
-}
-
-const editedWords = {
-  lemons: 'lemon'
-}
-
-const readReceipt = receipt => {
-  const isAWord = w => {
-    if (w in blacklisted) return false
-    return w ? w.length > 2 : false
-  }
-  receipt = receipt.map(word => {
-    return word.replace(/[^a-zA-Z]+/, '')
-  })
-  return receipt.filter(isAWord)
-}
-
 const CameraInput = props => {
   const [loading, setLoading] = useState(false)
   const [hasScanned, setScanStatus] = useState(false)
@@ -81,27 +53,27 @@ const CameraInput = props => {
       try {
         // lines 74-80 are for fetching real data from vision api
         // file is our uploaded image, in a File object
-        // const file = evt.target.files[0]
-        // const formData = new FormData()
-        // //append the File to formData so it can be sent to the server
-        // formData.append('img', file)
-        // const { data } = await axios.post(`/gvision`, formData)
-        // const receipt = readReceipt(data)
+        const file = evt.target.files[0]
+        const formData = new FormData()
+        //append the File to formData so it can be sent to the server
+        formData.append('img', file)
+        const { data } = await axios.post(`/gvision`, formData)
+        const receipt = readReceipt(data)
 
         //fake data for testing so we don't use up loads of api calls
-        let receipt = [
-          'apples',
-          'avocado',
-          'white rum',
-          'lime',
-          'orange liqueur',
-          'cake',
-          'lemon',
-          'whiskey',
-          'ice cream',
-          'bacon',
-          'chocolate'
-        ]
+        // let receipt = [
+        //   'apples',
+        //   'avocado',
+        //   'white rum',
+        //   'lime',
+        //   'orange liqueur',
+        //   'cake',
+        //   'lemon',
+        //   'whiskey',
+        //   'ice cream',
+        //   'bacon',
+        //   'chocolate'
+        // ]
         setLoading(false)
         setScanStatus(true)
         //if data comes back empty, throws an error without setting text in state
