@@ -2,13 +2,31 @@ import axios from 'axios'
 import React, {useEffect, useState} from 'react'
 import AllIngredients from './components/AllIngredients'
 import Request from './request-test'
-import {Route, Link} from 'react-router-dom'
+import {Route, Link, withRouter} from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux'
+
+import {
+    getAllIngredientsThunk,
+    addIngredientThunk,
+  } from "./redux/ingredients";
+  
 
 const RequestFilter = (props) => {
     let {ingreds, fields, inputLen} = props
-      // Handles ingredients with spaces 
+    console.log(props, 'props for request filter')
+    const userName = props.match.params.userName
     const [valid, setValid] = useState(false)
     const [validIng, setValidIng] = useState([])
+
+    const dispatch = useDispatch()
+    const ingredients = useSelector(state => state.ingredients)
+  
+    useEffect(() => {
+         dispatch(getAllIngredientsThunk(userName))
+  
+    }, [validIng])
+  
+    
     useEffect( () => {
         const reqValidator = async (ing) => {
             try{
@@ -36,22 +54,33 @@ const RequestFilter = (props) => {
     return (
         
         <div>
-
+    {ingredients.length ?
+    <div>
     <p>{validIng.map( (ingred) => 
     <div>
-    <div>{ingred.split('_').join(' ')} has been added</div>
-    <p> <AllIngredients ingred={ingred} /></p>
+    
+    {console.log(ingredients.includes(ingred))}
+    <p>{!ingredients.includes(ingred)?
+    <div>
+        <div>{ingred.split('_').join(' ')} has been added</div>
+            <AllIngredients ingred={ingred} /> 
+        </div>
+     : <div>{ingred} is already in your Cabinet!</div>} </p>
       </div>
     )}</p>
     <p>See your results: </p>
-  <Request ingreds={validIng} />
-
-
-    
+  <Request ingreds={validIng} /> 
+  </div>
+  : 
+  
+  <div>NA</div>
+}
     </div>
 
-    )}
+    )
+}
+    
 
 
-export default RequestFilter
+export default withRouter(RequestFilter)
 

@@ -118,3 +118,19 @@
   align-content: space-around;
   flex-direction: column;
 }
+
+#cabinet-page {
+  margin-left: 5rem;
+  margin-right: 5rem;
+}
+
+#cabinet-shelf {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+}
+/* 
+#cabinet-item {
+  padding: 1rem;
+} */

@@ -1,5 +1,5 @@
-import React from "react";
-import { connect } from "react-redux";
+import React, {useEffect, useState} from "react";
+import { connect, useDispatch, useSelector } from "react-redux";
 import {withRouter} from 'react-router-dom';
 
 
@@ -8,39 +8,60 @@ import {
   addIngredientThunk,
 } from "../redux/ingredients";
 
-class AllIngredients extends React.Component {
-  async componentDidMount() {
-    const userName = this.props.match.params.userName
-    const ingredients = await this.props.ingredients
-    console.log(this.props.ingred, this.props.ingredients, 'all ingreds')
-    this.props.addIngredient(userName, this.props.ingred)
-    this.props.getIngredients(userName);
+const AllIngredients = (props) => {
+  const userName = props.match.params.userName
+  console.log(props, userName)
 
-  }
-  render() {
-    const ingredients = this.props.ingredients;
-    {console.log(ingredients)}
-    return (
-      <div>
+  const dispatch = useDispatch()
+  const ingredients = useSelector(state => state.ingredients)
 
-      </div>
-    );
+  useEffect(() => {
+       dispatch(addIngredientThunk(userName, props.ingred))
+       dispatch(getAllIngredientsThunk(userName))
+
+  }, [])
+  
+
+  return (
+    <div>
+    </div>
+  )
 }
 
-}
+export default withRouter(AllIngredients)
 
-const mapState = (state) => {
-  return {
-    ingredients: state.ingredients,
-  };
-};
+// class AllIngredients extends React.Component {
+//   async componentDidMount() {
+//     const userName = this.props.match.params.userName
+//     const ingredients = await this.props.ingredients
+//     console.log(ingredients, 'ingredients')
+//     this.props.addIngredient(userName, this.props.ingred)
+//     this.props.getIngredients(userName);
+//     }
 
-const mapDispatch = (dispatch) => {
-  return {
-    getIngredients: userName => dispatch(getAllIngredientsThunk(userName)),
-    addIngredient: (userName, ingredient) =>
-      dispatch(addIngredientThunk(userName, ingredient)),
-  };
-};
+//   render() {
+//     const ingredients = this.props.ingredients;
+//     return (
+//       <div>
 
-export default withRouter(connect(mapState, mapDispatch)(AllIngredients));
+//       </div>
+//     );
+// }
+
+// }
+
+// const mapState = (state) => {
+//   return {
+//     ingredients: state.ingredients,
+//   };
+// };
+
+// const mapDispatch = (dispatch) => {
+//   return {
+//     getIngredients: userName => dispatch(getAllIngredientsThunk(userName)),
+//     addIngredient: (userName, ingredient) =>
+//       dispatch(addIngredientThunk(userName, ingredient)),
+//   };
+// };
+
+// export default withRouter(connect(mapState, mapDispatch)(AllIngredients));
