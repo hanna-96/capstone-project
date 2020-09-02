@@ -187,7 +187,7 @@ router.delete("/:userName/allingredients/:idx", async (req, res, next) => {
 
 router.put("/:userName/favorites", async (req, res, next) => {
   try {
-    await updateUserFavorites(req.params.userName, req.body)
+    await updateUserFavorites(req.params.userName, req.body.favorites)
     res.send('favorites updated')
   } catch(e) { next(e) }
 })

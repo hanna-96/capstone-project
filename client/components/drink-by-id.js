@@ -78,7 +78,7 @@ const DrinkId = (props) => {
   useEffect(() => {
     setUserFavorite(!!userFavorite)
     if (prevFavorites && prevFavorites.length !== props.user.favorites.length) {
-      updateFavorites(props.user.userName, props.user.favorites)
+      updateFavorites(props.user.userName, { favorites: props.user.favorites })
     }
   }, [props])
 
