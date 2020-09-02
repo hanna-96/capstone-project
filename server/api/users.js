@@ -80,9 +80,9 @@ router.get("/:userName/allingredients", async (req, res, next) => {
   try {
     const userName = req.params.userName;
     const singleUser = await getSingleUserByUserName(userName);
-    console.log(singleUser);
+    // console.log("singleUser", singleUser)
     const usersIngredients = singleUser.Item.ingredients;
-    console.log(singleUser);
+    // console.log(singleUser);
     res.send(usersIngredients);
   } catch (error) {
     console.error(error);
