@@ -27,17 +27,22 @@ app.use(require("cookie-parser")());
 //need to add
 const DynamoStore = require("dynamodb-store");
 
-const AWS = require("aws-sdk");
 if (process.env.NODE_ENV === "dev") require("./secrets");
-let awsConfig = {
-  region: "us-east-2",
-  endpoint: process.env.AWS_ENDPOINT,
-  accessKeyId: process.env.ACCESS_KEY_ID,
-  secretAccessKey: process.env.SECRET_ACCESS_KEY,
-};
-AWS.config.update(awsConfig);
-const DynamoDB = new AWS.DynamoDB();
 
+// also tried this:((
+passport.serializeUser(function (user, done) {
+  console.log("user in serialize", user);
+  //diesnt work for google log in
+  done(null, user.Item.userName);
+});
+passport.deserializeUser(async (userName, done) => {
+  try {
+    const user = await getSingleUserByUserName(userName);
+    done(null, user.Item);
+  } catch (err) {
+    done(err);
+  }
+});
 const session = {
   cookie: { maxAge },
   secret: "Capstone", //add later to secrets.js
@@ -64,18 +69,6 @@ if (process.env.PORT) {
 app.use(expressSession(session));
 app.use(passport.initialize());
 app.use(passport.session());
-// also tried this:((
-passport.serializeUser(function (user, done) {
-  done(null, user.Item.userName);
-});
-passport.deserializeUser(async (userName, done) => {
-  try {
-    const user = await getSingleUserByUserName(userName);
-    done(null, user.Item);
-  } catch (err) {
-    done(err);
-  }
-});
 
 app.use("/api/users", routes);
 app.use("/auth", require("./server/auth"));
