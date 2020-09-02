@@ -93,10 +93,10 @@ router.get("/:userName/allingredients", async (req, res, next) => {
 router.put("/:userName/allingredients", async (req, res, next) => {
   try {
     const userName = req.params.userName;
-    console.log(req.body, "body");
-    console.log(req.params, "params");
+    // console.log(req.body, "body");
+    // console.log(req.params, "params");
 
-    console.log("params", req.body.ingredient);
+    // console.log("params", req.body.ingredient);
     const { ingredient } = req.body;
     const updatedIngredients = await updateUserIngredients(userName, [
       ingredient,

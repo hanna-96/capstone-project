@@ -1,8 +1,7 @@
 import React from "react";
 // import PropTypes from 'prop-types'
 import { connect } from "react-redux";
-import CameraInput from "./CameraInput";
-import { Link, Redirect } from "react-router-dom";
+import { Link} from "react-router-dom";
 // import Link from "@material-ui/core/Link";
 
 import Button from "@material-ui/core/Button";
@@ -13,22 +12,14 @@ import SwipeableTextMobileStepper from "./Carousel";
 // import classNames from 'classnames';
 const UserHome = (props) => {
   return (
-    <div>
-      <Typography variant="h3" component="h3" align="center">
+    <div align="center"> 
+      <Typography variant="h3" component="h3" >
         Welcome {props.userName}!
       </Typography>
       <div>
         <br />
-        <Link to="/cabinet">Recently made drinks</Link>
-        {/* <Link
-          href=  " /cabinet" 
-          component="button"
-          variant="body2"
-          underline="hover"
-         
-        >
-          Recently made drinks
-        </Link> */}
+        <Link to={`/users/${props.userName}/cabinet`}>Recently made drinks</Link>
+
       </div>
       <SwipeableTextMobileStepper />
       <Button variant="contained" href="/scan" align="center">
