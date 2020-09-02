@@ -23,6 +23,8 @@ const expressSession = require('express-session')
 const passport = require('passport')
 const { getSingleUserByUserName } = require('./server/dynamoDB')
 app.use(require("cookie-parser")());
+
+//need to add
 const DynamoStore = require("dynamodb-store");
 
 const AWS = require("aws-sdk")
@@ -35,7 +37,8 @@ let awsConfig = {
   secretAccessKey: process.env.SECRET_ACCESS_KEY,
 }
 AWS.config.update(awsConfig)
-const DynamoDB = new AWS.DynamoDB()
+
+// const DynamoDB = new AWS.DynamoDB()
 
 const session = {
   cookie: { maxAge },
@@ -65,12 +68,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 // also tried this:((
 passport.serializeUser(function (user, done) {
-
   done(null, user.Item.userName);
 })
 passport.deserializeUser(async (userName, done) => {
   try {
-    // console.log('wtf: ', getSingleUserByUserName)
     const user = await getSingleUserByUserName(userName)
     done(null, user.Item)
   } catch (err) {
