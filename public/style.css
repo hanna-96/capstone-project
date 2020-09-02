@@ -118,7 +118,12 @@
   align-content: space-around;
   flex-direction: column;
 }
+<<<<<<< HEAD
 
 .mainPic {
   width: 100%;
+=======
+.scanItemsButton{
+  color:#57ada0;
+>>>>>>> bc380d10de53eac64e938644e44554a46c3aa0ca
 }

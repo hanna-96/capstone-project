@@ -1,5 +1,5 @@
 workbox.precaching.precacheAndRoute(self.__precacheManifest);
-
+workbox.setConfig({ debug: false })
 //for testing cache
 workbox.routing.registerRoute(
   /http:\/\/localhost:8080\//,
