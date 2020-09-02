@@ -62,7 +62,7 @@ async function getSingleUserByUserName(userName) {
   const params = {
     TableName: "Users3",
     Key: {
-      userName
+      userName,
     },
   };
   return await DocumentClient.get(params).promise();
@@ -103,11 +103,11 @@ async function updateUserName(userName, name) {
 //update User by adding a new ingredient
 async function updateUserIngredients(userName, newIngredient) {
   const user = await getSingleUserByUserName(userName);
-  console.log('user is',user.Item)
+  // console.log('user is',user.Item)
   const userIngredients = user.Item.ingredients;
-  console.log('user ingredients',userIngredients)
+  // console.log('user ingredients',userIngredients)
   const updatedIngredients = [...userIngredients, ...newIngredient];
-  console.log("updated ingred in DynamoDB", updatedIngredients);
+  // console.log("updated ingred in DynamoDB", updatedIngredients);
   const params = {
     TableName: "Users3",
     Key: {

@@ -19,7 +19,7 @@ router.get("/", async (req, res, next) => {
 router.get("/:userName", async (req, res, next) => {
   try {
     const userName = req.params.userName;
-    console.log('req user', req.user)
+    // console.log("req user", req.user);
     const singleUser = await getSingleUserByUserName(userName);
     res.send(singleUser.Item);
   } catch (error) {
@@ -37,8 +37,8 @@ router.post("/signup", async (req, res, next) => {
       email,
       password
     );
-    console.log(newUser)
-    req.login(newUser, err => (err ? next(err) : res.json(newUser)))
+    console.log(newUser);
+    req.login(newUser, (err) => (err ? next(err) : res.json(newUser)));
   } catch (error) {
     console.error(error);
   }
@@ -48,10 +48,8 @@ router.post("/login", async (req, res, next) => {
   try {
     const user = await getSingleUserByUserName(req.body.userName);
     if (!user) {
-      // console.log("No such user found:", req.body.userName);
       res.status(401).send("Wrong username and/or password");
     } else if (req.body.password !== user.Item.password) {
-      // console.log("Incorrect password for user:", req.body.userName);
       res.status(401).send("Wrong username and/or password");
     } else {
       req.login(user, (err) => (err ? next(err) : res.json(user)));
@@ -61,18 +59,12 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-router.post('/logout', (req, res) => {
-  req.logout()
+router.post("/logout", (req, res) => {
+  req.logout();
   // console.log('req session',req.session)
-  req.session.destroy()
-  res.redirect('/')
-})
-
-//this route was blocked from the frontend for some reason. Didn't even get the console.log
-// router.get('/me', (req, res) => {
-//   console.log('from get me: ', req.user)
-//   res.json(req.user)
-// })
+  req.session.destroy();
+  res.redirect("/");
+});
 
 router.put("/:userName", async (req, res, next) => {
   try {
@@ -88,9 +80,9 @@ router.get("/:userName/allingredients", async (req, res, next) => {
   try {
     const userName = req.params.userName;
     const singleUser = await getSingleUserByUserName(userName);
-    console.log(singleUser)
+    console.log(singleUser);
     const usersIngredients = singleUser.Item.ingredients;
-    console.log(singleUser)
+    console.log(singleUser);
     res.send(usersIngredients);
   } catch (error) {
     console.error(error);
@@ -100,13 +92,11 @@ router.get("/:userName/allingredients", async (req, res, next) => {
 
 router.put("/:userName/allingredients", async (req, res, next) => {
   try {
-    const userName = req.params.userName
-    console.log(req.body, 'body')
-    console.log(req.params, 'params')
+    const userName = req.params.userName;
+    console.log(req.body, "body");
+    console.log(req.params, "params");
 
     console.log("params", req.body.ingredient);
-    // console.log("req.body isss", req.body);
-    // TODO:destructure req.body depending on how much iingredinets will come from front-end(input)
     const { ingredient } = req.body;
     const updatedIngredients = await updateUserIngredients(userName, [
       ingredient,
@@ -128,7 +118,6 @@ router.delete("/:userName", async (req, res, next) => {
 });
 
 router.use((req, res, next) => {
-  const err = new Error("API route not found!");
   err.status = 404;
   next(err);
 });
