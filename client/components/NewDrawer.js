@@ -110,4 +110,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(null, mapDispatch)(NewDrawer)
+export default connect(mapState, mapDispatch)(NewDrawer)
