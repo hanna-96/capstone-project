@@ -13,6 +13,7 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom'
 
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -117,6 +118,7 @@ class Login extends React.Component {
            Sign In
          </Button> 
          </form>
+         <a href='auth/google'>Sign In with Google</a>
          </div>
          </Container>
     );
