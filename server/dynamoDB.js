@@ -38,6 +38,7 @@ async function addUser(userName, firstName, lastName, email, password) {
       lastName,
       email,
       ingredients: [],
+      favorites: [],
       password,
     },
   };

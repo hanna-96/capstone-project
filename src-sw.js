@@ -1,3 +1,5 @@
+workbox.setConfig({ debug: false })
+
 workbox.precaching.precacheAndRoute(self.__precacheManifest);
 
 //for testing cache

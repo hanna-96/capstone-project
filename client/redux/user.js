@@ -40,6 +40,21 @@ export const authLogin = (userName, password, history) => async dispatch => {
   }
 }
 
+export const authSignup = user => async dispatch => {
+  let res
+  try {
+    res = await axios.post(`/api/users/signup`, user)
+  } catch (authError) {
+    return dispatch(getUser({error: authError}))
+  }
+  try {
+    dispatch(getUser(res.data.Item))
+    history.push('/welcome')
+  } catch (dispatchOrHistoryErr) {
+    console.error(dispatchOrHistoryErr)
+  }
+}
+
 export const logout = () => async dispatch => {
   try {
     await axios.post('/api/users/logout')

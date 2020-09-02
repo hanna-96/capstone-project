@@ -71,7 +71,6 @@ class Login extends React.Component {
   }
   
   render() {
-    if (this.props.isLoggedIn) return <Redirect to='/welcome' />
     const {classes} = this.props
     return (
        <Container component="main" maxWidth="xs">

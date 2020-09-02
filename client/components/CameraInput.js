@@ -44,6 +44,10 @@ const CameraInput = props => {
   const [submitted, setSubmitStatus] = useState(false)
   const [text, setText] = useState([])
 
+  useEffect(() => {
+    if (!props.user.userName) props.history.push('/login')
+  }, [props.user])
+
   //useStyles() is material ui
   const classes = useStyles()
   const handleInput = evt => {
@@ -53,27 +57,27 @@ const CameraInput = props => {
       try {
         // lines 74-80 are for fetching real data from vision api
         // file is our uploaded image, in a File object
-        const file = evt.target.files[0]
-        const formData = new FormData()
-        //append the File to formData so it can be sent to the server
-        formData.append('img', file)
-        const { data } = await axios.post(`/gvision`, formData)
-        const receipt = readReceipt(data)
+        // const file = evt.target.files[0]
+        // const formData = new FormData()
+        // //append the File to formData so it can be sent to the server
+        // formData.append('img', file)
+        // const { data } = await axios.post(`/gvision`, formData)
+        // const receipt = readReceipt(data)
 
         //fake data for testing so we don't use up loads of api calls
-        // let receipt = [
-        //   'apples',
-        //   'avocado',
-        //   'white rum',
-        //   'lime',
-        //   'orange liqueur',
-        //   'cake',
-        //   'lemon',
-        //   'whiskey',
-        //   'ice cream',
-        //   'bacon',
-        //   'chocolate'
-        // ]
+        let receipt = [
+          'apples',
+          'avocado',
+          'white rum',
+          'lime',
+          'orange liqueur',
+          'cake',
+          'lemon',
+          'whiskey',
+          'ice cream',
+          'bacon',
+          'chocolate'
+        ]
         setLoading(false)
         setScanStatus(true)
         //if data comes back empty, throws an error without setting text in state

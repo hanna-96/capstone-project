@@ -30,15 +30,26 @@ router.get("/:userName", async (req, res, next) => {
 
 router.post("/signup", async (req, res, next) => {
   try {
+    console.log('req.body', req.body)
     const { userName, firstName, lastName, email, password } = req.body;
-    const newUser = await addUser(
+    await addUser(
       userName,
       firstName,
       lastName,
       email,
       password
-    );
-    console.log(newUser);
+    )
+    const newUser = { 
+      Item : {
+        userName,
+        firstName,
+        lastName,
+        email,
+        password,
+        ingredients: [],
+        favorites: []
+      }
+    }
     req.login(newUser, (err) => (err ? next(err) : res.json(newUser)));
   } catch (error) {
     console.error(error);
