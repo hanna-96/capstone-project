@@ -15,6 +15,7 @@ import { connect } from "react-redux";
 import { me } from "../redux/user";
 import history from '../history'
 import CameraInput from "./CameraInput";
+import HomePage from "./HomePage"
 
 class Routes extends React.Component {
 
@@ -36,11 +37,11 @@ class Routes extends React.Component {
       <div>
        
         <Switch>
-        <Route exact path="/" component={Login} />
+        <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component= {Login}/>
           <Route exact path="/signup" component={Signup} />
-          <Route exact path="/users/:userName" component={InputForm} />
-          <Route exact path= "/users/:userName/cabinet" component={Cabinet} />
+          <Route exact path={`/users/${this.props.userName}`} component={InputForm} />
+          <Route exact path= {`/users/${this.props.userName}/cabinet`} component={Cabinet} />
           <Route exact path='/results' component={DrinkList} />
           <Route exact path='/results/:id' component={DrinkId} />
           <Route exact path='/scan' component={CameraInput} />
@@ -62,6 +63,7 @@ class Routes extends React.Component {
  */
 const mapState = (state) => {
   return {
+    userName: state.user.userName,
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.userName,
