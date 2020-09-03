@@ -28,8 +28,8 @@ import SwipeableTextMobileStepper from "./Carousel";
 //     },
 //   }));
 
-const HomePape = () => {
-  const [ingredient, setIngredient] = useState("");
+const HomePape = props => { //added props here so that we could use it for useEffect
+  const [ingredient, setIngredient] = useState([]);
   // const [switch1, setSwitch1] = useState(false);
   // const classes = useStyles()
 
@@ -42,16 +42,13 @@ const HomePape = () => {
         console.log("data", data);
         const ingr = data.drinks.slice(0, 8);
         console.log(ingr);
-        setIngredient(ingr);
+        setIngredient(ingr); 
       } catch (error) {
         console.log(error);
       }
     };
-    // if (!switch1) {
-    //   setSwitch1(true);
-      func();
-    // }
-  });
+    func();
+  }, [props]); //props goes from undefined to defined when the component initially renders, so it's safe to use here
 
   console.log(ingredient, "short list");
   return (
@@ -59,11 +56,10 @@ const HomePape = () => {
       <React.Fragment>
         <h1>Heeeeyyy</h1>
         <img className="mainPic" src="https://i.ibb.co/0Jhtp3b/Cheers-3.png" />
-        {ingredient !== "" ? (
-          <SwipeableTextMobileStepper ingredients={ingredient} />
+       <SwipeableTextMobileStepper ingredients={ingredient} />
         ) : (
           <div></div>
-        )}
+        )
       </React.Fragment>
     </div>
   );
