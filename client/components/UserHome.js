@@ -10,17 +10,18 @@ import SwipeableTextMobileStepper from "./Carousel";
 
 // import classNames from 'classnames';
 const UserHome = (props) => {
+  console.log('thi userhome props',props)
   return (
     <React.Fragment>
       <div align="center" className = "userHome"> 
         <Typography variant="h3" component="h3" >
-          Welcome {props.userName}!
+          Welcome {props.user.firstName}!
         </Typography>
         <div>
           <br />
           {/* <Link to={`/users/${props.userName}/cabinet`}>Recently made drinks</Link> */}
           <Typography variant="h6" component="h6" >
-    <Link href={`/users/${props.userName}/cabinet`} >
+    <Link href={`/users/${props.user.userName}/cabinet`} >
     Recently made drinks
     </Link>
   </Typography>

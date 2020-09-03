@@ -67,7 +67,7 @@ const useStyles = makeStyles({
           </ListItem>
         </Link>
           {/* <Link href='/scan'> */}
-          <ListItem button key='scan' to="/scan" component={Link}>
+          <ListItem button key='scan' href={'/scan'} component={Link}>
             <ListItemText primary='Scan Items' />
           </ListItem>
         {/* </Link> */}
