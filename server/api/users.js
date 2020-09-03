@@ -6,7 +6,8 @@ const {
   updateUserName,
   deleteUser,
   updateUserIngredients,
-  deleteUserIngredients
+  deleteUserIngredients,
+  updateUserFavorites
 } = require("../dynamoDB");
 
 router.get("/", async (req, res, next) => {
@@ -30,15 +31,26 @@ router.get("/:userName", async (req, res, next) => {
 
 router.post("/signup", async (req, res, next) => {
   try {
+    console.log('req.body', req.body)
     const { userName, firstName, lastName, email, password } = req.body;
-    const newUser = await addUser(
+    await addUser(
       userName,
       firstName,
       lastName,
       email,
       password
-    );
-    console.log(newUser);
+    )
+    const newUser = { 
+      Item : {
+        userName,
+        firstName,
+        lastName,
+        email,
+        password,
+        ingredients: [],
+        favorites: []
+      }
+    }
     req.login(newUser, (err) => (err ? next(err) : res.json(newUser)));
   } catch (error) {
     console.error(error);
@@ -172,9 +184,14 @@ router.delete("/:userName/allingredients/:idx", async (req, res, next) => {
   } catch (error) {
     console.error(error);
   }
-});
+})
 
-
+router.put("/:userName/favorites", async (req, res, next) => {
+  try {
+    await updateUserFavorites(req.params.userName, req.body.favorites)
+    res.send('favorites updated')
+  } catch(e) { next(e) }
+})
 
 router.use((req, res, next) => {
   err.status = 404;

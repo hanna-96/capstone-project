@@ -14,37 +14,43 @@ const DocumentClient = new AWS.DynamoDB.DocumentClient();
 
 //creating table
 async function createTable() {
-  const params = {
-    TableName: "Users3",
-    KeySchema: [{ AttributeName: "userName", KeyType: "HASH" }],
-    AttributeDefinitions: [{ AttributeName: "userName", AttributeType: "S" }],
-    ProvisionedThroughput: {
-      ReadCapacityUnits: 3,
-      WriteCapacityUnits: 3,
-    },
-  };
-  return await DynamoDB.createTable(params).promise();
+  try{
+    const params = {
+      TableName: "Users3",
+      KeySchema: [{ AttributeName: "userName", KeyType: "HASH" }],
+      AttributeDefinitions: [{ AttributeName: "userName", AttributeType: "S" }],
+      ProvisionedThroughput: {
+        ReadCapacityUnits: 3,
+        WriteCapacityUnits: 3,
+      }
+    }
+    return await DynamoDB.createTable(params).promise();
+  } catch(e) { 
+    console.error(e)
+    next(e) }
 }
 // (async ()=>{
 //   console.log('table is created', await createTable());
 // })()
 //changed primary key to email !!!for another table
 async function addUser(userName, firstName, lastName, email, password,googleId="") {
-  const params = {
-    TableName: "Users3",
-    Item: {
-      userName,
-      firstName,
-      lastName,
-      email,
-      ingredients: [],
-      favouriteDrink:[],
-      password,
-      googleId
-    },
-  };
+  try {
+    const params = {
+      TableName: "Users3",
+      Item: {
+        userName,
+        firstName,
+        lastName,
+        email,
+        ingredients: [],
+        favorites: [],
+        password,
+        googleId
+      },
+    };
 
-  return await DocumentClient.put(params).promise();
+    return await DocumentClient.put(params).promise()
+  } catch(e) { next(e) }
 }
 // (async () => {
 //     console.log(
@@ -61,13 +67,15 @@ async function addUser(userName, firstName, lastName, email, password,googleId="
 
 //get single user (for another table)!!!
 async function getSingleUserByUserName(userName) {
-  const params = {
-    TableName: "Users3",
-    Key: {
-      userName,
-    },
-  };
-  return await DocumentClient.get(params).promise();
+  try {
+    const params = {
+      TableName: "Users3",
+      Key: {
+        userName,
+      },
+    };
+    return await DocumentClient.get(params).promise()
+  } catch(e) { next(e) }
 }
 // (async () => {
 //   console.log(
@@ -78,10 +86,12 @@ async function getSingleUserByUserName(userName) {
 
 // get allUsers (!!!expensive operation!!!)
 async function getAllUsers() {
-  const params = {
-    TableName: "Users3",
-  };
-  return await DocumentClient.scan(params).promise();
+  try {
+    const params = {
+      TableName: "Users3",
+    };
+    return await DocumentClient.scan(params).promise()
+  } catch(e) { next(e) }
 }
 // (async () => {
 //   console.log(
@@ -92,50 +102,75 @@ async function getAllUsers() {
 
 //update User (can update any attribute)
 async function updateUserName(userName, name) {
-  const params = {
-    TableName: "Users3",
-    Item: {
-      userName,
-      name,
-    },
-    ReturnConsumedCapacity: "TOTAL",
-  };
-  return await DocumentClient.put(params).promise();
+  try {
+    const params = {
+      TableName: "Users3",
+      Item: {
+        userName,
+        name,
+      },
+      ReturnConsumedCapacity: "TOTAL",
+    };
+    return await DocumentClient.put(params).promise()
+  } catch(e) { next(e) }
 }
 //update User by adding a new ingredient
 async function updateUserIngredients(userName, newIngredient) {
-  const user = await getSingleUserByUserName(userName);
-  const userIngredients = user.Item.ingredients;
-  const updatedIngredients = [...userIngredients, ...newIngredient];
-  const params = {
-    TableName: "Users3",
-    Key: {
-      userName,
-    },
-    UpdateExpression: `set ingredients = :allingredients`,
-    ExpressionAttributeValues: {
-      ":allingredients": updatedIngredients,
-    },
-  };
-  return await DocumentClient.update(params).promise();
+  try {
+    const user = await getSingleUserByUserName(userName);
+    const userIngredients = user.Item.ingredients;
+    const updatedIngredients = [...userIngredients, ...newIngredient];
+    const params = {
+      TableName: "Users3",
+      Key: {
+        userName,
+      },
+      UpdateExpression: `set ingredients = :allingredients`,
+      ExpressionAttributeValues: {
+        ":allingredients": updatedIngredients,
+      },
+    };
+    return await DocumentClient.update(params).promise()
+  } catch(e) { next(e) }
 }
 
 async function deleteUserIngredients(userName, deleteIdx) {
-  const user = await getSingleUserByUserName(userName);
-  const userIngredients = user.Item.ingredients;
-  const numIdx = Number(...deleteIdx)
-  const removedUserIngredients = [...userIngredients.filter((ingred, idx) => idx!== numIdx)];
-  const params = {
-    TableName: "Users3",
-    Key: {
-      userName,
-    },
-    UpdateExpression: `set ingredients = :allingredients`,
-    ExpressionAttributeValues: {
-      ":allingredients": removedUserIngredients,
-    },
-  };
-  return await DocumentClient.update(params).promise();
+  try {
+    const user = await getSingleUserByUserName(userName);
+    const userIngredients = user.Item.ingredients;
+    const numIdx = Number(...deleteIdx)
+    const removedUserIngredients = [...userIngredients.filter((ingred, idx) => idx!== numIdx)];
+    const params = {
+      TableName: "Users3",
+      Key: {
+        userName,
+      },
+      UpdateExpression: `set ingredients = :allingredients`,
+      ExpressionAttributeValues: {
+        ":allingredients": removedUserIngredients,
+      },
+    };
+    return await DocumentClient.update(params).promise()
+  } catch(e) { next(e) }
+}
+
+//add to or remove from user favorites
+//user object's favorites are updated on the frontent before being sent here
+async function updateUserFavorites(userName, favorites) {
+  try {
+
+    const params = {
+      TableName: "Users3",
+      Key: {
+        userName,
+      },
+      UpdateExpression: `set favorites = :f`,
+      ExpressionAttributeValues: {
+        ":f": favorites
+      }
+    }
+  return await DocumentClient.update(params).promise()
+  } catch(e) { next(e) }
 }
 
 // //run in node
@@ -151,14 +186,16 @@ async function deleteUserIngredients(userName, deleteIdx) {
 
 //delete User
 async function deleteUser(userName) {
-  const params = {
-    TableName: "Users3",
-    Key: {
-      userName,
-    },
-  };
+  try {
+    const params = {
+      TableName: "Users3",
+      Key: {
+        userName,
+      },
+    };
 
-  return await DocumentClient.delete(params).promise();
+    return await DocumentClient.delete(params).promise()
+  } catch(e) { next(e) }
 }
 // (async () => {
 //   console.log("the func worked", await deleteUser("4"));
@@ -173,5 +210,6 @@ module.exports = {
   updateUserName,
   updateUserIngredients,
   deleteUser,
-  deleteUserIngredients
+  deleteUserIngredients,
+  updateUserFavorites
 };

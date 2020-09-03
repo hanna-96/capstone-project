@@ -12,9 +12,11 @@ const Request = (props) => {
   const [drinkList, setDrinks] = useState([])
   const dispatch = useDispatch()
   const drinks = useSelector(state => state.drinks)
+  
 
   const [len, setLen] = useState([])
   const {ingreds} = props
+
 
   useEffect(()=> {
     dispatch(fetchSearches(drinkList))
@@ -48,7 +50,8 @@ const Request = (props) => {
       
       <div>
         <h2>{drinkList.length} Results</h2>
-        <Link to={{ pathname: '/results', state: {drinkList} }}>Go to results</Link>
+        <Link to={{ pathname: '/results', state: {drinkList} }}>Go to results</Link> 
+        {/* <Link to='/users' */}
         <DrinkList drinks={drinkList} />
         </div>
  : <div> Bleh...
