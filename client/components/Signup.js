@@ -15,6 +15,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
+import { authSignup } from '../redux/user'
 
 function Copyright() {
   return (
@@ -69,8 +71,7 @@ class Signup extends React.Component {
   }
   async handleSubmit(event) {
     event.preventDefault();
-    const data = await axios.post("/api/users/signup", this.state);
-    // this.props.history.push('/')
+    this.props.signup(this.state)
     this.setState({
       userName: "",
       firstName: "",
@@ -177,8 +178,12 @@ class Signup extends React.Component {
   }
 }
 
+const mapDispatch = dispatch => ({
+  signup: user => dispatch(authSignup(user))
+})
+
 Signup.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Signup)
+export default connect(null, mapDispatch)(withStyles(styles)(Signup))

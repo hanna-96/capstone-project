@@ -61,7 +61,7 @@ const useStyles = makeStyles({
             <ListItemText primary='Home' />
           </ListItem>
         </Link>
-        <Link href="/users/:userName/cabinet">
+        <Link href={`/users/${props.user.userName}/cabinet`}>
           <ListItem button key='cabinet'>
             <ListItemText primary='Your Cabinet' />
           </ListItem>
@@ -103,6 +103,7 @@ const mapState = (state) => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.userName,
+    user: state.user
   };
 }
 

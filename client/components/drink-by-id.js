@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef } from 'react'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -8,7 +8,8 @@ import Divider from '@material-ui/core/Divider';
 import { Container } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid'
-
+import { connect } from 'react-redux'
+import { addToUserFavorites, removeFromUserFavorites, updateFavorites } from '../redux/user'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +26,7 @@ const DrinkId = (props) => {
     const [drinkDetails, setDrink] = useState({})
     const [details, setDetails] = useState([])
     const [didRun, setDidRun] = useState(false)
-
+    const [userFavorite, setUserFavorite] = useState(false)
  
 
     const results = () => {
@@ -38,21 +39,16 @@ const DrinkId = (props) => {
           const {data}= await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
           const {drinks} = data
           setDrink(drinks[0])
-          
         } catch (error) {
           console.log(error);
         }
   
       }
-  
-
       if(!didRun) {
         getDrinkDetails(id)
         setDidRun(true)
-        
       }
-      
-    } )
+    })
 
     useEffect( () => {
       const getIngAndMeasure = () => {
@@ -69,8 +65,31 @@ const DrinkId = (props) => {
   
     }, [drinkDetails]
     )
-  
-  
+///////////////////////////favorites start/////////////////////////////////////
+  //custom hook that allows us to save previous props  
+  function usePrevious(value) {
+    const ref = useRef()
+    useEffect(() => { ref.current = value })
+    return ref.current
+  }
+  const prevFavorites = usePrevious(props.user.favorites)
+
+  //updates favorites in DB when prevFavorites does not match current favorites
+  useEffect(() => {
+    setUserFavorite(!!userFavorite)
+    if (prevFavorites && prevFavorites.length !== props.user.favorites.length) {
+      updateFavorites(props.user.userName, { favorites: props.user.favorites })
+    }
+  }, [props])
+
+  //updates favorites on the frontend
+  const handleFavorite = () => {
+    if (props.user.favorites.includes(drinkDetails.strDrink)) props.removeFavorite(drinkDetails.strDrink)
+    else props.addFavorite(drinkDetails.strDrink)
+    setUserFavorite(!!userFavorite)
+  }
+///////////////////////////favorites end///////////////////////////////////////
+
     return (
     
         <div>
@@ -110,6 +129,12 @@ const DrinkId = (props) => {
                   
                   </Grid>
                   </List>
+                  {
+                    props.user && 
+                    <Button onClick={handleFavorite} className={props.user.favorites.includes(drinkDetails.strDrink) && 'favorited-btn'}>
+                      {props.user.favorites.includes(drinkDetails.strDrink) ? 'favorited!' : 'add to favorites'}
+                    </Button>
+                  }
                   <Button onClick={results}>Back to results</Button>
                 </div>
               </Container> 
@@ -120,11 +145,15 @@ const DrinkId = (props) => {
             
         
       )
-    }
+}
 
+const mapState = state => ({ user: state.user })
+const mapDispatch = dispatch => ({
+  addFavorite: favorite => dispatch(addToUserFavorites(favorite)),
+  removeFavorite: unFavorite => dispatch(removeFromUserFavorites(unFavorite))
+})
 
-
-export default DrinkId
+export default connect(mapState, mapDispatch)(DrinkId)
 
 {/* <ListItem button>
   <ListItemText primary="Inbox" />

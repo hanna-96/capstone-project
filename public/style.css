@@ -79,7 +79,14 @@
 }
 
 /************ scan view end ************/
+/************ favorites styles ************/
 
+.favorited-btn {
+  background-color: lightpink;
+  color: darkred;
+}
+
+/************ favorites end ************/
 
 .drink-page {
   display: flex;
