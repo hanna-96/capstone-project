@@ -126,15 +126,22 @@ router.get("/:userName/allingredients/:idx", async (req, res, next) => {
 router.put("/:userName/allingredients", async (req, res, next) => {
   try {
     const userName = req.params.userName;
+    const { ingredient } = req.body;
+    const singleUser = await getSingleUserByUserName(userName)
+    const ingredients = singleUser.Item.ingredients
+    if(!ingredients.includes(ingredient)) {
     // console.log(req.body, "body");
     // console.log(req.params, "params");
 
     // console.log("params", req.body.ingredient);
-    const { ingredient } = req.body;
+    
     const updatedIngredients = await updateUserIngredients(userName, [
       ingredient,
     ]);
     res.send(updatedIngredients);
+  } else {
+    res.send(ingredients)
+  }
   } catch (error) {
     console.error(error);
   }

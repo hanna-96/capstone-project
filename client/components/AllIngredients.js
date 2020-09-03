@@ -23,7 +23,16 @@ const AllIngredients = (props) => {
   
 
   return (
+    <div> { ingredients.length ? 
     <div>
+      {ingredients.includes(props.ingred) ? <div>{props.ingred} is already in your Cabinet! </div> 
+      
+      : <div> {props.ingred} was added to your Cabinet</div> }
+    </div>
+
+    : <div></div>
+
+    }
     </div>
   )
 }
