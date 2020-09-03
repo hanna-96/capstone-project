@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import PropTypes from 'prop-types'
 import { connect } from "react-redux";
-// import { Link} from "react-router-dom";
-import Link from "@material-ui/core/Link";
-
+import { Link} from "react-router-dom";
+// import Link from "@material-ui/core/Link";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import SwipeableTextMobileStepper from "./Carousel";
+import { getFavoriteDrinks } from "../redux/favorites";
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
+
 
 // import classNames from 'classnames';
 const UserHome = (props) => {
+  useEffect(() => {
+    const getFaves = () => {
+      props.getFavorites(props.user.favorites)
+    }
+    getFaves()
+  }, [props.user])
+
   return (
     <React.Fragment>
       <div align="center" className = "userHome"> 
@@ -20,25 +30,40 @@ const UserHome = (props) => {
           <br />
           {/* <Link to={`/users/${props.userName}/cabinet`}>Recently made drinks</Link> */}
           <Typography variant="h6" component="h6" >
-    <Link href={`/users/${props.userName}/cabinet`} >
-    Recently made drinks
-    </Link>
-  </Typography>
+            <Link to={`/users/${props.userName}/cabinet`} className='mui-like'>
+              Recently made drinks
+            </Link>
+          </Typography>
         </div>
         <SwipeableTextMobileStepper />
-        <Button variant="contained" href="/scan" align="center" className="scanItemsButton" color="57ada0">
+        <Button variant="contained" href="/scan" align="center" className="scan-btn" color="primary">
           Scan items
         </Button>
       </div>
-      <div id='favorites-bar'>
-      {
-        props.user.favorites.slice(0, 3).map(drink =>
-          <div className='drink'>
-            favorite!!
+      { props.user.favorites.length &&
+      <div id='the-last-one-i-swear'>
+        <button className='block'>
+          <ArrowBackIosIcon />
+        </button>
+        <div id='favorites-bar'>
+          <span>favorite cocktails</span>
+          <div id='favorites-view'>
+              {
+              props.favorites.map(drink =>
+                // <div className='favorite-drink-thumb' key={drink.idDrink}>
+                  <Link to={{ pathname: `/results/${drink.idDrink}`, state: {id: drink.idDrink} }} className='favorite-drink-thumb mui-like' key={drink.idDrink}>
+                    <img src={drink.strDrinkThumb + '/preview'} className='favorite-drink-img' />
+                    {drink.strDrink}
+                  </Link>
+                // </div>
+              )}
           </div>
-        )
+        </div>
+        <button className='block'>
+          <ArrowForwardIosIcon />
+        </button>
+      </div>
       }
-    </div>
   </React.Fragment>
   );
 };
@@ -46,10 +71,15 @@ const UserHome = (props) => {
 const mapState = (state) => {
   return {
     user: state.user,
+    favorites: state.favorites
   };
 };
 
-export default connect(mapState, null)(UserHome);
+const mapDispatch = dispatch => ({
+  getFavorites: drinks => dispatch(getFavoriteDrinks(drinks))
+})
+
+export default connect(mapState, mapDispatch)(UserHome);
 // export default connect(mapState, null)(withStyles(styles)(UserHome))
 /**
  * PROP TYPES

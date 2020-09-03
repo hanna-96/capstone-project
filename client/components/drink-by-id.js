@@ -84,8 +84,8 @@ const DrinkId = (props) => {
 
   //updates favorites on the frontend
   const handleFavorite = () => {
-    if (props.user.favorites.includes(drinkDetails.strDrink)) props.removeFavorite(drinkDetails.strDrink)
-    else props.addFavorite(drinkDetails.strDrink)
+    if (props.user.favorites.includes(drinkDetails.idDrink)) props.removeFavorite(drinkDetails.idDrink)
+    else props.addFavorite(drinkDetails.idDrink)
     setUserFavorite(!!userFavorite)
   }
 ///////////////////////////favorites end///////////////////////////////////////
@@ -131,8 +131,8 @@ const DrinkId = (props) => {
                   </List>
                   {
                     props.user && 
-                    <Button onClick={handleFavorite} className={props.user.favorites.includes(drinkDetails.strDrink) && 'favorited-btn'}>
-                      {props.user.favorites.includes(drinkDetails.strDrink) ? 'favorited!' : 'add to favorites'}
+                    <Button onClick={handleFavorite} className={props.user.favorites.includes(drinkDetails.idDrink) && 'favorited-btn'}>
+                      {props.user.favorites.includes(drinkDetails.idDrink) ? 'favorited!' : 'add to favorites'}
                     </Button>
                   }
                   <Button onClick={results}>Back to results</Button>
