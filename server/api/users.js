@@ -94,12 +94,12 @@ router.get("/:userName/allingredients", async (req, res, next) => {
   try {
     const userName = req.params.userName;
     const singleUser = await getSingleUserByUserName(userName);
-   if(singleUser.Item) {
+   if(singleUser.Item.ingredients) {
     const usersIngredients = singleUser.Item.ingredients;
     // console.log(singleUser);
     res.send(usersIngredients);
    } else {
-     res.send('User does not exist')
+     console.log('error users does not have ingredients')
    }
   } catch (error) {
     console.error(error);
