@@ -14,6 +14,7 @@ import TabScrollButton from '@material-ui/core/TabScrollButton'
 
 // import classNames from 'classnames';
 const UserHome = (props) => {
+  console.log('userhome props',props)
   useEffect(() => {
     const getFaves = () => {
       props.getFavorites(props.user.favorites, 'favorites')
@@ -71,9 +72,10 @@ const UserHome = (props) => {
 };
 
 const mapState = (state) => {
+  console.log('userhome state',state)
   return {
     user: state.user,
-    drinks: state.favorites.favorites
+    drinks: state.drinks.favorites
   };
 };
 
