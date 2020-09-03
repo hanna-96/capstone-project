@@ -44,7 +44,7 @@ export const authLogin = (userName, password, history) => async dispatch => {
   }
 }
 
-export const authSignup = user => async dispatch => {
+export const authSignup = (user, history) => async dispatch => {
   let res
   try {
     res = await axios.post(`/api/users/signup`, user)

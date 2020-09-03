@@ -33,7 +33,13 @@ function ButtonAppBar(props) {
           <IconButton edge="start" className={classes.menuButton} color="secondary" aria-label="menu" onClick={toggleDrawer}>
             <MenuIcon />
           </IconButton>
-          {!isLoggedIn && (<Button color="inherit" href="/login">Login</Button>)}
+          {!isLoggedIn && (
+            <div>
+              <Button color="inherit" href="/login">Login</Button>
+              <Button color="inherit" href="/signup">Signup</Button>
+            </div>
+          )}
+          <Button color="inherit" href="/">Main</Button>
         </Toolbar>
       </AppBar>
     </div>
