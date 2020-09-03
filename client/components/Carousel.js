@@ -9,8 +9,7 @@ import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
 
-const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
-
+// const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const tutorialSteps = [
   {
     label: "The  Witch`s heart",
@@ -48,6 +47,7 @@ const tutorialSteps = [
       "https://i2.wp.com/buythiscookthat.com/wp-content/uploads/2019/04/Strawberry-Mint-Rum-Cocktail-2.jpg",
   },
 ];
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -87,9 +87,10 @@ function SwipeableTextMobileStepper() {
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
-
+console.log('PROPS', props)
   return (
     <div className={classes.root}>
+      <h1>hello</h1>
       <Paper square elevation={0} className={classes.header}>
         <Typography>{tutorialSteps[activeStep].label}</Typography>
       </Paper>
