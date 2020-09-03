@@ -7,9 +7,9 @@ import users from './users'
 import user from './user'
 import searches from './searches'
 import singleUser from './singleUser'
-import favorites from './favorites'
+import drinks from './drinks'
 
-const reducer = combineReducers({ ingredients, users, user, singleUser, searches, favorites })
+const reducer = combineReducers({ ingredients, users, user, singleUser, searches, drinks })
 
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))

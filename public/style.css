@@ -21,6 +21,7 @@
 .mui-like:active {
   color: #062e29;
   transition: .3s;
+  outline: lightsalmon dotted 1px;
 }
 
 /************ scan view styles ************/
@@ -155,6 +156,11 @@
   -webkit-overflow-scrolling: touch;
 }
 
+#see-all-favorites-link {
+  width: 150px;
+  align-self: flex-end;
+}
+
 .favorite-drink-thumb {
   margin: 0 .5em;
   padding: 1em;
@@ -172,10 +178,6 @@
   height: 150px;
   margin-bottom: .2em;
 }
-
-/* #the-last-one-i-swear {
-  text-align: center;
-} */
 
 /************ favorites end ************/
 

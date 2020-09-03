@@ -6,16 +6,17 @@ import { Link} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import SwipeableTextMobileStepper from "./Carousel";
-import { getFavoriteDrinks } from "../redux/favorites";
+import { getFavoriteDrinks } from "../redux/drinks";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
+import TabScrollButton from '@material-ui/core/TabScrollButton'
 
 
 // import classNames from 'classnames';
 const UserHome = (props) => {
   useEffect(() => {
     const getFaves = () => {
-      props.getFavorites(props.user.favorites)
+      props.getFavorites(props.user.favorites, 'favorites')
     }
     getFaves()
   }, [props.user])
@@ -49,7 +50,7 @@ const UserHome = (props) => {
           <span>favorite cocktails</span>
           <div id='favorites-view'>
               {
-              props.favorites.map(drink =>
+              props.drinks.map(drink =>
                 // <div className='favorite-drink-thumb' key={drink.idDrink}>
                   <Link to={{ pathname: `/results/${drink.idDrink}`, state: {id: drink.idDrink} }} className='favorite-drink-thumb mui-like' key={drink.idDrink}>
                     <img src={drink.strDrinkThumb + '/preview'} className='favorite-drink-img' />
@@ -57,6 +58,7 @@ const UserHome = (props) => {
                   </Link>
                 // </div>
               )}
+            <Link id='see-all-favorites-link mui-like'>See all</Link>
           </div>
         </div>
         <button className='block'>
@@ -71,12 +73,12 @@ const UserHome = (props) => {
 const mapState = (state) => {
   return {
     user: state.user,
-    favorites: state.favorites
+    drinks: state.favorites.favorites
   };
 };
 
 const mapDispatch = dispatch => ({
-  getFavorites: drinks => dispatch(getFavoriteDrinks(drinks))
+  getFavorites: (drinks, type) => dispatch(getFavoriteDrinks(drinks, type))
 })
 
 export default connect(mapState, mapDispatch)(UserHome);
