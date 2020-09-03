@@ -2,10 +2,11 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
 const path = require("path");
 const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
+const isDev = process.env.NODE_ENV === 'dev'
+
 module.exports = env => {
-  const mode = env.mode ? env.mode : "production";
   return {
-    mode,
+    mode: isDev ? 'development' : 'production',
     entry: {
       main: "./index.js"
     },

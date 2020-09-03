@@ -25,9 +25,7 @@ async function createTable() {
       }
     }
     return await DynamoDB.createTable(params).promise();
-  } catch(e) { 
-    console.error(e)
-    next(e) }
+  } catch(e) { console.error(e) }
 }
 // (async ()=>{
 //   console.log('table is created', await createTable());
@@ -50,7 +48,7 @@ async function addUser(userName, firstName, lastName, email, password,googleId="
     };
 
     return await DocumentClient.put(params).promise()
-  } catch(e) { next(e) }
+  } catch(e) { console.error(e) }
 }
 // (async () => {
 //     console.log(
@@ -75,7 +73,7 @@ async function getSingleUserByUserName(userName) {
       },
     };
     return await DocumentClient.get(params).promise()
-  } catch(e) { next(e) }
+  } catch(e) { console.error(e) }
 }
 // (async () => {
 //   console.log(
@@ -91,7 +89,7 @@ async function getAllUsers() {
       TableName: "Users3",
     };
     return await DocumentClient.scan(params).promise()
-  } catch(e) { next(e) }
+  } catch(e) { console.error(e) }
 }
 // (async () => {
 //   console.log(
@@ -112,7 +110,7 @@ async function updateUserName(userName, name) {
       ReturnConsumedCapacity: "TOTAL",
     };
     return await DocumentClient.put(params).promise()
-  } catch(e) { next(e) }
+  } catch(e) { console.error(e) }
 }
 //update User by adding a new ingredient
 async function updateUserIngredients(userName, newIngredient) {
@@ -131,7 +129,7 @@ async function updateUserIngredients(userName, newIngredient) {
       },
     };
     return await DocumentClient.update(params).promise()
-  } catch(e) { next(e) }
+  } catch(e) { console.error(e) }
 }
 
 async function deleteUserIngredients(userName, deleteIdx) {
@@ -151,14 +149,13 @@ async function deleteUserIngredients(userName, deleteIdx) {
       },
     };
     return await DocumentClient.update(params).promise()
-  } catch(e) { next(e) }
+  } catch(e) { console.error(e) }
 }
 
 //add to or remove from user favorites
 //user object's favorites are updated on the frontent before being sent here
 async function updateUserFavorites(userName, favorites) {
   try {
-
     const params = {
       TableName: "Users3",
       Key: {
@@ -170,7 +167,7 @@ async function updateUserFavorites(userName, favorites) {
       }
     }
   return await DocumentClient.update(params).promise()
-  } catch(e) { next(e) }
+  } catch(e) { console.error(e) }
 }
 
 // //run in node
@@ -195,7 +192,7 @@ async function deleteUser(userName) {
     };
 
     return await DocumentClient.delete(params).promise()
-  } catch(e) { next(e) }
+  } catch(e) { console.error(e) }
 }
 // (async () => {
 //   console.log("the func worked", await deleteUser("4"));
