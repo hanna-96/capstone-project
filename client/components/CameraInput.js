@@ -122,7 +122,7 @@ const CameraInput = props => {
             onInput={handleInput}
           />
           <label htmlFor="contained-button-file">
-            <Button variant="contained" id='scan-btn' color="primary" component="span" size="large" startIcon={<CloudUploadIcon />}>
+            <Button variant="contained" className='scan-btn' color="primary" component="span" size="large" startIcon={<CloudUploadIcon />}>
               { hasScanned ? 'Scan Again' : 'Scan Receipt' }
             </Button>
           </label>
