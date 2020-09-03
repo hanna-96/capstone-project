@@ -51,10 +51,13 @@ const Cabinet = (props) => {
 
                 
 
-            { ingredients.length? 
-                
+            { !ingredients || ingredients.length < 1 ? 
+            
+             <div>No ingredients yet!  <Link to={`/users/${userName}`}>Add to your Cabinet</Link></div> :   
                 ingredients.map((ingred, idx) => 
                 <div id='cabinet-item'>
+
+
                     
                     <Card color='primary' variant='outlined'>
                         {ingred} 
@@ -69,7 +72,6 @@ const Cabinet = (props) => {
                             </Card>
                         
                     </div>)
-                    : <div>No ingredients yet!  <Link to={`/users/${userName}`}>Add to your Cabinet</Link></div>
             }
             </div>
             </Container>

@@ -17,14 +17,16 @@ const RequestFilter = (props) => {
     const userName = props.match.params.userName
     const [valid, setValid] = useState(false)
     const [validIng, setValidIng] = useState([])
+    const [didRun, setDidRun] = useState(false)
 
     const dispatch = useDispatch()
     const ingredients = useSelector(state => state.ingredients)
   
     useEffect(() => {
-         dispatch(getAllIngredientsThunk(userName))
-  
-    }, [validIng])
+   
+            dispatch(getAllIngredientsThunk(userName))
+
+    }, [])
   
     
     useEffect( () => {
@@ -46,35 +48,43 @@ const RequestFilter = (props) => {
             }
             
         }
-
-        ingreds.forEach(async ing => await reqValidator(ing))
+        if(!didRun) {
+            
+            ingreds.forEach(async ing => await reqValidator(ing))
+            
+        }
+        setDidRun(true)
+        
     }, [inputLen])
 
     
     return (
-        
+        //  validIng length 1 A: ["lime"]  => [] (validIng is one)
+        //  validIng length 1 :  ["lime"] => ["lime"]
+        // validIng >1 : ["lime", "lemon"] => []  
+        // validIng ["lime"] 
+        // validIng:  ["lime", "lemon"] 
+
         <div>
-    {ingredients.length ?
-    <div>
+    <div> 
     <p>{validIng.map( (ingred) => 
     <div>
-    
-    {console.log(ingredients.includes(ingred))}
-    <p>{!ingredients.includes(ingred)?
+    {console.log(ingredients,  'ingredients and validINg', validIng)}
+    <p>{(!ingredients.length|| !ingredients.includes(ingred))?
     <div>
         <div>{ingred.split('_').join(' ')} has been added</div>
             <AllIngredients ingred={ingred} /> 
         </div>
-     : <div>{ingred} is already in your Cabinet!</div>} </p>
+     : 
+     <div>{ingred} is already in your Cabinet!</div>
+     
+     } </p>
       </div>
     )}</p>
     <p>See your results: </p>
   <Request ingreds={validIng} /> 
   </div>
-  : 
-  
-  <div></div>
-}
+
     </div>
 
     )
