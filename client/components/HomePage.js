@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios';
+import Card from '@material-ui/core/Card';
+import CardMedia from '@material-ui/core/CardMedia';
 
 export default function HomePape() {
     const [ingredient, setIngredient] = useState('')
@@ -25,14 +27,23 @@ export default function HomePape() {
     return(
         <div>
             {/* {ingredient !== '' ? <h1>{ingredient}</h1> : <div></div>} */}
-            <div>
-            <h1>Mixogolist</h1>
-             <img className="mainPic" 
-             src="https://techgirl.co.za/wp-content/uploads/2015/01/pdid3.jpg"/>
-            <h3>Drink of the week</h3>
+            {/* <div style={{backgroundImage: `url("https://techgirl.co.za/wp-content/uploads/2015/01/pdid3.jpg")`, width:'250px',height:'250px'}}> */}
+            {/* <h1>Mixogolist</h1>/ */}
+    {/* <div style={{color:"white"}}>{" "}</div> */}
+              <img className="mainPic" 
+             src="https://i.ibb.co/0Jhtp3b/Cheers-3.png"/>
+             <Card>
+             <CardMedia
+        // className={classes.media}
+        image={ingredient.strDrinkThumb}
+        // title={ingredient.strDrink}
+        title="kak dela"
+      />
+        </Card>
+            {/* <h3>Drink of the week</h3>
             {ingredient.strDrink}
-            <img src={ingredient.strDrinkThumb} />
-            </div>
+            <img src={ingredient.strDrinkThumb} /> */}
+            {/* </div> */}
         </div>
     )
 }
