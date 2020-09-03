@@ -1,7 +1,7 @@
 import React from "react";
 // import PropTypes from 'prop-types'
 import { connect } from "react-redux";
-// import { Link} from "react-router-dom";
+import { withRouter} from "react-router-dom";
 import Link from "@material-ui/core/Link";
 
 import Button from "@material-ui/core/Button";
@@ -10,17 +10,18 @@ import SwipeableTextMobileStepper from "./Carousel";
 
 // import classNames from 'classnames';
 const UserHome = (props) => {
+  const {userName} = props.user
   return (
     <React.Fragment>
       <div align="center" className = "userHome"> 
         <Typography variant="h3" component="h3" >
-          Welcome {props.userName}!
+          Welcome {userName}!
         </Typography>
         <div>
           <br />
           {/* <Link to={`/users/${props.userName}/cabinet`}>Recently made drinks</Link> */}
           <Typography variant="h6" component="h6" >
-    <Link href={`/users/${props.userName}/cabinet`} >
+    <Link href={`/users/${userName}/cabinet`} >
     Recently made drinks
     </Link>
   </Typography>
@@ -50,10 +51,3 @@ const mapState = (state) => {
 };
 
 export default connect(mapState, null)(UserHome);
-// export default connect(mapState, null)(withStyles(styles)(UserHome))
-/**
- * PROP TYPES
- */
-// UserHome.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
