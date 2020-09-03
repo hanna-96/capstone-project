@@ -15,6 +15,7 @@ import { connect } from "react-redux";
 import { me } from "../redux/user";
 import history from '../history'
 import CameraInput from "./CameraInput";
+import AllFavorites from "./AllFavorites";
 
 class Routes extends React.Component {
 
@@ -39,6 +40,7 @@ class Routes extends React.Component {
         <Route exact path="/" component={Login} />
           <Route exact path="/login" component= {Login}/>
           <Route exact path="/signup" component={Signup} />
+          <Route exact path='/users/:userName/allFavorites' component={AllFavorites} />
           <Route exact path="/users/:userName" component={InputForm} />
           <Route exact path= "/users/:userName/cabinet" component={Cabinet} />
           <Route exact path='/results' component={DrinkList} />
