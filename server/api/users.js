@@ -7,7 +7,8 @@ const {
   deleteUser,
   updateUserIngredients,
   deleteUserIngredients,
-  updateUserFavorites
+  updateUserFavorites,
+  updateUserFriends
 } = require("../dynamoDB");
 
 router.get("/", async (req, res, next) => {
@@ -48,7 +49,8 @@ router.post("/signup", async (req, res, next) => {
         email,
         password,
         ingredients: [],
-        favorites: []
+        favorites: [],
+        friends: []
       }
     }
     req.login(newUser, (err) => (err ? next(err) : res.json(newUser)));
@@ -105,6 +107,20 @@ router.get("/:userName/allingredients", async (req, res, next) => {
     console.error(error);
   }
 });
+
+router.get("/:userName/friends", async (req, res, next) => {
+  try {
+    const userName = req.params.userName;
+    const singleUser = await getSingleUserByUserName(userName)
+    if(singleUser.Item.friends) {
+      const userFriends = singleUser.Item.friends
+      res.send(userFriends) } else {
+        console.log('no friends yet :(')
+      }
+  } catch(e) { next(e) }
+})
+
+
 
 router.get("/:userName/allingredients/:idx", async (req, res, next) => {
   try {
@@ -172,7 +188,7 @@ router.delete("/:userName/allingredients/", async (req, res, next) => {
     ]);
     res.send(deletedIngredients);
   } catch (error) {
-    console.error(error);
+    console.error(next);
   }
 });
 
@@ -192,7 +208,7 @@ router.delete("/:userName/allingredients/:idx", async (req, res, next) => {
     console.log('testing')
     res.send(deletedIngredients);
   } catch (error) {
-    console.error(error);
+    console.error(next);
   }
 })
 
@@ -203,9 +219,21 @@ router.put("/:userName/favorites", async (req, res, next) => {
   } catch(e) { next(e) }
 })
 
+
+router.put("/:userName/friends", async (req, res, next) => {
+  try {
+    console.log(req.body, req.params)
+    const friends = await updateUserFriends(req.params.userName, [req.body.friend])
+    console.log(friends)
+    res.send(friends)
+  } catch(e) { next(e) }
+})
+
 router.use((req, res, next) => {
   err.status = 404;
   next(err);
 });
+
+
 
 module.exports = router;

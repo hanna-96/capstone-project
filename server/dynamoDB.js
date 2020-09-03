@@ -44,6 +44,7 @@ async function addUser(userName, firstName, lastName, email, password,googleId="
         email,
         ingredients: [],
         favorites: [],
+        friends: [],
         password,
         googleId
       },
@@ -56,10 +57,10 @@ async function addUser(userName, firstName, lastName, email, password,googleId="
 //     console.log(
 //         "the func worked",
 //         await addUser(
-//             "ann_96",
-//             "Ann",
-//             "Rz",
-//             "nuyta96@gmail.com",
+//             "sara95dfsfa",
+//             "C",
+//             "Rzsdfdsfa",
+//             "sara@gail.com",
 //             "123",
 //             )
 //             );
@@ -173,16 +174,46 @@ async function updateUserFavorites(userName, favorites) {
   } catch(e) { next(e) }
 }
 
-// //run in node
+
+
+
+async function updateUserFriends(userName, friend) {
+  try {
+    const user = await getSingleUserByUserName(userName);
+    if(user.Item.friends) {
+      const userFriends = user.Item.friends;
+      console.log(userFriends)
+      const updatedFriends = [...userFriends, friend]
+    
+    const params = {
+      TableName: "Users3",
+      Key: {
+        userName,
+      },
+      UpdateExpression: `set friends = :friends`,
+      ExpressionAttributeValues: {
+        ":friends": updatedFriends
+      }
+    }
+  
+  return await DocumentClient.update(params).promise()
+    } else {
+      console.log('no friends arr')
+    }
+  } catch(e) { console.log(e) }
+}
+
+//run in node
 // (async () => {
 //   console.log(
 //     "the func worked",
-//     await updateUserIngredients(
-//     "anya_96",
-//      ["champagne"]
+//     await updateUserFriends(
+//     "sara95",
+//      ["sara"]
 //     )
 //   );
 // })();
+
 
 //delete User
 async function deleteUser(userName) {
@@ -211,5 +242,6 @@ module.exports = {
   updateUserIngredients,
   deleteUser,
   deleteUserIngredients,
-  updateUserFavorites
+  updateUserFavorites,
+  updateUserFriends
 };

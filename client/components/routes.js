@@ -9,6 +9,7 @@ import Cabinet from './Cabinet'
 import PropTypes from "prop-types";
 import Request from "../request-test";
 import UserHome from "./UserHome";
+import Feed from './Feed'
 // import AllIngredients from "./AllIngredients";
 // import AllUsers from "./AllUsers";
 import { connect } from "react-redux";
@@ -44,6 +45,7 @@ class Routes extends React.Component {
           <Route exact path='/results' component={DrinkList} />
           <Route exact path='/results/:id' component={DrinkId} />
           <Route exact path='/scan' component={CameraInput} />
+          <Route exact path='/:userName/feed' component={Feed} />
 
           {isLoggedIn && (
             <Switch>
