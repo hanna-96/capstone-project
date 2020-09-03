@@ -66,30 +66,31 @@ const RequestFilter = (props) => {
         // validIng:  ["lime", "lemon"] 
 
         <div>
+            {ingredients? 
     <div> 
     <p>{validIng.map( (ingred) => 
     <div>
-    {console.log(ingredients,  'ingredients and validINg', validIng)}
-    <p>{(!ingredients.length|| !ingredients.includes(ingred))?
+    <p>
     <div>
         <div>{ingred.split('_').join(' ')} has been added</div>
             <AllIngredients ingred={ingred} /> 
         </div>
-     : 
      <div>{ingred} is already in your Cabinet!</div>
-     
-     } </p>
+        </p>
       </div>
     )}</p>
     <p>See your results: </p>
   <Request ingreds={validIng} /> 
   </div>
+  :
+<div></div>}
+    
 
+    
     </div>
 
     )
 }
-    
 
 
 export default withRouter(RequestFilter)
