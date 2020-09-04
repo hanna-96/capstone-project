@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from "react"
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { withRouter} from "react-router-dom";
+// import Link from "@material-ui/core/Link";
+
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import SwipeableTextMobileStepper from "./Carousel";
@@ -37,11 +40,12 @@ const UserHome = (props) => {
     else ref.current.scrollLeft -= Math.ceil(window.outerWidth/2)
   }
 
+  const {userName} = props.user
   return (
     <div className='for-centering-container'>
       <div align="center" className = "userHome"> 
         <Typography variant="h3" component="h3" >
-          Welcome {props.user.userName}!
+          Welcome {userName}!
         </Typography>
         <div>
           <br />

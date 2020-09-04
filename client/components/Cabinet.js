@@ -26,15 +26,15 @@ const Cabinet = (props) => {
 
     useEffect(()=> {
         dispatch(getAllIngredientsThunk(userName))
-    }, [])
+    }, [userName])
 
-    useEffect(() => {
-        const getIngredientThumb = (ingred) => {
-            const url = `https://www.thecocktaildb.com/images/ingredients/${ingred}-small.png`
-            setObj(prev => [...prev, {name: ingred, thumbnail: url}])
-        }
-        ingredients.forEach( (ingred) => getIngredientThumb(ingred))
-    }, [ingredArr])
+    // useEffect(() => {
+    //     const getIngredientThumb = (ingred) => {
+    //         const url = `https://www.thecocktaildb.com/images/ingredients/${ingred}-small.png`
+    //         setObj(prev => [...prev, {name: ingred, thumbnail: url}])
+    //     }
+    //     ingredients.forEach( (ingred) => getIngredientThumb(ingred))
+    // }, [ingredArr])
 
         return (
             <div id='cabinet-page'>
@@ -51,7 +51,7 @@ const Cabinet = (props) => {
 
                 
 
-            { ingredients.length? 
+            { ingredients.length > 0 ? 
                 
                 ingredients.map((ingred, idx) => 
                 <div id='cabinet-item'>

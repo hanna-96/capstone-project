@@ -66,11 +66,11 @@ const useStyles = makeStyles({
             <ListItemText primary='Your Cabinet' />
           </ListItem>
         </Link>
-          {/* <Link href='/scan'> */}
-          <ListItem button key='scan' to="/scan" component={Link}>
+          <Link href='/scan'>
+          <ListItem button key='scan'>
             <ListItemText primary='Scan Items' />
           </ListItem>
-        {/* </Link> */}
+        </Link>
       </List>
       <Divider />
       <List>
