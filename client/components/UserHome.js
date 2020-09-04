@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 // import PropTypes from 'prop-types'
 import { connect } from "react-redux";
-import { Link} from "react-router-dom";
-// import Link from "@material-ui/core/Link";
+import { withRouter} from "react-router-dom";
+import Link from "@material-ui/core/Link";
+
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import SwipeableTextMobileStepper from "./Carousel";
@@ -14,28 +15,21 @@ import TabScrollButton from '@material-ui/core/TabScrollButton'
 
 // import classNames from 'classnames';
 const UserHome = (props) => {
-  console.log('userhome props',props)
-  useEffect(() => {
-    const getFaves = () => {
-      props.getFavorites(props.user.favorites, 'favorites')
-    }
-    getFaves()
-  }, [props.user])
-
+  const {userName} = props.user
   return (
     <React.Fragment>
       <div align="center" className = "userHome"> 
         <Typography variant="h3" component="h3" >
-          Welcome {props.user.firstName}!
+          Welcome {userName}!
         </Typography>
         <div>
           <br />
           {/* <Link to={`/users/${props.userName}/cabinet`}>Recently made drinks</Link> */}
           <Typography variant="h6" component="h6" >
-            <Link to={`/users/${props.userName}/cabinet`} className='mui-like'>
-              Recently made drinks
-            </Link>
-          </Typography>
+    <Link href={`/users/${userName}/cabinet`} >
+    Recently made drinks
+    </Link>
+  </Typography>
         </div>
         <SwipeableTextMobileStepper />
         <Button variant="contained" href="/scan" align="center" className="scan-btn" color="primary">
@@ -79,11 +73,11 @@ const mapState = (state) => {
   };
 };
 
-const mapDispatch = dispatch => ({
-  getFavorites: (drinks, type) => dispatch(getFavoriteDrinks(drinks, type))
-})
+// const mapDispatch = dispatch => ({
+//   getFavorites: (drinks, type) => dispatch(getFavoriteDrinks(drinks, type))
+// })
 
-export default connect(mapState, mapDispatch)(UserHome);
+// export default connect(mapState, mapDispatch)(UserHome);
 // export default connect(mapState, null)(withStyles(styles)(UserHome))
 /**
  * PROP TYPES
@@ -91,3 +85,4 @@ export default connect(mapState, mapDispatch)(UserHome);
 // UserHome.propTypes = {
 //   classes: PropTypes.object.isRequired,
 // };
+export default connect(mapState, null)(UserHome);
