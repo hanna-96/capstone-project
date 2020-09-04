@@ -223,7 +223,9 @@ router.put("/:userName/favorites", async (req, res, next) => {
 router.put("/:userName/friends", async (req, res, next) => {
   try {
     console.log(req.body, req.params)
-    const friends = await updateUserFriends(req.params.userName, [req.body.friend])
+    const friend = req.body.friend
+    const status = req.body.status
+    const friends = await updateUserFriends(req.params.userName, [{friend, status}])
     console.log(friends)
     res.send(friends)
   } catch(e) { next(e) }

@@ -7,17 +7,18 @@ const GET_FRIENDS = 'GET_FRIENDS'
 const ADD_FRIEND = 'ADD_FRIEND'
 // const REMOVE_FRIEND = 'REMOVE_FRIEND'
 
-const getFriends = (type, friends) => {
+const getFriends = (friends) => {
     return {
         type: GET_FRIENDS,
         friends,
     }
 }
 
-const addFriend = (type, friend) => {
+const addFriend = ( friend, status) => {
     return {
         type: ADD_FRIEND,
         friend,
+        status,
     }
 }
 
@@ -32,12 +33,11 @@ export const getFriendsThunk = (userName) => {
     }
 }
 
-export const addFriendThunk = (userName, friend) => {
+export const addFriendThunk = (userName, friend, status) => {
     return async (dispatch) => {
     try {
-        const {data} = await axios.put(`/api/users/${userName}/friends`, {friend})
-        console.log(data)
-        dispatch(addFriend(data))
+        const {data} = await axios.put(`/api/users/${userName}/friends`, {friend, status})
+        dispatch(addFriend(friend, status))
     } catch(err) {
         console.log(err)
         }
@@ -49,7 +49,7 @@ const friendsReducer = (state = initialState, action) => {
         case GET_FRIENDS :
             return action.friends
         case ADD_FRIEND:
-            return action.friend
+            return [...state, {friend: action.friend,status:  action.status}]
         default:
             return state
     }

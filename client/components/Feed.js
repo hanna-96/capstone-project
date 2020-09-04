@@ -16,7 +16,8 @@ const Feed = (props) => {
         e.preventDefault()
         const selectedFriend = e.currentTarget.value
         console.log(selectedFriend)
-        dispatch(addFriendThunk(userName, selectedFriend))
+        console.log(friends)
+        dispatch(addFriendThunk(userName, selectedFriend, 'pending'))
     }
 
     useEffect(()=> {

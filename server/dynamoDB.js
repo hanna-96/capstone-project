@@ -183,7 +183,7 @@ async function updateUserFriends(userName, friend) {
     if(user.Item.friends) {
       const userFriends = user.Item.friends;
       console.log(userFriends)
-      const updatedFriends = [...userFriends, friend]
+      const updatedFriends = [...userFriends, ...friend]
     
     const params = {
       TableName: "Users3",
