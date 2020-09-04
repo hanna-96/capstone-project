@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
@@ -7,93 +7,107 @@ import SwipeableTextMobileStepper from "./Carousel";
 import { getFavoriteDrinks } from "../redux/drinks"
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
+import IconButton from '@material-ui/core/IconButton'
 
 const UserHome = (props) => {
+
+  const [ingredients, setIngredients] = useState([])
 
   useEffect(() => {
     const faves = props.user.favorites.length > 10 ? props.user.favorites.slice(0, 10) : props.user.favorites
     props.getFavorites(faves, 'favorites')
+    const getIngredients = () => {
+      // const userHomeIngredients = []
+      const userHomeIngredients = props.user.ingredients > 10 ? props.user.ingredients.slice(0, 10) : props.user.ingredients
+      const a = userHomeIngredients.map(i => ({
+        name: i,
+        img: `https://www.thecocktaildb.com/images/ingredients/${i}-small.png`
+      }))
+      setIngredients(a)
+    }
+    if (props.user.ingredients) getIngredients()
   }, [props.user])
 
   //grabs the scrollable element
   const faveRef = useRef()
+  const ingRef = useRef()
   //scrolls the scrollable element
-  const handleScroll = dir => {
-    if (dir === 'forwards') faveRef.current.scrollLeft += Math.ceil(window.outerWidth/2)
-    else faveRef.current.scrollLeft -= Math.ceil(window.outerWidth/2)
+  const handleScroll = (dir, ref) => {
+    if (dir === 'forwards') ref.current.scrollLeft += Math.ceil(window.outerWidth/2)
+    else ref.current.scrollLeft -= Math.ceil(window.outerWidth/2)
   }
 
   return (
-    <React.Fragment>
+    <div className='for-centering-container'>
       <div align="center" className = "userHome"> 
         <Typography variant="h3" component="h3" >
-          Welcome {props.userName}!
+          Welcome {props.user.userName}!
         </Typography>
         <div>
           <br />
-          {/* <Link to={`/users/${props.userName}/cabinet`}>Recently made drinks</Link> */}
           <Typography variant="h6" component="h6" >
-            <Link to={`/users/${props.userName}/cabinet`} className='mui-like'>
-              Recently made drinks
-            </Link>
+              Featured Drinks
           </Typography>
         </div>
         <SwipeableTextMobileStepper />
-        <Button variant="contained" href="/scan" align="center" className="scan-btn" color="primary">
-          Scan items
-        </Button>
       </div>
+
+      {/* /////////////////////////FAVORITES ELEMENT/////////////////////////// */}
+
       { props.user.favorites.length &&
-      <div className='the-last-one-i-swear'>
-        <button className='block' onClick={() => handleScroll('backwards')}>
+      <div className='user-home-bar'>
+        <IconButton className='block' onClick={() => handleScroll('backwards', faveRef)}>
           <ArrowBackIosIcon />
-        </button>
+        </IconButton>
         <div id='favorites-bar'>
           <div className='bar-info'>
             <span>{`favorite cocktails | `}</span>
             <Link to={`/users/${props.user.userName}/allFavorites`} className='see-all-favorites-link mui-like'>see all</Link>
           </div>
-          <div id='favorites-view' ref={faveRef}>
+          <div className='favorites-view' ref={faveRef}>
               {
               props.favorites.map(drink =>
-                  <Link to={{ pathname: `/results/${drink.idDrink}`, state: {id: drink.idDrink} }} className='favorite-drink-thumb mui-like' key={drink.idDrink} >
-                    <img src={drink.strDrinkThumb + '/preview'} className='favorite-drink-img' />
-                    {drink.strDrink}
-                  </Link>
+                <Link to={{ pathname: `/results/${drink.idDrink}`, state: {id: drink.idDrink} }} className='favorite-drink-thumb mui-like' key={drink.idDrink} >
+                  <img src={drink.strDrinkThumb + '/preview'} className='favorite-drink-img' />
+                  {drink.strDrink}
+                </Link>
               )}
           </div>
         </div>
-        <button className='block' onClick={() => handleScroll('forwards')}>
+        <IconButton className='block' onClick={() => handleScroll('forwards', faveRef)}>
           <ArrowForwardIosIcon />
-        </button>
+        </IconButton>
       </div>
       }
-      { props.user.ingredients.length &&
-      <div className='the-last-one-i-swear'>
-        <button className='block' onClick={() => handleScroll('backwards')}>
+
+      {/* /////////////////////////INGREDIENTS ELEMENT/////////////////////////// */}
+
+      { ingredients.length &&
+      <div className='user-home-bar'>
+        <IconButton className='block' onClick={() => handleScroll('backwards', ingRef)}>
           <ArrowBackIosIcon />
-        </button>
+        </IconButton>
         <div id='favorites-bar'>
           <div className='bar-info'>
-            <span>{`favorite cocktails | `}</span>
-            <Link to={`/users/${props.user.userName}/allFavorites`} className='see-all-favorites-link mui-like'>see all</Link>
+            <span>{`inside your cabinet | `}</span>
+            <Link to={`/users/${props.user.userName}/cabinet`} className='see-all-favorites-link mui-like'>see all</Link>
           </div>
-          <div id='favorites-view' ref={faveRef}>
-              {
-              props.favorites.map(drink =>
-                  <Link to={{ pathname: `/results/${drink.idDrink}`, state: {id: drink.idDrink} }} className='favorite-drink-thumb mui-like' key={drink.idDrink} >
-                    <img src={drink.strDrinkThumb + '/preview'} className='favorite-drink-img' />
-                    {drink.strDrink}
-                  </Link>
-              )}
+          <div className='favorites-view' ref={ingRef}>
+            {
+            ingredients.map((ingredient, i) =>
+                <div className='favorite-drink-thumb' key={i}>
+                  <img src={ingredient.img} className='favorite-drink-img' />
+                  {ingredient.name}
+                </div>
+            )}
           </div>
         </div>
-        <button className='block' onClick={() => handleScroll('forwards')}>
+        <IconButton className='block' onClick={() => handleScroll('forwards', ingRef)}>
           <ArrowForwardIosIcon />
-        </button>
+        </IconButton>
       </div>
       }
-  </React.Fragment>
+  </div>
   );
 };
 
