@@ -8,44 +8,46 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
+import ingredients from "../redux/ingredients";
+
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
-const tutorialSteps = [
-  {
-    label: "The  Witch`s heart",
-    imgPath:
-      "https://www.theflavorbender.com/wp-content/uploads/2015/10/Witch-Heart-Halloween-Cocktail-The-Flavor-Bender-Featured-Image-SQ-3-500x375.jpg",
-  },
-  {
-    label: "St. Regis Berries Boom",
-    imgPath:
-      "https://images.unsplash.com/photo-1536935338788-846bb9981813?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
-  },
-  {
-    label: "The Bahhus",
-    imgPath:
-      "https://i.pinimg.com/originals/86/cd/2d/86cd2d17121e4f9d43c7e5587029d4dd.jpg",
-  },
-  {
-    label: "Mezcal Sour",
-    imgPath:
-      "https://d194ip2226q57d.cloudfront.net/images/Mezcal-Sour_Tequila-and-Mezcal_By-Brandon-Alms.original.jpg",
-  },
-  {
-    label: "Whiskey Smash",
-    imgPath:
-      "https://www.thecocktailproject.com/sites/default/files/Makers_Mark_Whiskey_Smash_Thumb.jpg",
-  },
-  {
-    label: "Clover club",
-    imgPath:
-      "https://assets.punchdrink.com/wp-content/uploads/2017/04/Slide-Clover-Club-Egg-White-Cocktails-Boston-Sour-Clover-Club-Recipe-1024x576.jpg",
-  },
-  {
-    label: "Strawbery rum cocktail",
-    imgPath:
-      "https://i2.wp.com/buythiscookthat.com/wp-content/uploads/2019/04/Strawberry-Mint-Rum-Cocktail-2.jpg",
-  },
-];
+// const tutorialSteps = [
+//   {
+//     label: "The  Witch`s heart",
+//     imgPath:
+//       "https://www.theflavorbender.com/wp-content/uploads/2015/10/Witch-Heart-Halloween-Cocktail-The-Flavor-Bender-Featured-Image-SQ-3-500x375.jpg",
+//   },
+//   {
+//     label: "St. Regis Berries Boom",
+//     imgPath:
+//       "https://images.unsplash.com/photo-1536935338788-846bb9981813?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
+//   },
+//   {
+//     label: "The Bahhus",
+//     imgPath:
+//       "https://i.pinimg.com/originals/86/cd/2d/86cd2d17121e4f9d43c7e5587029d4dd.jpg",
+//   },
+//   {
+//     label: "Mezcal Sour",
+//     imgPath:
+//       "https://d194ip2226q57d.cloudfront.net/images/Mezcal-Sour_Tequila-and-Mezcal_By-Brandon-Alms.original.jpg",
+//   },
+//   {
+//     label: "Whiskey Smash",
+//     imgPath:
+//       "https://www.thecocktailproject.com/sites/default/files/Makers_Mark_Whiskey_Smash_Thumb.jpg",
+//   },
+//   {
+//     label: "Clover club",
+//     imgPath:
+//       "https://assets.punchdrink.com/wp-content/uploads/2017/04/Slide-Clover-Club-Egg-White-Cocktails-Boston-Sour-Clover-Club-Recipe-1024x576.jpg",
+//   },
+//   {
+//     label: "Strawbery rum cocktail",
+//     imgPath:
+//       "https://i2.wp.com/buythiscookthat.com/wp-content/uploads/2019/04/Strawberry-Mint-Rum-Cocktail-2.jpg",
+//   },
+// ];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,8 +74,8 @@ function SwipeableTextMobileStepper(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  // const ingredientsArr = props.ingredients;
-  const maxSteps = tutorialSteps.length;
+  const ingredientsArr = props.ingredients;
+  const maxSteps = ingredientsArr.length;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -86,10 +88,12 @@ function SwipeableTextMobileStepper(props) {
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
+  console.log("PROPS", props);
+  console.log(" ingredients arr in carousel", ingredientsArr);
   return (
     <div className={classes.root}>
       <Paper square elevation={0} className={classes.header}>
-        <Typography>{tutorialSteps[activeStep].label}</Typography>
+        {/* <Typography>{ingredientsArr[activeStep].strDrink}</Typography> */}
       </Paper>
       <AutoPlaySwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -97,13 +101,14 @@ function SwipeableTextMobileStepper(props) {
         onChangeIndex={handleStepChange}
         enableMouseEvents
       >
-        {tutorialSteps.map((ingredient, index) => (
-          <div key={ingredient.label}>
+        {ingredientsArr.map((ingredient, index) => (
+          <div key={ingredient.strDrink}>
+            <p>{ingredient.strDrink}</p>
             {Math.abs(activeStep - index) <= 2 ? (
               <img
                 className={classes.img}
-                src={ingredient.imgPath}
-                alt={ingredient.label}
+                src={ingredient.strDrinkThumb}
+                alt={ingredient.strDrink}
               />
             ) : null}
           </div>

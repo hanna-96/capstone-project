@@ -5,7 +5,7 @@ import axios from "axios";
 // import CardActions from '@material-ui/core/CardActions';
 import { makeStyles } from "@material-ui/core/styles";
 // import Typography from '@material-ui/core/Typography';
-import SwipeableTextMobileStepper from "./Carousel";
+import SwipeableTextMobileStepper from "./CarouselForHomePage";
 
 // const useStyles = makeStyles((theme) => ({
 //     root: {
@@ -28,7 +28,8 @@ import SwipeableTextMobileStepper from "./Carousel";
 //     },
 //   }));
 
-const HomePape = props => { //added props here so that we could use it for useEffect
+const HomePape = (props) => {
+  //added props here so that we could use it for useEffect
   const [ingredient, setIngredient] = useState([]);
   // const [switch1, setSwitch1] = useState(false);
   // const classes = useStyles()
@@ -40,9 +41,9 @@ const HomePape = props => { //added props here so that we could use it for useEf
           "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Rum"
         );
         console.log("data", data);
-        const ingr = data.drinks.slice(0, 8);
+        const ingr = data.drinks.slice(16, 21);
         console.log(ingr);
-        setIngredient(ingr); 
+        setIngredient(ingr);
       } catch (error) {
         console.log(error);
       }
@@ -54,12 +55,8 @@ const HomePape = props => { //added props here so that we could use it for useEf
   return (
     <div>
       <React.Fragment>
-        <h1>Heeeeyyy</h1>
         <img className="mainPic" src="https://i.ibb.co/0Jhtp3b/Cheers-3.png" />
-       <SwipeableTextMobileStepper ingredients={ingredient} />
-        ) : (
-          <div></div>
-        )
+        <SwipeableTextMobileStepper ingredients={ingredient} />
       </React.Fragment>
     </div>
   );
