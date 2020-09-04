@@ -15,6 +15,7 @@ import { connect } from "react-redux";
 import { me } from "../redux/user";
 import history from '../history'
 import CameraInput from "./CameraInput";
+import AllFavorites from "./AllFavorites";
 import HomePage from "./HomePage"
 
 class Routes extends React.Component {
@@ -34,14 +35,17 @@ class Routes extends React.Component {
   render() {
     const { isLoggedIn } = this.props;
     return (
-      <div>
+      <div id='routes'>
        
         <Switch>
         <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component= {Login}/>
           <Route exact path="/signup" component={Signup} />
-          <Route exact path={`/users/${this.props.userName}`} component={InputForm} />
-          <Route exact path= {`/users/${this.props.userName}/cabinet`} component={Cabinet} />
+          <Route exact path='/users/:userName/allFavorites' component={AllFavorites} />
+          <Route exact path="/users/:userName" component={InputForm} />
+          <Route exact path= "/users/:userName/cabinet" component={Cabinet} />
+          {/* <Route exact path={`/users/${this.props.userName}`} component={InputForm} />
+          <Route exact path= {`/users/${this.props.userName}/cabinet`} component={Cabinet} /> */}
           <Route exact path='/results' component={DrinkList} />
           <Route exact path='/results/:id' component={DrinkId} />
           <Route exact path='/scan' component={CameraInput} />
