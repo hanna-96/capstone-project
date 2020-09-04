@@ -69,7 +69,7 @@ class Signup extends React.Component {
       [event.target.name]: event.target.value,
     });
   }
-  async handleSubmit(event) {
+  handleSubmit(event) {
     event.preventDefault();
     this.props.signup(this.state)
     this.setState({
@@ -178,8 +178,8 @@ class Signup extends React.Component {
   }
 }
 
-const mapDispatch = dispatch => ({
-  signup: user => dispatch(authSignup(user))
+const mapDispatch = (dispatch, ownProps) => ({
+  signup: user => dispatch(authSignup(user, ownProps.history))
 })
 
 Signup.propTypes = {

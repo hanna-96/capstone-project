@@ -56,6 +56,7 @@ router.post("/signup", async (req, res, next) => {
     req.login(newUser, (err) => (err ? next(err) : res.json(newUser)));
   } catch (error) {
     console.error(error);
+    next(error)
   }
 });
 
@@ -89,7 +90,8 @@ router.put("/:userName", async (req, res, next) => {
     const updatedUser = await updateUserName(userName, name);
     res.send(updatedUser.Item);
   } catch (error) {
-    console.log(next);
+    console.error(error);
+    next(error)
   }
 });
 router.get("/:userName/allingredients", async (req, res, next) => {
@@ -105,6 +107,7 @@ router.get("/:userName/allingredients", async (req, res, next) => {
    }
   } catch (error) {
     console.error(error);
+    next(error)
   }
 });
 
@@ -133,6 +136,7 @@ router.get("/:userName/allingredients/:idx", async (req, res, next) => {
     res.send(usersIngredients);
   } catch (error) {
     console.error(error);
+    next(error)
   }
 });
 // update User's ingredients by adding a new Ingredient
@@ -159,7 +163,8 @@ router.put("/:userName/allingredients", async (req, res, next) => {
     res.send(ingredients)
   }
   } catch (error) {
-    console.error(error);
+    console.error(error)
+    next(error)
   }
 });
 
@@ -170,7 +175,8 @@ router.delete("/:userName", async (req, res, next) => {
     await deleteUser(userName);
     res.sendStatus(204);
   } catch (error) {
-    console.error(next);
+    console.error(error);
+    next(error)
   }
 });
 
@@ -188,7 +194,10 @@ router.delete("/:userName/allingredients/", async (req, res, next) => {
     ]);
     res.send(deletedIngredients);
   } catch (error) {
-    console.error(next);
+
+    console.error(error);
+    next(error)
+
   }
 });
 
@@ -208,7 +217,9 @@ router.delete("/:userName/allingredients/:idx", async (req, res, next) => {
     console.log('testing')
     res.send(deletedIngredients);
   } catch (error) {
-    console.error(next);
+
+    console.error(error);
+    next(error)
   }
 })
 

@@ -10,6 +10,9 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid'
 import { connect } from 'react-redux'
 import { addToUserFavorites, removeFromUserFavorites, updateFavorites } from '../redux/user'
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
+import FavoriteIcon from '@material-ui/icons/Favorite'
+import IconButton from '@material-ui/core/IconButton'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -84,8 +87,8 @@ const DrinkId = (props) => {
 
   //updates favorites on the frontend
   const handleFavorite = () => {
-    if (props.user.favorites.includes(drinkDetails.strDrink)) props.removeFavorite(drinkDetails.strDrink)
-    else props.addFavorite(drinkDetails.strDrink)
+    if (props.user.favorites.includes(drinkDetails.idDrink)) props.removeFavorite(drinkDetails.idDrink)
+    else props.addFavorite(drinkDetails.idDrink)
     setUserFavorite(!!userFavorite)
   }
 ///////////////////////////favorites end///////////////////////////////////////
@@ -131,9 +134,10 @@ const DrinkId = (props) => {
                   </List>
                   {
                     props.user && 
-                    <Button onClick={handleFavorite} className={props.user.favorites.includes(drinkDetails.strDrink) && 'favorited-btn'}>
-                      {props.user.favorites.includes(drinkDetails.strDrink) ? 'favorited!' : 'add to favorites'}
-                    </Button>
+                    <IconButton onClick={handleFavorite} className={props.user.favorites.includes(drinkDetails.idDrink) && 'favorited-btn'}>
+                      {props.user.favorites.includes(drinkDetails.idDrink) ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                      <div id ='favorited'></div>
+                    </IconButton>
                   }
                   <Button onClick={results}>Back to results</Button>
                 </div>
