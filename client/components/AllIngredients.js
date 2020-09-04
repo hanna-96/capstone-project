@@ -12,18 +12,31 @@ const AllIngredients = (props) => {
   const userName = props.match.params.userName
   console.log(props, userName)
 
+  const [rendered, setRendered] = useState(false)
+
   const dispatch = useDispatch()
   const ingredients = useSelector(state => state.ingredients)
 
   useEffect(() => {
        dispatch(addIngredientThunk(userName, props.ingred))
        dispatch(getAllIngredientsThunk(userName))
+       setRendered(true)
 
   }, [])
   
 
   return (
+    <div> { ingredients.length ? 
     <div>
+      {ingredients.includes(props.ingred) ? 
+      <div>{props.ingred.split('_').join(' ')} is already in your Cabinet but is included in the search results! </div> 
+      
+      : <div> {props.ingred.split('_').join(' ')} was added to your Cabinet</div> }
+    </div>
+
+    : <div></div>
+
+    }
     </div>
   )
 }
