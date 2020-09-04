@@ -34,7 +34,7 @@ const AllIngredients = (props) => {
       : <div> {props.ingred.split('_').join(' ')} was added to your Cabinet</div> }
     </div>
 
-    : <div>Could not be added</div>
+    : <div></div>
 
     }
     </div>
