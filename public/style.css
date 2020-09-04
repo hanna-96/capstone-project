@@ -238,19 +238,33 @@
 
 .drink-page {
   display: flex;
-}
-
-.drink-detail {
+  width: 40%;
   align-items: center;
-
+  margin-left: 10em;
+  flex-wrap: row;
+} 
+.drink-page div {
+  border: 1px;
+  padding: 10px;
+  /* flex-wrap: row; */
 }
+/* .drink-detail {
+  align-items: center;
+} */
 
 .drink-img {
   align-items: center;
   justify-content: center;
-  width: 50%;
+  width: 100%;
 }
-
+.recipe {
+  width: 100%;
+}
+.recipe-name {
+  font-size: 2rem;
+  text-transform: capitalize;
+  font-weight: bold;;
+}
 #submission {
   display: flex;
   justify-content: center;
@@ -300,3 +314,4 @@
 .mainPic {
   width: 100%;
 }
+

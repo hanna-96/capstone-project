@@ -101,7 +101,7 @@ class Login extends React.Component {
            margin="normal"
            fullWidth
              name="password"
-             type="text"
+             type="password"
              required
              label="Password"
              onChange={this.handleChange}
