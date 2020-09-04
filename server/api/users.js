@@ -7,7 +7,8 @@ const {
   deleteUser,
   updateUserIngredients,
   deleteUserIngredients,
-  updateUserFavorites
+  updateUserFavorites,
+  updateUserFriends
 } = require("../dynamoDB");
 
 router.get("/", async (req, res, next) => {
@@ -48,7 +49,8 @@ router.post("/signup", async (req, res, next) => {
         email,
         password,
         ingredients: [],
-        favorites: []
+        favorites: [],
+        friends: []
       }
     }
     req.login(newUser, (err) => (err ? next(err) : res.json(newUser)));
@@ -109,6 +111,20 @@ router.get("/:userName/allingredients", async (req, res, next) => {
   }
 });
 
+router.get("/:userName/friends", async (req, res, next) => {
+  try {
+    const userName = req.params.userName;
+    const singleUser = await getSingleUserByUserName(userName)
+    if(singleUser.Item.friends) {
+      const userFriends = singleUser.Item.friends
+      res.send(userFriends) } else {
+        console.log('no friends yet :(')
+      }
+  } catch(e) { next(e) }
+})
+
+
+
 router.get("/:userName/allingredients/:idx", async (req, res, next) => {
   try {
     const userName = req.params.userName;
@@ -130,15 +146,22 @@ router.get("/:userName/allingredients/:idx", async (req, res, next) => {
 router.put("/:userName/allingredients", async (req, res, next) => {
   try {
     const userName = req.params.userName;
+    const { ingredient } = req.body;
+    const singleUser = await getSingleUserByUserName(userName)
+    const ingredients = singleUser.Item.ingredients
+    if(!ingredients.includes(ingredient)) {
     // console.log(req.body, "body");
     // console.log(req.params, "params");
 
     // console.log("params", req.body.ingredient);
-    const { ingredient } = req.body;
+    
     const updatedIngredients = await updateUserIngredients(userName, [
       ingredient,
     ]);
     res.send(updatedIngredients);
+  } else {
+    res.send(ingredients)
+  }
   } catch (error) {
     console.error(error)
     next(error)
@@ -171,8 +194,10 @@ router.delete("/:userName/allingredients/", async (req, res, next) => {
     ]);
     res.send(deletedIngredients);
   } catch (error) {
+
     console.error(error);
     next(error)
+
   }
 });
 
@@ -192,6 +217,7 @@ router.delete("/:userName/allingredients/:idx", async (req, res, next) => {
     console.log('testing')
     res.send(deletedIngredients);
   } catch (error) {
+
     console.error(error);
     next(error)
   }
@@ -204,9 +230,23 @@ router.put("/:userName/favorites", async (req, res, next) => {
   } catch(e) { next(e) }
 })
 
+
+router.put("/:userName/friends", async (req, res, next) => {
+  try {
+    console.log(req.body, req.params)
+    const friend = req.body.friend
+    const status = req.body.status
+    const friends = await updateUserFriends(req.params.userName, [{friend, status}])
+    console.log(friends)
+    res.send(friends)
+  } catch(e) { next(e) }
+})
+
 router.use((req, res, next) => {
   err.status = 404;
   next(err);
 });
+
+
 
 module.exports = router;
