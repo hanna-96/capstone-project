@@ -133,15 +133,21 @@
   margin: 0 .6em;
 }
 
-.favorites-view {
+.items-view {
   padding: 1em;
   display: flex;
   align-items: center;
+  height: 233px;
   width: 70vw;
   border: 1px solid rgb(187, 187, 187);
   overflow: scroll;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
+}
+
+.empty {
+  justify-content: center;
+  text-align: center;
 }
 
 .favorite-drink-thumb {

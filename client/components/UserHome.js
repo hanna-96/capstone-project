@@ -49,15 +49,6 @@ const UserHome = (props) => {
     if (props.user.ingredients) getIngredients()
   }, [props.user])
 
-  //grabs the scrollable element
-  const faveRef = useRef()
-  const ingRef = useRef()
-  //scrolls the scrollable element
-  const handleScroll = (dir, ref) => {
-    if (dir === 'forwards') ref.current.scrollLeft += Math.ceil(window.outerWidth/2)
-    else ref.current.scrollLeft -= Math.ceil(window.outerWidth/2)
-  }
-
   const classes = useStyles()
   const {userName} = props.user
   return (
@@ -77,21 +68,23 @@ const UserHome = (props) => {
 
       {/* /////////////////////////FAVORITES ELEMENT/////////////////////////// */}
 
-      { props.user.favorites.length &&
+      { props.user.favorites &&
       <div className='user-home-bar'>
         <div id='favorites-bar'>
           <div className='bar-info'>
             <span>{`favorite cocktails | `}</span>
             <Link to={`/users/${props.user.userName}/allFavorites`} className='see-all-favorites-link mui-like'>see all</Link>
           </div>
-          <div className={`${classes.scrollBar} favorites-view`} ref={faveRef}>
+          <div className={`${classes.scrollBar} items-view ${!props.favorites.length ? 'empty' : ''}`}>
               {
+              props.favorites.length ?
               props.favorites.map(drink =>
                 <Link to={{ pathname: `/results/${drink.idDrink}`, state: {id: drink.idDrink} }} className='favorite-drink-thumb mui-like' key={drink.idDrink} >
                   <img src={drink.strDrinkThumb + '/preview'} className='favorite-drink-img' />
                   {drink.strDrink}
                 </Link>
-              )}
+              ) : <div className='empty'>No favorites yet. <Link to={`/users/${userName}`} className='mui-like'>Add some now!</Link></div>
+              }
           </div>
         </div>
       </div>
@@ -99,21 +92,23 @@ const UserHome = (props) => {
 
       {/* /////////////////////////INGREDIENTS ELEMENT/////////////////////////// */}
 
-      { ingredients.length &&
+      { ingredients &&
       <div className='user-home-bar'>
         <div id='favorites-bar'>
           <div className='bar-info'>
             <span>{`inside your cabinet | `}</span>
             <Link to={`/users/${props.user.userName}/cabinet`} className='see-all-favorites-link mui-like'>see all</Link>
           </div>
-          <div className={`${classes.scrollBar} favorites-view`} ref={ingRef}>
+          <div className={`${classes.scrollBar} items-view ${!ingredients.length ? 'empty' : ''}`}>
             {
+            ingredients.length ?
             ingredients.map((ingredient, i) =>
                 <div className='favorite-drink-thumb' key={i}>
                   <img src={ingredient.img} className='favorite-drink-img' />
                   {ingredient.name}
                 </div>
-            )}
+            ) : <div className='empty'>Nothing in your cabinet yet. <Link to={`/users/${userName}`} className='mui-like'>Add some ingredients now!</Link></div>
+            }
           </div>
         </div>
       </div>
