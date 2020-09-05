@@ -10,12 +10,13 @@ const RequestFilter = (props) => {
       // Handles ingredients with spaces 
     const [valid, setValid] = useState(false)
     const [validIng, setValidIng] = useState([])
+
     useEffect( () => {
         const reqValidator = async (ing) => {
             try{
                 if(ing.includes(' ')) ing = ing.split(' ').join('_')
                 // makes call to API DB .. if there is a drinks object present, set to true otherwise set to false
-                const {data} =await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ing}`)
+                const {data} = await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ing}`)
                 if(data.drinks && !validIng.includes(ing)) {
                         setValid(true)
                         setValidIng(prev => [...prev, ing])
@@ -31,22 +32,23 @@ const RequestFilter = (props) => {
         }
 
         ingreds.forEach(async ing => await reqValidator(ing))
-    }, [inputLen])
 
+    }, [inputLen])
     
     return (
         
         <div>
-
     <p>{validIng.map( (ingred) => 
     <div>
-
-    <p> <AllIngredients ingred={ingred} /></p>
+    {console.log('inside validIng.map: ', ingred)}
+    <p> <AllIngredients ingred={ingred} /></p> 
       </div>
     )}</p>
+    {/* {done && <AllIngredients ingreds={validIng} />} */}
 
     <p>See your results: </p>
-  <Request ingreds={validIng} />
+    {console.log('validIng: ', validIng)}
+    <Request ingreds={validIng} />
   
 
 

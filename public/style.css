@@ -92,14 +92,6 @@
 /************ scan view end ************/
 /************ favorites styles ************/
 
-.block {
-  width: 2.5em;
-  height: 2.5em;
-  background-color: #ffffff;
-  border: none;
-  transition: .3s;
-  border-radius: 2em;
-}
 .block:active {
   color: rgb(209, 73, 191);
   border: none;
@@ -147,7 +139,7 @@
   align-items: center;
   width: 70vw;
   border: 1px solid rgb(187, 187, 187);
-  overflow: hidden;
+  overflow: scroll;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 }
@@ -199,6 +191,7 @@
 }
 
 .drink-list-thumb {
+  position: relative;
   border: 1px solid rgb(221, 221, 221);
   padding: 1em;
   margin: 1vw 1.5vw;
@@ -211,6 +204,13 @@
   align-self: flex-start;
   margin-left: 10vw;
   margin-bottom: .5em;
+}
+
+.heart-icon {
+  position: absolute;
+  right: 3.5vh;
+  top: 3.5vh;
+  color: rgb(255, 218, 224);
 }
 
 /************ favorites end ************/
@@ -236,11 +236,30 @@
   .all-drinks-container {
     justify-content: center;
   }
+  .user-home-bar {
+    width: 95vw;
+  }
+  .favorites-view {
+    width: 85vw;
+  }
 }
 @media screen and (max-width: 600px) {
   .drink-img-all {
     max-height: 70vw;
     max-width: 70vw;
+  }
+  .heart-icon {
+    right: 4vh;
+    top: 4vh;
+  }
+  .block {
+    display: none;
+  }
+  .user-home-bar {
+    width: 100vw;
+  }
+  .favorites-view {
+    width: 95vw;
   }
 }
 /***************media end*****************/
