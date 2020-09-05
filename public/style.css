@@ -245,7 +245,7 @@
   .user-home-bar {
     width: 95vw;
   }
-  .favorites-view {
+  .items-view {
     width: 85vw;
   }
 }
@@ -264,7 +264,7 @@
   .user-home-bar {
     width: 100vw;
   }
-  .favorites-view {
+  .items-view {
     width: 95vw;
   }
 }

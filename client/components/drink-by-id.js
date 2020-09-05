@@ -133,10 +133,10 @@ const DrinkId = (props) => {
                   {
                     props.user.userName && 
                     <IconButton onClick={handleFavorite} className={isFavorite && 'favorited-btn'}>
-                      { isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                      <div id ='favorited'></div>
+                      { isFavorite ? <FavoriteIcon color='secondary' /> : <FavoriteBorderIcon color='primary' /> }
                     </IconButton>
                   }
+                  {/* <div id ='favorited'>{isFavorite ? 'favorited!' : 'un-favorited'}</div> */}
                   <Button onClick={results}>Back to results</Button>
                 </div>
               </Container> 
