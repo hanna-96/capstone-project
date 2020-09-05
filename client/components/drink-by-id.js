@@ -104,38 +104,38 @@ const DrinkId = (props) => {
               <Container fluid>
               <div className='drink-detail'>
                 <List>
-                <ListItem><p>{drinkDetails.strDrink}</p></ListItem>
-                <ListItem><p>{drinkDetails.strInstruction}</p></ListItem>
-                  <Divider />
-                  <Grid Container>
-                  <Paper>
-            
-                    <Grid item xs={6} spacing={2}>
-                  
-                      <div><p><img className='drink-img' src={drinkDetails.strDrinkThumb}/></p>
+                  <ListItem key={drinkDetails.strDrink}><p>{drinkDetails.strDrink}</p></ListItem>
+                  <ListItem key={drinkDetails.idDrink}><p>{drinkDetails.strInstruction}</p></ListItem>
+                    <Divider />
+                    <Grid Container>
+                    <Paper>
+              
+                      <Grid item xs={6} spacing={2}>
+                    
+                        <div><p><img className='drink-img' src={drinkDetails.strDrinkThumb}/></p>
 
-                  </div>
-                  </Grid>
-
-                  
-                  <Divider /> 
-                  <Grid item xs={6} spacing={2}>
-
-                  <h2>Receipe</h2>
-                  <h3>{drinkDetails.strInstructions}</h3>
-
-
-
-                  {details.map(detail  => <ListItem>{detail.ingreds} {detail.measure}</ListItem> )}
+                    </div>
                     </Grid>
-                  </Paper>
-                  
-                  </Grid>
+
+                    
+                    <Divider /> 
+                    <Grid item xs={6} spacing={2}>
+
+                    <h2>Receipe</h2>
+                    <h3>{drinkDetails.strInstructions}</h3>
+
+
+
+                    {details.map(detail  => <ListItem>{detail.ingreds} {detail.measure}</ListItem> )}
+                      </Grid>
+                    </Paper>
+                    
+                    </Grid>
                   </List>
                   {
-                    props.user && 
-                    <IconButton onClick={handleFavorite} className={props.user.favorites.includes(drinkDetails.idDrink) && 'favorited-btn'}>
-                      {props.user.favorites.includes(drinkDetails.idDrink) ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                    props.user.userName && 
+                    <IconButton onClick={handleFavorite} className={userFavorite && 'favorited-btn'}>
+                      { userFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                       <div id ='favorited'></div>
                     </IconButton>
                   }
@@ -150,7 +150,7 @@ const DrinkId = (props) => {
         
       )
 }
-
+// props.user.favorites.includes(drinkDetails.idDrink)
 const mapState = state => ({ user: state.user })
 const mapDispatch = dispatch => ({
   addFavorite: favorite => dispatch(addToUserFavorites(favorite)),

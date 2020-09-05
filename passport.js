@@ -38,11 +38,9 @@ module.exports = function (passport) {
     DocumentClient.get(
       { "TableName": "Users3", "Key": { "userName": userName } },
       function (err, data) {
-        console.log("data before of des", data);
         if (err) {
           done(err, data);
         }
-        console.log("data after of des", data);
         done(err, {
           "userName": data.Item.userName,
           "password": data.Item.password,

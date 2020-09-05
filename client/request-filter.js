@@ -10,7 +10,6 @@ const RequestFilter = (props) => {
       // Handles ingredients with spaces 
     const [valid, setValid] = useState(false)
     const [validIng, setValidIng] = useState([])
-
     useEffect( () => {
         const reqValidator = async (ing) => {
             try{
@@ -44,7 +43,6 @@ const RequestFilter = (props) => {
     <p> <AllIngredients ingred={ingred} /></p> 
       </div>
     )}</p>
-    {/* {done && <AllIngredients ingreds={validIng} />} */}
 
     <p>See your results: </p>
     {console.log('validIng: ', validIng)}

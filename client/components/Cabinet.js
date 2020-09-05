@@ -58,7 +58,6 @@ const Cabinet = (props) => {
                     
                     <Card color='primary' variant='outlined'>
                         {ingred} 
-                        {/* <img src={`https://www.thecocktaildb.com/images/ingredients/${ingred}-small.png`} /> */}
                         <CardMedia
                             component="img"
                             height="100"

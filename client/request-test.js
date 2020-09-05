@@ -26,6 +26,7 @@ const Request = (props) => {
 
     const getDrinks = async (ing)  => {
       try {
+        console.log('ing: ', ing)
         const {data} =await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ing}`)
         const {drinks} = data
         setDrinks(prevDrinks => [...prevDrinks,...drinks])
@@ -38,6 +39,16 @@ const Request = (props) => {
     ingreds.forEach( async ing => {
       await getDrinks(ing)
     })
+    //   try {
+    //     const allDrinksData = await Promise.all(i => 
+    //       axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${i}`)
+    //     )
+    //     allDrinks = allDrinksData.reduce((acc, v) => [...acc, ...v.data.drinks], [])
+    //     setDrinks(allDrinks)
+    //     dispatch(fetchSearches(drinkList))
+    //   } catch(e) { console.error(e) }
+    // }
+    // getDrinks(ings)
 }, [ingreds])
 
 
@@ -51,8 +62,6 @@ const Request = (props) => {
       <div>
         <h2>{drinkList.length} Results</h2>
         <Link to={{ pathname: '/results', state: {drinkList} }}>Go to results</Link> 
-        {/* <Link to='/users' */}
-        <DrinkList drinks={drinkList} />
         </div>
  : <div> Bleh...
    </div>} 
