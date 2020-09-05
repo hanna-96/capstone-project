@@ -28,9 +28,7 @@ const DrinkId = (props) => {
     const classes = useStyles()
     const [drinkDetails, setDrink] = useState({})
     const [details, setDetails] = useState([])
-    const [didRun, setDidRun] = useState(false)
-    const [userFavorite, setUserFavorite] = useState(false)
- 
+    const [didRun, setDidRun] = useState(false) 
 
     const results = () => {
       props.history.goBack()
@@ -79,7 +77,6 @@ const DrinkId = (props) => {
 
   //updates favorites in DB when prevFavorites does not match current favorites
   useEffect(() => {
-    setUserFavorite(!!userFavorite)
     if (prevFavorites && prevFavorites.length !== props.user.favorites.length) {
       updateFavorites(props.user.userName, { favorites: props.user.favorites })
     }
@@ -89,15 +86,16 @@ const DrinkId = (props) => {
   const handleFavorite = () => {
     if (props.user.favorites.includes(drinkDetails.idDrink)) props.removeFavorite(drinkDetails.idDrink)
     else props.addFavorite(drinkDetails.idDrink)
-    setUserFavorite(!!userFavorite)
   }
+
+  //changes render of favorite button based on favorite status
+  let isFavorite = false
+  if (props.user.favorites && props.user.favorites.includes(drinkDetails.idDrink)) isFavorite = true
+
 ///////////////////////////favorites end///////////////////////////////////////
 
     return (
-    
         <div>
-            
-
           { drinkDetails.strDrink ? 
            
             <div className='drink-page'>
@@ -126,7 +124,7 @@ const DrinkId = (props) => {
 
 
 
-                    {details.map(detail  => <ListItem>{detail.ingreds} {detail.measure}</ListItem> )}
+                    {details.map((detail, i)  => <ListItem key={i}>{detail.ingreds} {detail.measure}</ListItem> )}
                       </Grid>
                     </Paper>
                     
@@ -134,8 +132,8 @@ const DrinkId = (props) => {
                   </List>
                   {
                     props.user.userName && 
-                    <IconButton onClick={handleFavorite} className={userFavorite && 'favorited-btn'}>
-                      { userFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                    <IconButton onClick={handleFavorite} className={isFavorite && 'favorited-btn'}>
+                      { isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                       <div id ='favorited'></div>
                     </IconButton>
                   }
@@ -158,19 +156,3 @@ const mapDispatch = dispatch => ({
 })
 
 export default connect(mapState, mapDispatch)(DrinkId)
-
-{/* <ListItem button>
-  <ListItemText primary="Inbox" />
-</ListItem>
-<Divider />
-<ListItem button divider>
-  <ListItemText primary="Drafts" />
-</ListItem>
-<ListItem button>
-  <ListItemText primary="Trash" />
-</ListItem>
-<Divider light />
-<ListItem button>
-  <ListItemText primary="Spam" />
-</ListItem>
-</List> */}
