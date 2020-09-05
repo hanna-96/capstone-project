@@ -10,49 +10,57 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const DrinkList = (props) => {
 
-    const useStyles = makeStyles({
-        root: {
-          minWidth: 275,
-        },
-        bullet: {
-          display: 'inline-block',
-          margin: '0 2px',
-          transform: 'scale(0.8)',
-        },
-        title: {
-          fontSize: 14,
-        },
-        pos: {
-          marginBottom: 12,
-        },
-      });
+  const useStyles = makeStyles({
+    root: {
+      minWidth: 275,
+    },
+    bullet: {
+      display: 'inline-block',
+      margin: '0 2px',
+      transform: 'scale(0.8)',
+    },
+    title: {
+      fontSize: 14,
+    },
+    pos: {
+      marginBottom: 12,
+    },
+  });
 
-      
-    const classes = useStyles();
-    return (
-        <div>
-            
-      { history.state.state !== undefined && history.state.state !== null ? history.state.state.drinkList.map((drink) => {
-
-        return (
-          <div>
-           <Card className={classes.root}>
-           <CardContent>
-        <p><img src={`${drink.strDrinkThumb}/preview`} /></p>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-        <p>  Drink Name: <Link to={{ pathname: `/results/${drink.idDrink}`, state: {id: drink.idDrink} }}>{drink.strDrink}</Link></p>
-  </Typography>
-        
-        </CardContent>
-        </Card>
-        </div>
-        )
+    
+  const classes = useStyles();
+  let drinks = []
+  if (history.state.state) {
+    drinks = history.state.state.drinkList.reduce((acc, v) => {
+      let s = false
+      v.relevance = 1
+      for (let i = 0; i < acc.length; i++) {
+        if (acc[i].idDrink === v.idDrink) {
+          acc[i].relevance += 1
+          s = true
+        }
       }
- 
-        ) : <div></div>}
-        </div>
-    )
-
+      if (!s) acc.push(v)
+      return acc
+    }, [])
+    .sort((a, b) => b.relevance - a.relevance)
+  }
+  return (
+    <div className='for-centering-container'>
+      <h3 id='search-results'>Search results:</h3>
+      <div className='all-drinks-container'>
+      { history.state.state !== undefined && history.state.state !== null ?
+        drinks.map(drink => {
+          return (
+            <div className={classes.root} key={drink.idDrink} className='drink-list-thumb'>
+              <img src={drink.strDrinkThumb} className='drink-img-all' />
+              <Typography className={classes.title} color="textSecondary" gutterBottom>
+                <Link to={{ pathname: `/results/${drink.idDrink}`, state: {id: drink.idDrink} }}>{drink.strDrink}</Link>
+              </Typography>
+            </div>
+          )}) : null}
+      </div>
+    </div>)
 }
 
 

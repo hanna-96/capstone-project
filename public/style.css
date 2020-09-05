@@ -11,7 +11,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 3em;
+  margin: 3em 0;
 }
 
 /************ scan view styles ************/
@@ -187,18 +187,18 @@
   outline: lightsalmon dotted 1px;
 }
 
-#all-favorites-container {
+.all-drinks-container {
   display: flex;
   flex-wrap: wrap;
   width: 80vw;
 }
 
-.favorite-drink-img-all {
+.drink-img-all {
   max-height: 15vw;
   max-width: 15vw;
 }
 
-.favorite-drink {
+.drink-list-thumb {
   border: 1px solid rgb(221, 221, 221);
   padding: 1em;
   margin: 1vw 1.5vw;
@@ -207,35 +207,43 @@
   align-items: center;
 }
 
+#search-results {
+  align-self: flex-start;
+  margin-left: 10vw;
+  margin-bottom: .5em;
+}
+
+/************ favorites end ************/
+
+/************media start****************/
 @media screen and (max-width: 1699px) {
-  .favorite-drink-img-all {
+  .drink-img-all {
     max-height: 17vw;
     max-width: 17vw;
   }
 }
 @media screen and (max-width: 1366px) {
-  .favorite-drink-img-all {
+  .drink-img-all {
     max-height: 20vw;
     max-width: 20vw;
   }
 }
 @media screen and (max-width: 1000px) {
-  .favorite-drink-img-all {
+  .drink-img-all {
     max-height: 30vw;
     max-width: 30vw;
   }
-  #all-favorites-container {
+  .all-drinks-container {
     justify-content: center;
   }
 }
 @media screen and (max-width: 600px) {
-  .favorite-drink-img-all {
+  .drink-img-all {
     max-height: 70vw;
     max-width: 70vw;
   }
 }
-/************ favorites end ************/
-
+/***************media end*****************/
 .drink-page {
   display: flex;
 }
