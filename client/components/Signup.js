@@ -150,7 +150,7 @@ class Signup extends React.Component {
           variant="outlined"
           fullWidth
             name="password"
-            type="text"
+            type="password"
             label="Password"
             required
             onChange={this.handleChange}

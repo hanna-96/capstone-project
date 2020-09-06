@@ -13,11 +13,12 @@ import { addToUserFavorites, removeFromUserFavorites, updateFavorites } from '..
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import IconButton from '@material-ui/core/IconButton'
+import Card from '@material-ui/core/Card';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    maxWidth: 360,
+    // maxWidth: 450,
     backgroundColor: theme.palette.background.paper,
   },
 }));
@@ -101,37 +102,46 @@ const DrinkId = (props) => {
           { drinkDetails.strDrink ? 
            
             <div className='drink-page'>
-              <Container fluid>
+
+              <Container fluid className={classes.root}>
               <div className='drink-detail'>
+                <div>
                 <List>
-                <ListItem><p>{drinkDetails.strDrink}</p></ListItem>
+                <ListItem className="recipe-name">{drinkDetails.strDrink}</ListItem>
                 <ListItem><p>{drinkDetails.strInstruction}</p></ListItem>
                   <Divider />
                   <Grid Container>
                   <Paper>
             
-                    <Grid item xs={6} spacing={2}>
+                {/* <Card className={classes.root} color='primary' variant='outlined'> */}
+                    <Grid item xs={15} spacing={2}>
                   
                       <div><p><img className='drink-img' src={drinkDetails.strDrinkThumb}/></p>
 
                   </div>
                   </Grid>
 
-                  
+                  {/* </Card> */}
                   <Divider /> 
-                  <Grid item xs={6} spacing={2}>
+                  {/* <Grid item xs={6} spacing={2}> */}
 
-                  <h2>Receipe</h2>
-                  <h3>{drinkDetails.strInstructions}</h3>
-
-
-
-                  {details.map(detail  => <ListItem>{detail.ingreds} {detail.measure}</ListItem> )}
-                    </Grid>
+                  <h2>Recipe:</h2>
+                  <div className="recipe">
+                  <ListItem>{drinkDetails.strInstructions}</ListItem>
+                  </div>
+                    {/* </Grid> */}
                   </Paper>
                   
                   </Grid>
                   </List>
+                  </div>
+                  <div>
+                  <Card>
+                    <h2>Ingredients:</h2>
+                  {details.map(detail  => (
+                  <ListItem>{detail.ingreds} {detail.measure}</ListItem>))}
+                  </Card>
+                  </div>
                   {
                     props.user && 
                     <IconButton onClick={handleFavorite} className={props.user.favorites.includes(drinkDetails.idDrink) && 'favorited-btn'}>
