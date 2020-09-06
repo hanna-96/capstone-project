@@ -74,16 +74,15 @@ app.use("/auth", require("./server/auth"));
 
 app.post("/gvision", async (req, res, next) => {
   try {
-    //still need these console.logs for mobile tests
-    const client = new vision.ImageAnnotatorClient();
-    const fileName = req.files.img.data;
+    const client = new vision.ImageAnnotatorClient()
+    const fileName = req.files.img.data
     //result is the full json object
-    const [result] = await client.documentTextDetection(fileName);
+    const [result] = await client.documentTextDetection(fileName)
     //result.fullTextAnnotation.text gives us one string with all transcribed text
-    const fullTextAnnotation = result.fullTextAnnotation;
-    res.send(fullTextAnnotation.text.split("\n"));
+    const fullTextAnnotation = result.fullTextAnnotation
+    res.send(fullTextAnnotation.text)
   } catch (e) {
-    next(e);
+    next(e)
   }
 });
 

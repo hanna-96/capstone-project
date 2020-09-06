@@ -1,107 +1,105 @@
-const getVendor = s => {
-  const myRe = /.*\d.*/g
-  let first3line = s.split('\n').slice(0, 2)
-  let res = ''
-  first3line.forEach(line => {
-    if (!myRe.exec(line)) {
-      res += line + ' '
+const ingAliases = {
+  coke: 'coca-cola',
+  cokacola: 'coca-cola',
+  'coka cola': 'coca-cola',
+  apples: 'apple',
+  bananas: 'banana',
+  cantaloupes: 'cantaloupe',
+  lemons: 'lemon',
+  limes: 'lime',
+  oranges: 'orange',
+  olives: 'olive',
+  pineapples: 'pineapple',
+  kiwis: 'kiwi',
+  papayas: 'papaya',
+  strawberry: 'strawberries',
+  cranberry: 'cranberries',
+  grape: 'grapes',
+  'yellow bananas': 'banana',
+  'bananas yellow': 'banana',
+  'ice cream': 'ice-cream'
+}
+
+const blacklisted = {
+  total: true,
+  tare: true,
+  fresh: true,
+  mastercard: true,
+  card: true,
+  cash: true,
+  lb: true,
+  lblb: true,
+  merch: true,
+  merchandise: true,
+  balance: true,
+  items: true,
+  item: true,
+  id: true,
+  markdown: true,
+  f: true,
+  fw: true,
+  t: true,
+  tf: true,
+  produce: true,
+  grocery: true,
+  bulk: true,
+  dairy: true,
+}
+
+let serialRegex = /[a-z]{2,3}#:? ?\d+/ig
+let phoneRegex = /((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}/
+let strAddressRegex = /\b\d{1,6} +.{2,25}\b(avenue|ave|court|ct|street|st|drive|dr|lane|ln|road|rd|blvd|plaza|plz|parkway|pkwy)[.,]?(.{0,25} +\b\d{5}\b)?/ig
+let gridAddressRegex = /(\b( +)?\d{1,6} +(north|east|south|west|n|e|s|w)[,.]?){2}(.{0,25} +\b\d{5}\b)?\b/ig
+
+//cuts off parts of the receipt text that aren't products and returns an array
+const findProducts = text => {
+  console.log('in findProducts: ', text)
+  let textArr = text.split('\n').map(word => word.toLowerCase())
+  let fullText = textArr.join(' ')
+  //If there's an address, finds which line it ends at, cut it off and everything that comes before it
+  let address = fullText.match(strAddressRegex)
+  if (!address) address = fullText.match(gridAddressRegex)
+  if (address) {
+    address = address[address.length-1].split(' ')
+    address = address[address.length-1]
+    for (let i = 0; i < textArr.length; i++) {
+      if (textArr[i].includes(address)) {
+        textArr = textArr.slice(i + 1, textArr.length)
+      }
     }
+  }
+  for (let i = 0; i < textArr.length; i++) {
+    if(textArr[i] === undefined) break
+    if (serialRegex.test(textArr[i]) || phoneRegex.test(textArr[i])) {
+      textArr = textArr.slice(i + 1, textArr.length)
+      i = 0
+    }
+  }
+  let subtotalRegex = /(subtotal|bag refund|reusable bag)/
+  for (let i = 0; i < textArr.length; i++) {
+    if (subtotalRegex.test(textArr[i])) {
+      return textArr.slice(0, i)
+    }
+  }
+  return textArr
+}
+
+//after findProducts(), run through remaining elements to remove prices, weights, blacklisted words, and swap partially valid keywords with fully valid keywords
+const readReceipt = text => {
+  let moreReg = /\s\w{1}$/
+  console.log('before findProducts')
+  let receipt = findProducts(text)
+  const isAWord = w => {
+    if (w in blacklisted) return false
+    return w.length > 2
+  }
+  receipt = receipt.map(word => {
+    word = word.toLowerCase().replace(/[0-9\.:/@#$%\-\*&\(\),]+/g, '').replace(/\s+/g, ' ').replace(moreReg, '')
+    word =  word in ingAliases ? ingAliases[word] : word
+    word = word.split(' ').filter(w => !blacklisted[w]).join(' ')
+    return word.trim()
   })
-  res = res.trim().toUpperCase()
-  return res
+  return receipt.filter(isAWord)
 }
 
-const isFloat = x => {
-  return !!(x % 1)
-}
-
-const makeLine = (dict, x, y, part) => {
-  let range = []
-  for (let i = y - 20; i < y + 40; i++) {
-    range.push(i)
-  }
-
-  for (let each of range) {
-    // ** if on the same line
-    if (dict.hasOwnProperty(each)) {
-      if (x > 600) {
-        dict[each].price += part
-      } else {
-        dict[each].name += part
-      }
-      return
-    }
-  }
-  // ** if on a different line
-  if (x > 600) {
-    dict[y] = {
-      name: '',
-      price: part
-    }
-  } else {
-    dict[y] = {
-      name: part,
-      price: ''
-    }
-  }
-}
-
-function readReceipt(parsed) {
-  console.log(parsed)
-  try {
-    let document = parsed.fullTextAnnotation
-    //get vendor name
-    let vendorStr = document.text
-    let vendor = getVendor(vendorStr)
-    // get products array
-    let blocks = document.pages[0].blocks //27 blocks
-    let dictionary = {}
-    for (let block of blocks) {
-      block.paragraphs.forEach(paragraph =>
-        paragraph.words.forEach(word => {
-          let x = word.boundingBox.vertices[0].x
-          let y = word.boundingBox.vertices[0].y
-          let part = word.symbols.map(symbol => symbol.text).join('') // part = the word
-          if (part !== '$') makeLine(dictionary, x, y, part)
-        })
-      )
-    }
-    let products = []
-    let totalPrice
-    for (let itemKey in dictionary) {
-      let item = dictionary[itemKey]
-      if (
-        item.price &&
-        !isNaN(item.price) &&
-        isFloat(item.price) &&
-        !item.name.toLowerCase().includes('total') &&
-        !item.name.toLowerCase().includes('due')
-      ) {
-        item.price = item.price[0] === '$' ? item.price.slice(1) : item.price
-        item.categoryId = 1
-        products.push(item)
-      }
-      //get total price
-      if (
-        item.price &&
-        !isNaN(item.price) &&
-        isFloat(item.price) &&
-        (item.name.toLowerCase().includes('total') ||
-          item.name.toLowerCase().includes('due'))
-      ) {
-        totalPrice = item.price[0] === '$' ? item.price.slice(1) : item.price
-      }
-    }
-    let receiptDetails = {
-      vendor: vendor,
-      products: products,
-      totalPrice: totalPrice
-    }
-    return receiptDetails
-  } catch (err) {
-    console.error(err)
-    return {error: 'Unable to read receipt'}
-  }
-}
-
-module.exports = readReceipt
+export default readReceipt
