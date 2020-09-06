@@ -45,13 +45,11 @@ export const getAllIngredientsThunk = (userName) => {
 };
 export const addIngredientThunk = (userName, ingredient) => {
   return async (dispatch) => {
-    console.log('ingredient from thunk: ', ingredient)
     try {
       if (ingredient) {
         let { data } = await axios.put(
           `/api/users/${userName}/allingredients`, {ingredient}
         )
-        console.log('data from ing thunk: ', data)
         dispatch(addIngredient(ingredient))
       }
     } catch (error) {
@@ -64,7 +62,6 @@ export const deleteIngredientThunk = (userName, ingredients, idx) => {
   return async (dispatch) => {
 
   try {
-      console.log("idx", idx)
        await axios.delete(`/api/users/${userName}/allingredients/${idx.toString()}`, {ingredients,idx})
         dispatch(deleteIngredient(ingredients,idx))
   } catch(err) {

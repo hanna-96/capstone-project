@@ -6,7 +6,6 @@ import {getAllUsersThunk} from '../redux/users'
 import Button from '@material-ui/core/Button'
 
 const Feed = (props) => {
-    console.log(props, 'the props')
     const userName = props.match.params.userName
     const dispatch = useDispatch()
     const users = useSelector(state => state.users)

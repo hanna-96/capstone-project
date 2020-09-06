@@ -53,7 +53,6 @@ let gridAddressRegex = /(\b( +)?\d{1,6} +(north|east|south|west|n|e|s|w)[,.]?){2
 
 //cuts off parts of the receipt text that aren't products and returns an array
 const findProducts = text => {
-  console.log('in findProducts: ', text)
   let textArr = text.split('\n').map(word => word.toLowerCase())
   let fullText = textArr.join(' ')
   //If there's an address, finds which line it ends at, cut it off and everything that comes before it
@@ -87,7 +86,6 @@ const findProducts = text => {
 //after findProducts(), run through remaining elements to remove prices, weights, blacklisted words, and swap partially valid keywords with fully valid keywords
 const readReceipt = text => {
   let moreReg = /\s\w{1}$/
-  console.log('before findProducts')
   let receipt = findProducts(text)
   const isAWord = w => {
     if (w in blacklisted) return false

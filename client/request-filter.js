@@ -39,13 +39,11 @@ const RequestFilter = (props) => {
         <div>
     <p>{validIng.map( (ingred) => 
     <div>
-    {console.log('inside validIng.map: ', ingred)}
     <p> <AllIngredients ingred={ingred} /></p> 
       </div>
     )}</p>
 
     <p>See your results: </p>
-    {console.log('validIng: ', validIng)}
     <Request ingreds={validIng} />
   
 

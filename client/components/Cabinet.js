@@ -19,7 +19,6 @@ const Cabinet = (props) => {
     const handleClick = (e) => {
         e.preventDefault()
         const idx =Number(e.currentTarget.value)
-        console.log('idx', idx)
         
         dispatch(deleteIngredientThunk(userName, ingredients, idx))
     }
