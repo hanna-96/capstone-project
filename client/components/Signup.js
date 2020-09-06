@@ -151,8 +151,8 @@ class Signup extends React.Component {
           fullWidth
             name="password"
             id="standard-password-input"
-            label="Password"
             type="password"
+            label="Password"
             autoComplete="current-password"
             required
             onChange={this.handleChange}
