@@ -15,11 +15,11 @@ const AllFavorites = () => {
   return (
     <div className='for-centering-container'>
       <h3>{user.userName && `${user.userName}'s Favorites`}</h3>
-      <div id='all-favorites-container'>
+      <div className='all-drinks-container'>
       {
         favorites.map(drink =>
-          <Link to={{ pathname: `/results/${drink.idDrink}`, state: {id: drink.idDrink} }} className='favorite-drink mui-like' key={drink.idDrink} >
-            <img src={drink.strDrinkThumb} className='favorite-drink-img-all' />
+          <Link to={{ pathname: `/results/${drink.idDrink}`, state: {id: drink.idDrink} }} className='drink-list-thumb mui-like' key={drink.idDrink} >
+            <img src={drink.strDrinkThumb} className='drink-img-all' />
             {drink.strDrink}
           </Link>
         )

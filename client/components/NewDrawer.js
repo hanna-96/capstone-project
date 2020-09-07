@@ -98,7 +98,6 @@ const useStyles = makeStyles({
       }
     </div>
   );
-  console.log('is it logged in?', props.isLoggedIn)
   return (
     <div>
         <React.Fragment key={anchor}>

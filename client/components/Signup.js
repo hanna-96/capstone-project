@@ -94,7 +94,7 @@ class Signup extends React.Component {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-      <form onSubmit={this.handleSubmit} className={classes.form}>
+        <form onSubmit={this.handleSubmit} className={classes.form}>
             <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
           <TextField
@@ -150,8 +150,10 @@ class Signup extends React.Component {
           variant="outlined"
           fullWidth
             name="password"
+            id="standard-password-input"
             type="password"
             label="Password"
+            autoComplete="current-password"
             required
             onChange={this.handleChange}
             value={this.state.password}
