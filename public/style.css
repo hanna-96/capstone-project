@@ -7,6 +7,14 @@
   box-shadow: none;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  margin: 0;
+  padding-bottom: 5rem;
+}
 .for-centering-container {
   display: flex;
   flex-direction: column;
@@ -279,6 +287,28 @@
   justify-content: center;
   flex-wrap: wrap;
   
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+}
+.footer {
+  display: flex;
+  align-content: center;
+  justify-content: space-around;
+  background-color: #80ced6;
+  padding: 0.5em;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 80px;
+  width: 100%;
+  flex-direction: row;
+}
+
+.footer a {
+  color: black;
 }
 
 #inputs {
