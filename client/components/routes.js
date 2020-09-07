@@ -24,13 +24,6 @@ class Routes extends React.Component {
   componentDidMount() {
     this.props.loadInitialData();
   }
-  // componentDidUpdate(prevProps) {
-  //   // Typical usage (don't forget to compare props):
-  //   if (this.props.isLoggedIn !== prevProps.isLoggedIn) {
-  //     this.props.history.push('/welcome')
-  //     console.log("it's working")
-  //   }
-  // }
 
 
   render() {

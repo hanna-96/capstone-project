@@ -19,7 +19,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 3em;
+  margin: 3em 0;
 }
 
 /************ scan view styles ************/
@@ -100,14 +100,6 @@ body {
 /************ scan view end ************/
 /************ favorites styles ************/
 
-.block {
-  width: 2.5em;
-  height: 2.5em;
-  background-color: #ffffff;
-  border: none;
-  transition: .3s;
-  border-radius: 2em;
-}
 .block:active {
   color: rgb(209, 73, 191);
   border: none;
@@ -149,15 +141,21 @@ body {
   margin: 0 .6em;
 }
 
-.favorites-view {
+.items-view {
   padding: 1em;
   display: flex;
   align-items: center;
+  height: 238px;
   width: 70vw;
   border: 1px solid rgb(187, 187, 187);
-  overflow: hidden;
+  overflow: scroll;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
+}
+
+.empty {
+  justify-content: center;
+  text-align: center;
 }
 
 .favorite-drink-thumb {
@@ -195,18 +193,19 @@ body {
   outline: lightsalmon dotted 1px;
 }
 
-#all-favorites-container {
+.all-drinks-container {
   display: flex;
   flex-wrap: wrap;
   width: 80vw;
 }
 
-.favorite-drink-img-all {
+.drink-img-all {
   max-height: 15vw;
   max-width: 15vw;
 }
 
-.favorite-drink {
+.drink-list-thumb {
+  position: relative;
   border: 1px solid rgb(221, 221, 221);
   padding: 1em;
   margin: 1vw 1.5vw;
@@ -215,35 +214,69 @@ body {
   align-items: center;
 }
 
+#search-results {
+  align-self: flex-start;
+  margin-left: 10vw;
+  margin-bottom: .5em;
+}
+
+.heart-icon {
+  position: absolute;
+  right: 3.5vh;
+  top: 3.5vh;
+  color: rgb(255, 218, 224);
+}
+
+/************ favorites end ************/
+
+/************media start****************/
 @media screen and (max-width: 1699px) {
-  .favorite-drink-img-all {
+  .drink-img-all {
     max-height: 17vw;
     max-width: 17vw;
   }
 }
 @media screen and (max-width: 1366px) {
-  .favorite-drink-img-all {
+  .drink-img-all {
     max-height: 20vw;
     max-width: 20vw;
   }
 }
 @media screen and (max-width: 1000px) {
-  .favorite-drink-img-all {
+  .drink-img-all {
     max-height: 30vw;
     max-width: 30vw;
   }
-  #all-favorites-container {
+  .all-drinks-container {
     justify-content: center;
+  }
+  .user-home-bar {
+    width: 95vw;
+  }
+  .items-view {
+    width: 85vw;
   }
 }
 @media screen and (max-width: 600px) {
-  .favorite-drink-img-all {
+  .drink-img-all {
     max-height: 70vw;
     max-width: 70vw;
   }
+  .heart-icon {
+    right: 4vh;
+    top: 4vh;
+  }
+  .block {
+    display: none;
+  }
+  .user-home-bar {
+    width: 100vw;
+  }
+  .items-view {
+    width: 95vw;
+  }
 }
-/************ favorites end ************/
-
+/***************media end*****************/
 .drink-page {
   display: flex;
   width: 40%;

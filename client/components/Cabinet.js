@@ -19,7 +19,6 @@ const Cabinet = (props) => {
     const handleClick = (e) => {
         e.preventDefault()
         const idx =Number(e.currentTarget.value)
-        console.log('idx', idx)
         
         dispatch(deleteIngredientThunk(userName, ingredients, idx))
     }
@@ -58,7 +57,6 @@ const Cabinet = (props) => {
                     
                     <Card color='primary' variant='outlined'>
                         {ingred} 
-                        {/* <img src={`https://www.thecocktaildb.com/images/ingredients/${ingred}-small.png`} /> */}
                         <CardMedia
                             component="img"
                             height="100"

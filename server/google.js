@@ -30,7 +30,6 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
        await getSingleUserByUserName(user.Item.userName)
           .then((user) => done(null, user))
           .catch(done)
-          console.log("I am successfully done here!!!")
       }
     )
 //google verifies the user
@@ -55,6 +54,5 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
         failureRedirect: '/login'
       })
     )
-    console.log("   SUCESSS!!!!")
     }
   

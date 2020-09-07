@@ -15,7 +15,7 @@ const RequestFilter = (props) => {
             try{
                 if(ing.includes(' ')) ing = ing.split(' ').join('_')
                 // makes call to API DB .. if there is a drinks object present, set to true otherwise set to false
-                const {data} =await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ing}`)
+                const {data} = await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ing}`)
                 if(data.drinks && !validIng.includes(ing)) {
                         setValid(true)
                         setValidIng(prev => [...prev, ing])
@@ -31,22 +31,20 @@ const RequestFilter = (props) => {
         }
 
         ingreds.forEach(async ing => await reqValidator(ing))
-    }, [inputLen])
 
+    }, [inputLen])
     
     return (
         
         <div>
-
     <p>{validIng.map( (ingred) => 
     <div>
-
-    <p> <AllIngredients ingred={ingred} /></p>
+    <p> <AllIngredients ingred={ingred} /></p> 
       </div>
     )}</p>
 
     <p>See your results: </p>
-  <Request ingreds={validIng} />
+    <Request ingreds={validIng} />
   
 
 
