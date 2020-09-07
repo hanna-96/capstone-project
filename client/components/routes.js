@@ -56,6 +56,7 @@ class Routes extends React.Component {
             <Switch>
               {/* Routes placed here are only available after logging in */}
               <Route exact path="/welcome" component={UserHome} />
+              <Route exact path= "/users/:userName/cabinet" component={Cabinet} />
             </Switch>
           )}
           <Route component={Login} />

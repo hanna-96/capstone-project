@@ -4,6 +4,7 @@ import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
 import Input from "@material-ui/core/Input";
 import RequestFilter from "./request-filter";
+import Link from '@material-ui/core/Link'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
@@ -40,7 +41,6 @@ const InputForm = () => {
     const addField = () => { 
         // adds a field with each click on the plus icon
         //Each click increases length of the field array and the number of clicks
-        console.log('clicked')
         setFields(prev => [...prev, 1])
         setClicked(clicked+1)
     }
@@ -71,7 +71,6 @@ const InputForm = () => {
           <Button type='submit' value='Submit'>Submit Ingredients</Button>
           </div>
         </FormControl>
-              {console.log(inputs, 'the inputs')}
             {submitted? <RequestFilter ingreds={inputs} inputLen={inputs.length} />: <div></div>} 
        {submitted ? clearInput(): <div></div>}
     </form> 

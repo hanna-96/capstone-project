@@ -19,7 +19,6 @@ const Cabinet = (props) => {
     const handleClick = (e) => {
         e.preventDefault()
         const idx =Number(e.currentTarget.value)
-        console.log('idx', idx)
         
         dispatch(deleteIngredientThunk(userName, ingredients, idx))
     }
@@ -28,13 +27,6 @@ const Cabinet = (props) => {
         dispatch(getAllIngredientsThunk(userName))
     }, [userName])
 
-    // useEffect(() => {
-    //     const getIngredientThumb = (ingred) => {
-    //         const url = `https://www.thecocktaildb.com/images/ingredients/${ingred}-small.png`
-    //         setObj(prev => [...prev, {name: ingred, thumbnail: url}])
-    //     }
-    //     ingredients.forEach( (ingred) => getIngredientThumb(ingred))
-    // }, [ingredArr])
 
         return (
             <div id='cabinet-page'>
