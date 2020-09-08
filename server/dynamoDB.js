@@ -47,6 +47,7 @@ async function addUser(
         email,
         ingredients: [],
         favorites: [],
+        friends: [],
         password,
         googleId,
       },
@@ -57,7 +58,6 @@ async function addUser(
     console.error(e);
   }
 }
-
 //get single user (for another table)!!!
 async function getSingleUserByUserName(userName) {
   try {
@@ -166,6 +166,35 @@ async function updateUserFavorites(userName, favorites) {
     console.error(e);
   }
 }
+
+async function updateUserFriends(userName, friend) {
+  try {
+    const user = await getSingleUserByUserName(userName);
+    if (user.Item.friends) {
+      const userFriends = user.Item.friends;
+      console.log(userFriends);
+      const updatedFriends = [...userFriends, ...friend];
+
+      const params = {
+        TableName: "Users3",
+        Key: {
+          userName,
+        },
+        UpdateExpression: `set friends = :friends`,
+        ExpressionAttributeValues: {
+          ":friends": updatedFriends,
+        },
+      };
+
+      return await DocumentClient.update(params).promise();
+    } else {
+      console.log("no friends arr");
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 //delete User
 async function deleteUser(userName) {
   try {
@@ -191,4 +220,5 @@ module.exports = {
   deleteUser,
   deleteUserIngredients,
   updateUserFavorites,
+  updateUserFriends,
 };

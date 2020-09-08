@@ -1,13 +1,14 @@
 import { Workbox } from "workbox-window";
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./client/app";
-import "./public/style.css";
-import { BrowserRouter as Router } from "react-router-dom";
-import store from "./client/redux/store.js";
-import { Provider } from "react-redux";
-import history from "./client/history";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './client/app'
+import './public/style.css'
+// import { BrowserRouter as Router} from 'react-router-dom'
+import { BrowserRouter as Router} from 'react-router-dom'
+import store from './client/redux/store.js'
+import {Provider} from 'react-redux'
+import history from './client/history'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';  
 
 const theme = createMuiTheme({
   palette: {

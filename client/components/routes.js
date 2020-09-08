@@ -9,6 +9,7 @@ import Cabinet from "./Cabinet";
 import PropTypes from "prop-types";
 import Request from "../request-test";
 import UserHome from "./UserHome";
+import Feed from './Feed'
 // import AllIngredients from "./AllIngredients";
 // import AllUsers from "./AllUsers";
 import { connect } from "react-redux";
@@ -16,19 +17,12 @@ import { me } from "../redux/user";
 import history from "../history";
 import CameraInput from "./CameraInput";
 import AllFavorites from "./AllFavorites";
-import HomePage from "./HomePage";
+import HomePage from "./HomePage"
 
 class Routes extends React.Component {
   componentDidMount() {
     this.props.loadInitialData();
   }
-  // componentDidUpdate(prevProps) {
-  //   // Typical usage (don't forget to compare props):
-  //   if (this.props.isLoggedIn !== prevProps.isLoggedIn) {
-  //     this.props.history.push('/welcome')
-  //     console.log("it's working")
-  //   }
-  // }
 
   render() {
     const { isLoggedIn } = this.props;
@@ -38,24 +32,21 @@ class Routes extends React.Component {
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
+          <Route exact path='/users/:userName/allFavorites' component={AllFavorites} />
+          <Route exact path="/users/:userName" component={InputForm} />
+          <Route exact path= "/users/:userName/cabinet" component={Cabinet} />
+          {/* <Route exact path={`/users/${this.props.userName}`} component={InputForm} />
+          <Route exact path= {`/users/${this.props.userName}/cabinet`} component={Cabinet} /> */}
+          <Route exact path='/results' component={DrinkList} />
+          <Route exact path='/results/:id' component={DrinkId} />
+          <Route exact path='/scan' component={CameraInput} />
+          <Route exact path='/:userName/feed' component={Feed} />
+
           {isLoggedIn && (
             <Switch>
               {/* Routes placed here are only available after logging in */}
               <Route exact path="/welcome" component={UserHome} />
-              <Route
-                exact
-                path="/users/:userName/allFavorites"
-                component={AllFavorites}
-              />
-              <Route exact path="/users/:userName" component={InputForm} />
-              <Route
-                exact
-                path="/users/:userName/cabinet"
-                component={Cabinet}
-              />
-              <Route exact path="/results" component={DrinkList} />
-              <Route exact path="/results/:id" component={DrinkId} />
-              <Route exact path="/scan" component={CameraInput} />
+              <Route exact path= "/users/:userName/cabinet" component={Cabinet} />
             </Switch>
           )}
           <Route component={Login} />

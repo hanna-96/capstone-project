@@ -78,36 +78,36 @@ class Login extends React.Component {
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <form onSubmit={this.handleSubmit} className={classes.form}>
-            {/* <label>User name</label> */}
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              name="userName"
-              type="text"
-              required
-              label="Username"
-              onChange={this.handleChange}
-              value={this.state.userName}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              name="password"
-              type="text"
-              required
-              label="Password"
-              onChange={this.handleChange}
-              value={this.state.password}
-            />
-            {/* </p> */}
-            <Button
+        </Avatar>
+        <Typography component="h1" variant="h5">
+         Sign in
+        </Typography>
+       <form onSubmit={this.handleSubmit} className={classes.form}>
+         {/* <label>User name</label> */}
+         <TextField
+         variant="outlined"
+         margin="normal"
+         fullWidth
+           name="userName"
+           type="text"
+           required
+           label="Username"
+           onChange={this.handleChange}
+           value={this.state.userName}
+         />
+           <TextField
+           variant="outlined"
+           margin="normal"
+           fullWidth
+             name="password"
+             type="password"
+             required
+             label="Password"
+             onChange={this.handleChange}
+             value={this.state.password}
+           />
+         {/* </p> */}
+         <Button
               type="submit"
               fullWidth
               variant="contained"

@@ -10,9 +10,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import { Link } from 'react-router-dom'
 import RequestFilter from '../request-filter'
-import InputForm from '../input-form'
-import { readReceipt } from '../util/fruits'
-// import readReceipt from '../../readReceipt'
+import readReceipt from '../util/readReceipt'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,29 +53,28 @@ const CameraInput = props => {
     setSubmitStatus(false)
     const read = async () => {
       try {
-        // lines 74-80 are for fetching real data from vision api
+        // bewlow lines are for fetching real data from vision api
         // file is our uploaded image, in a File object
-        // const file = evt.target.files[0]
-        // const formData = new FormData()
-        // //append the File to formData so it can be sent to the server
-        // formData.append('img', file)
-        // const { data } = await axios.post(`/gvision`, formData)
-        // const receipt = readReceipt(data)
-
+        const file = evt.target.files[0]
+        const formData = new FormData()
+        //append the File to formData so it can be sent to the server
+        formData.append('img', file)
+        const { data } = await axios.post(`/gvision`, formData)
+        const receipt = readReceipt(data)
         //fake data for testing so we don't use up loads of api calls
-        let receipt = [
-          'apples',
-          'avocado',
-          'white rum',
-          'lime',
-          'orange liqueur',
-          'cake',
-          'lemon',
-          'whiskey',
-          'ice cream',
-          'bacon',
-          'chocolate'
-        ]
+        // let receipt = [
+        //   'apples',
+        //   'avocado',
+        //   'white rum',
+        //   'lime',
+        //   'orange liqueur',
+        //   'cake',
+        //   'lemon',
+        //   'whiskey',
+        //   'ice cream',
+        //   'bacon',
+        //   'chocolate'
+        // ]
         setLoading(false)
         setScanStatus(true)
         //if data comes back empty, throws an error without setting text in state
@@ -104,11 +101,11 @@ const CameraInput = props => {
       <div id='file-input'>
         { error ? <h2>Could not read text</h2> : ''}
         <ul id='input-text-list' className={classes.scrollBar}>
-          { text && text.map(word =>
-          <li className='scanned-item'>
+          { text && text.map((word, i) =>
+          <li className='scanned-item' key={i}>
             <span>{word}</span>
-            <IconButton aria-label="delete">
-              <DeleteForeverIcon onClick={() => handleRemove(word)} size="small" />
+            <IconButton aria-label="delete" onClick={() => handleRemove(word)}>
+              <DeleteForeverIcon size="small" />
             </IconButton>
           </li>
           ) }
