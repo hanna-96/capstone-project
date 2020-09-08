@@ -7,6 +7,7 @@
     "start-server": "nodemon server.js -e html,js,css --ignore public",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --env.mode development --colors",
+    "build": "webpack -p",
     "build-client": "webpack",
     "build-watch": "webpack -w",
     "deploy": "deploy"
