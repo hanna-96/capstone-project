@@ -61,9 +61,9 @@ const session = {
     },
   }),
 };
-if (process.env.PORT) {
-  session.cookie.secure = true;
-}
+// if (process.env.PORT) {
+//   session.cookie.secure = true;
+// }
 app.use(expressSession(session));
 app.use(passport.initialize());
 app.use(passport.session());
