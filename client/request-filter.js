@@ -41,6 +41,7 @@ const RequestFilter = (props) => {
 
 
     <p> <AllIngredients ingred={ingred} /></p>
+
       </div>
     )}</p>
 

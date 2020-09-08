@@ -38,5 +38,4 @@ const AllIngredients = (props) => {
   )
 }
 
-
 export default withRouter(AllIngredients)
