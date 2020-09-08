@@ -8,39 +8,50 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
+import ingredients from "../redux/ingredients";
+
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
-const tutorialSteps = [
-  {
-    label: "The  Witch`s heart",
-    imgPath:"https://wallpaperaccess.com/full/1663371.jpg"
-  },
-  {
-    label: "St. Regis Berries Boom",
-    imgPath:"https://www.smithjournal.com.au/images/blogs/2017/Behind_the_Scenes_of_the_Original_Blade_Runner_Models/cocktailFINAL/Cocktail_1.jpg"  },
- {
-    label: "The Bahhus",
-    imgPath:"https://www.1802house.com/wp-content/uploads/2018/06/cocktails-slide.jpg"
-  },
-  {
-    label: "Mezcal Sour",
-    imgPath:"https://americansocialbar.com/wp-content/uploads/2016/07/Cool-Cocktails-for-a-Hot-Summer-in-Miami-Bond-edit.jpg"  },
-  {
-    label: "Whiskey Smash",
-    imgPath:"https://www.thespruceeats.com/thmb/um-o_60dJ3P3iYYsE-jfSlsHtHs=/4000x2667/filters:no_upscale():max_bytes(150000):strip_icc()/Floradora-Cocktail-3e5eb09045ff4764a60bd818a5985af0.jpg"
-  },
-  {
-    label: "Clover club",
-    imgPath:
-      "https://assets.punchdrink.com/wp-content/uploads/2017/04/Slide-Clover-Club-Egg-White-Cocktails-Boston-Sour-Clover-Club-Recipe-1024x576.jpg",
-  },
-  {
-    label: "Strawbery rum cocktail",
-    imgPath:"https://images.unsplash.com/photo-1485265449635-ca623a55e95c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"  },
-];
+// const tutorialSteps = [
+//   {
+//     label: "The  Witch`s heart",
+//     imgPath:
+//       "https://www.theflavorbender.com/wp-content/uploads/2015/10/Witch-Heart-Halloween-Cocktail-The-Flavor-Bender-Featured-Image-SQ-3-500x375.jpg",
+//   },
+//   {
+//     label: "St. Regis Berries Boom",
+//     imgPath:
+//       "https://images.unsplash.com/photo-1536935338788-846bb9981813?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
+//   },
+//   {
+//     label: "The Bahhus",
+//     imgPath:
+//       "https://i.pinimg.com/originals/86/cd/2d/86cd2d17121e4f9d43c7e5587029d4dd.jpg",
+//   },
+//   {
+//     label: "Mezcal Sour",
+//     imgPath:
+//       "https://d194ip2226q57d.cloudfront.net/images/Mezcal-Sour_Tequila-and-Mezcal_By-Brandon-Alms.original.jpg",
+//   },
+//   {
+//     label: "Whiskey Smash",
+//     imgPath:
+//       "https://www.thecocktailproject.com/sites/default/files/Makers_Mark_Whiskey_Smash_Thumb.jpg",
+//   },
+//   {
+//     label: "Clover club",
+//     imgPath:
+//       "https://assets.punchdrink.com/wp-content/uploads/2017/04/Slide-Clover-Club-Egg-White-Cocktails-Boston-Sour-Clover-Club-Recipe-1024x576.jpg",
+//   },
+//   {
+//     label: "Strawbery rum cocktail",
+//     imgPath:
+//       "https://i2.wp.com/buythiscookthat.com/wp-content/uploads/2019/04/Strawberry-Mint-Rum-Cocktail-2.jpg",
+//   },
+// ];
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 800,
+    maxWidth: 400,
     flexGrow: 1,
   },
   header: {
@@ -51,9 +62,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.default,
   },
   img: {
-    height: 400, //was 450 looks good for web but not for mobile
+    height: 255,
     display: "block",
-    // maxWidth: 400,
+    maxWidth: 400,
     overflow: "hidden",
     width: "100%",
   },
@@ -63,8 +74,8 @@ function SwipeableTextMobileStepper(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  // const ingredientsArr = props.ingredients;
-  const maxSteps = tutorialSteps.length;
+  const ingredientsArr = props.ingredients;
+  const maxSteps = ingredientsArr.length;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -77,11 +88,12 @@ function SwipeableTextMobileStepper(props) {
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
+  console.log("PROPS", props);
+  console.log(" ingredients arr in carousel", ingredientsArr);
   return (
-    <div className={classes.root} >
-      <div id="carousel1">
-      <Paper square elevation={0} className={classes.header} align="center">
-        <Typography variant="h5" component="h5" color="primary">{tutorialSteps[activeStep].label}</Typography>
+    <div className={classes.root}>
+      <Paper square elevation={0} className={classes.header}>
+        {/* <Typography>{ingredientsArr[activeStep].strDrink}</Typography> */}
       </Paper>
       <AutoPlaySwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -89,13 +101,14 @@ function SwipeableTextMobileStepper(props) {
         onChangeIndex={handleStepChange}
         enableMouseEvents
       >
-        {tutorialSteps.map((ingredient, index) => (
-          <div key={ingredient.label}>
+        {ingredientsArr.map((ingredient, index) => (
+          <div key={ingredient.strDrink}>
+            <p>{ingredient.strDrink}</p>
             {Math.abs(activeStep - index) <= 2 ? (
               <img
                 className={classes.img}
-                src={ingredient.imgPath}
-                alt={ingredient.label}
+                src={ingredient.strDrinkThumb}
+                alt={ingredient.strDrink}
               />
             ) : null}
           </div>
@@ -131,7 +144,6 @@ function SwipeableTextMobileStepper(props) {
           </Button>
         }
       />
-      </div>
     </div>
   );
 }

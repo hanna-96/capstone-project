@@ -59,11 +59,11 @@ const UserHome = (props) => {
         </Typography>
         <div>
           <br />
-          <Typography variant="h6" component="h6" >
+          <Typography variant="h4" component="h6" >
               Featured Drinks
           </Typography>
         </div>
-        <SwipeableTextMobileStepper />
+        <SwipeableTextMobileStepper className="carousel"/>
       </div>
 
       {/* /////////////////////////FAVORITES ELEMENT/////////////////////////// */}
@@ -118,6 +118,7 @@ const UserHome = (props) => {
 };
 
 const mapState = (state) => {
+  console.log('userhome state',state)
   return {
     user: state.user,
     favorites: state.drinks.favorites

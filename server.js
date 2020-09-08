@@ -29,7 +29,6 @@ const DynamoStore = require("dynamodb-store");
 
 if (process.env.NODE_ENV === "dev") require("./secrets");
 
-// also tried this:((
 passport.serializeUser(function (user, done) {
   //diesnt work for google log in
   done(null, user.Item.userName);
@@ -44,7 +43,7 @@ passport.deserializeUser(async (userName, done) => {
 });
 const session = {
   cookie: { maxAge },
-  secret: "Capstone", //add later to secrets.js
+  secret: process.env.SECRET || "Capstone",
   resave: false,
   saveUninitialized: true,
   store: new DynamoStore({

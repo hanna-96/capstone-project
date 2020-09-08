@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
   margin: 0;
+
 }
 
 #app-bar {
@@ -138,7 +139,7 @@ body {
 
 .bar-info > span {
   color: gray;
-  margin: 0 .6em;
+  margin: 0.6em;
 }
 
 .items-view {
@@ -393,4 +394,24 @@ footer {
 .mainPic {
   width: 100%;
 }
+.googleLogin{
+  width:100px;
+  height: 100px;
+  background-color:black;
+}
 
+#container{
+  /* display: flex; */
+/* background-image: url("https://venerablecapital.es/wp-content/uploads/2019/07/bigstock-Mojito-drink-on-wood-with-blur-63752305.jpg"); */
+/* background-repeat: no-repeat; */
+/* background-image: url("https://previews.123rf.com/images/bondd/bondd1801/bondd180100725/94596548-tropical-drink-pineapple-juice-margarita-cocktail-with-fresh-mint-light-blue-background-copy-space-t.jpg") */
+
+background-image: url("https://i.pinimg.com/originals/27/0e/c0/270ec08bcf95f59e83181359827f573e.jpg")
+}
+#carousel1{
+  align-content: center;
+  outline-color: red;
+  align-items: center;
+  /* width: 1500px; */
+
+}

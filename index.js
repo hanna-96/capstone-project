@@ -12,20 +12,20 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
   palette: {
-     primary: {
-        light: '#89dfd1',
-        main: '#57ada0',
-        dark: '#217d72'
-     },
-     secondary: {
-       main: '#c1514d',
-       light: '#f88179',
-       dark: '#8c2125'
-     },
+    primary: {
+      light: "#89dfd1",
+      main: "#57ada0",
+      dark: "#217d72",
+    },
+    secondary: {
+      main: "#c1514d",
+      light: "#f88179",
+      dark: "#8c2125",
+    },
   },
-  typography: { 
-     useNextVariants: true
-  }
+  typography: {
+    useNextVariants: true,
+  },
 });
 
 if ("serviceWorker" in navigator) {
@@ -60,8 +60,8 @@ if ("serviceWorker" in navigator) {
 
 ReactDOM.render(
   <Provider store={store}>
-    <MuiThemeProvider theme = { theme }>
-      <Router history ={history}>
+    <MuiThemeProvider theme={theme}>
+      <Router history={history}>
         <App />
       </Router>
     </MuiThemeProvider>
