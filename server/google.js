@@ -14,30 +14,7 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: process.env.GOOGLE_CALLBACK,
   };
-  const strategy = new GoogleStrategy(
-    googleConfig,
-    async (token, refreshToken, profile, done) => {
-      const googleId = profile.id;
-      const userName = profile.name.givenName;
-      const email = profile.emails[0].value;
-      const firstName = profile.name.givenName || "foo";
-      const lastName = profile.name.familyName;
-      const password = "123";
-      const newUser = await addUser(
-        userName,
-        firstName,
-        lastName,
-        email,
-        password,
-        googleId
-      );
-      const user = await getSingleUserByUserName(userName);
-      await getSingleUserByUserName(user.Item.userName)
-        .then((user) => done(null, user))
-        .catch(done);
-    }
-  );
-
+ 
     const strategy = new GoogleStrategy(
       googleConfig,
       async (token, refreshToken, profile, done) => {
