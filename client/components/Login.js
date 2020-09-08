@@ -130,14 +130,13 @@ class Login extends React.Component {
             color="primary"
           >
         <Avatar
-            alt="google"
-            
+            alt="google"         
             src="https://lh3.googleusercontent.com/lPbVbplwYYqugYhql3ijLj3ALw1NKVNXn1vVLWVBpGAScxDciEyp10rMk2VZHGwPQNAXaJ1iGr4nE4-B8mioY9vMnlIt6wp98llYxA"
             className={classes.small}
+            color="primary"
           />
             Sign In with Google
           </Button>
-          {/* <a href='auth/google'>Sign In with Google</a> */}
         </div>
       </Container>
     );

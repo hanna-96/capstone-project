@@ -21,7 +21,6 @@ router.get("/", async (req, res, next) => {
 router.get("/:userName", async (req, res, next) => {
   try {
     const userName = req.params.userName;
-    // console.log("req user", req.user);
     const singleUser = await getSingleUserByUserName(userName);
     res.send(singleUser.Item);
   } catch (error) {
@@ -31,7 +30,6 @@ router.get("/:userName", async (req, res, next) => {
 
 router.post("/signup", async (req, res, next) => {
   try {
-    console.log("req.body", req.body);
     const { userName, firstName, lastName, email, password } = req.body;
     await addUser(userName, firstName, lastName, email, password);
     const newUser = {
@@ -48,14 +46,13 @@ router.post("/signup", async (req, res, next) => {
     req.login(newUser, (err) => (err ? next(err) : res.json(newUser)));
   } catch (error) {
     console.error(error);
-    next(error)
+    next(error);
   }
 });
 
 router.post("/login", async (req, res, next) => {
   try {
     const user = await getSingleUserByUserName(req.body.userName);
-    console.log("logged in user", user);
     if (!user) {
       res.status(401).send("Wrong username and/or password");
     } else if (req.body.password !== user.Item.password) {
@@ -70,7 +67,6 @@ router.post("/login", async (req, res, next) => {
 
 router.post("/logout", (req, res) => {
   req.logout();
-  // console.log('req session',req.session)
   req.session.destroy();
   res.redirect("/");
 });
@@ -83,23 +79,22 @@ router.put("/:userName", async (req, res, next) => {
     res.send(updatedUser.Item);
   } catch (error) {
     console.error(error);
-    next(error)
+    next(error);
   }
 });
 router.get("/:userName/allingredients", async (req, res, next) => {
   try {
     const userName = req.params.userName;
     const singleUser = await getSingleUserByUserName(userName);
-   if(singleUser.Item.ingredients) {
-    const usersIngredients = singleUser.Item.ingredients;
-    // console.log(singleUser);
-    res.send(usersIngredients);
-   } else {
-     console.log('error users does not have ingredients')
-   }
+    if (singleUser.Item.ingredients) {
+      const usersIngredients = singleUser.Item.ingredients;
+      res.send(usersIngredients);
+    } else {
+      console.log("error users does not have ingredients");
+    }
   } catch (error) {
     console.error(error);
-    next(error)
+    next(error);
   }
 });
 
@@ -108,13 +103,11 @@ router.get("/:userName/allingredients/:idx", async (req, res, next) => {
     const userName = req.params.userName;
     const idx = req.params.idx;
     const singleUser = await getSingleUserByUserName(userName);
-    console.log(singleUser);
     const usersIngredients = singleUser.Item.ingredients[idx];
-    console.log(usersIngredients);
     res.send(usersIngredients);
   } catch (error) {
     console.error(error);
-    next(error)
+    next(error);
   }
 });
 // update User's ingredients by adding a new Ingredient
@@ -127,8 +120,8 @@ router.put("/:userName/allingredients", async (req, res, next) => {
     ]);
     res.send(updatedIngredients);
   } catch (error) {
-    console.error(error)
-    next(error)
+    console.error(error);
+    next(error);
   }
 });
 
@@ -139,7 +132,7 @@ router.delete("/:userName", async (req, res, next) => {
     res.sendStatus(204);
   } catch (error) {
     console.error(error);
-    next(error)
+    next(error);
   }
 });
 
@@ -147,18 +140,15 @@ router.delete("/:userName/allingredients/", async (req, res, next) => {
   try {
     const userName = req.params.userName;
     const { ingredients, idx } = req.body;
-
     const singleUser = await getSingleUserByUserName(userName);
     const userIngred = singleUser.Item.ingredients;
-    console.log(userIngred, "in delete");
-    console.log(req.params, req.body, "params");
     const deletedIngredients = await deleteUserIngredients(userName, [
       userIngred[idx],
     ]);
     res.send(deletedIngredients);
   } catch (error) {
     console.error(error);
-    next(error)
+    next(error);
   }
 });
 
@@ -168,16 +158,11 @@ router.delete("/:userName/allingredients/:idx", async (req, res, next) => {
     const idx = req.params.idx;
     const singleUser = await getSingleUserByUserName(userName);
     const ingredients = singleUser.Item.ingredients;
-    console.log(idx, "the index");
-    console.log(req.params, "the params");
-    console.log(req.body, "the body in router delete");
     const deletedIngredients = await deleteUserIngredients(userName, [idx]);
-    console.log(deletedIngredients, "deleted");
-    console.log("testing");
     res.send(deletedIngredients);
   } catch (error) {
     console.error(error);
-    next(error)
+    next(error);
   }
 });
 

@@ -17,7 +17,6 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   const strategy = new GoogleStrategy(
     googleConfig,
     async (token, refreshToken, profile, done) => {
-      //   console.log('profile is',profile)
       const googleId = profile.id;
       const userName = profile.name.givenName;
       const email = profile.emails[0].value;
@@ -52,7 +51,6 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   //   login page.  Otherwise, the primary route function function will be called,
   //   which, in this example, will redirect the user to the home page.
   router.get(
-    //   '/callback',
     "/callback",
     passport.authenticate("google", {
       successRedirect: "/welcome",

@@ -1,27 +1,18 @@
 * {
   box-sizing: border-box;
   margin: 0;
+
 }
 
 #app-bar {
   box-shadow: none;
 }
 
-.mui-like {
-  text-decoration: none;
-  color: #57ada0;
-  transition: .3s;
-}
-
-.mui-like:hover {
-  color: #217d72;
-  transition: .3s;
-}
-
-.mui-like:active {
-  color: #062e29;
-  transition: .3s;
-  outline: lightsalmon dotted 1px;
+.for-centering-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 3em;
 }
 
 /************ scan view styles ************/
@@ -123,42 +114,43 @@
   background-color: rgb(233, 233, 233);
 }
 
-.favorited-btn {
+#favorited-btn {
   background-color: lightpink;
   color: darkred;
 }
 
-#the-last-one-i-swear {
+.user-home-bar {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 1em 0;
 }
 
-#favorites-bar {
+.favorites-bar {
   display: flex;
   justify-content: center;
   flex-direction: column;
   margin: 1em;
 }
 
-#favorites-bar > span {
-  color: gray;
-  margin-left: .6em;
+.bar-info {
+  display: flex;
 }
 
-#favorites-view {
+.bar-info > span {
+  color: gray;
+  margin: 0 .6em;
+}
+
+.favorites-view {
   padding: 1em;
   display: flex;
   align-items: center;
   width: 70vw;
   border: 1px solid rgb(187, 187, 187);
   overflow: hidden;
+  scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-}
-
-#see-all-favorites-link {
-  width: 150px;
-  align-self: flex-end;
 }
 
 .favorite-drink-thumb {
@@ -169,7 +161,7 @@
   flex-direction: column;
   align-items: center;
 }
-.favorite-drink-thumb * {
+.favorite-drink-thumb *, .favorite-drink * {
   text-align: center;
 }
 
@@ -179,6 +171,70 @@
   margin-bottom: .2em;
 }
 
+.mui-like {
+  text-decoration: none;
+  color: #57ada0;
+  transition: .3s;
+}
+
+.mui-like:hover {
+  color: #217d72;
+  transition: .3s;
+}
+
+.mui-like:active {
+  color: #062e29;
+  transition: .3s;
+  outline: lightsalmon dotted 1px;
+}
+
+#all-favorites-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80vw;
+}
+
+.favorite-drink-img-all {
+  max-height: 15vw;
+  max-width: 15vw;
+}
+
+.favorite-drink {
+  border: 1px solid rgb(221, 221, 221);
+  padding: 1em;
+  margin: 1vw 1.5vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media screen and (max-width: 1699px) {
+  .favorite-drink-img-all {
+    max-height: 17vw;
+    max-width: 17vw;
+  }
+}
+@media screen and (max-width: 1366px) {
+  .favorite-drink-img-all {
+    max-height: 20vw;
+    max-width: 20vw;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .favorite-drink-img-all {
+    max-height: 30vw;
+    max-width: 30vw;
+  }
+  #all-favorites-container {
+    justify-content: center;
+  }
+}
+@media screen and (max-width: 600px) {
+  .favorite-drink-img-all {
+    max-height: 70vw;
+    max-width: 70vw;
+  }
+}
 /************ favorites end ************/
 
 .drink-page {
@@ -249,4 +305,28 @@
   width:100px;
   height: 100px;
   background-color:black;
+}
+/* .makeStyles-root-14{
+  width: 800px;
+} */
+/* .userHome{
+  /* background-color:palegreen; */
+  /* width: 800px; */
+  /* height: auto; */
+
+/* }  */
+#container{
+  /* display: flex; */
+/* background-image: url("https://venerablecapital.es/wp-content/uploads/2019/07/bigstock-Mojito-drink-on-wood-with-blur-63752305.jpg"); */
+/* background-repeat: no-repeat; */
+/* background-image: url("https://previews.123rf.com/images/bondd/bondd1801/bondd180100725/94596548-tropical-drink-pineapple-juice-margarita-cocktail-with-fresh-mint-light-blue-background-copy-space-t.jpg") */
+
+background-image: url("https://i.pinimg.com/originals/27/0e/c0/270ec08bcf95f59e83181359827f573e.jpg")
+}
+#carousel1{
+  align-content: center;
+  outline-color: red;
+  align-items: center;
+  /* width: 1500px; */
+
 }

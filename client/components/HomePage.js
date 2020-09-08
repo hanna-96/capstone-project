@@ -1,39 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-// import Card from '@material-ui/core/Card';
-// import CardMedia from '@material-ui/core/CardMedia';
-// import CardActions from '@material-ui/core/CardActions';
-import { makeStyles } from "@material-ui/core/styles";
-// import Typography from '@material-ui/core/Typography';
-import SwipeableTextMobileStepper from "./CarouselForHomePage";
-
-// const useStyles = makeStyles((theme) => ({
-//     root: {
-//       maxWidth: 400,
-//       flexGrow: 1,
-//     },
-//     header: {
-//       display: "flex",
-//       alignItems: "center",
-//       height: 50,
-//       paddingLeft: theme.spacing(4),
-//       backgroundColor: theme.palette.background.default,
-//     },
-//     img: {
-//       height: 255,
-//       display: "block",
-//       maxWidth: 400,
-//       overflow: "hidden",
-//       width: "100%",
-//     },
-//   }));
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
+import SwipeableTextMobileStepper from "./Carousel";
 
 const HomePape = (props) => {
-  //added props here so that we could use it for useEffect
   const [ingredient, setIngredient] = useState([]);
-  // const [switch1, setSwitch1] = useState(false);
-  // const classes = useStyles()
-
   useEffect(() => {
     const func = async () => {
       try {
@@ -55,24 +28,26 @@ const HomePape = (props) => {
   return (
     <div>
       <React.Fragment>
-        <img className="mainPic" src="https://i.ibb.co/0Jhtp3b/Cheers-3.png" />
-        <SwipeableTextMobileStepper ingredients={ingredient} />
+        <CssBaseline />
+        <Container maxWidth="xl" id="container"> 
+
+          <Typography
+            component="div"
+            style={{ backgroundColor: "none", height: "100vh"}}
+          >
+            {/* <h1>Mixologist</h1> */}
+            <Typography variant="h2" component="h3" align="center" color="primary">
+         Scan,shake & sip!
+        </Typography>
+            <SwipeableTextMobileStepper ingredients={ingredient}  />
+          </Typography>
+        {/* <img className="mainPic" src="https://i.ibb.co/0Jhtp3b/Cheers-3.png" /> */}
+
+        </Container>
       </React.Fragment>
     </div>
   );
 };
 export default HomePape;
 
-{
-  /* <Card className={classes.root} color='primary' variant='outlined'>
-<CardMedia
-className={classes.media}
-component="img"
-image={ingredient.strDrinkThumb}
-title={ingredient.strDrink}
-/>
-<Typography variant="body2" color="textSecondary" component="p">
-{ingredient.strInstructions}
-</Typography> */
-}
-// </Card>
+
