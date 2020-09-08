@@ -182,8 +182,6 @@ router.delete("/:userName/allingredients/", async (req, res, next) => {
     
     const singleUser = await getSingleUserByUserName(userName)
     const userIngred = singleUser.Item.ingredients
-    console.log(userIngred, 'in delete')
-    console.log(req.params, req.body, 'params')
     const deletedIngredients = await deleteUserIngredients(userName, [
       userIngred[idx]
     ]);
@@ -202,9 +200,6 @@ router.delete("/:userName/allingredients/:idx", async (req, res, next) => {
     const idx = req.params.idx
     const singleUser = await getSingleUserByUserName(userName)
     const ingredients = singleUser.Item.ingredients
-    console.log(idx, 'the index')
-    console.log(req.params, 'the params')
-    console.log(req.body, 'the body in router delete')
     const deletedIngredients = await deleteUserIngredients(userName, 
       [idx]
     );
@@ -232,7 +227,6 @@ router.put("/:userName/friends", async (req, res, next) => {
     const friend = req.body.friend
     const status = req.body.status
     const friends = await updateUserFriends(req.params.userName, [{friend, status}])
-    console.log(friends)
     res.send(friends)
   } catch(e) { next(e) }
 })

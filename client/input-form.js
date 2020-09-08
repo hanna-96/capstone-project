@@ -4,6 +4,7 @@ import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
 import Input from "@material-ui/core/Input";
 import RequestFilter from "./request-filter";
+import Link from '@material-ui/core/Link'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
@@ -65,9 +66,9 @@ const InputForm = () => {
               }
           )}
           </div>
-        
+            <br />
 
-          <Button type='submit' value='Submit'>Submit Ingredients</Button>
+          <Button type='submit' variant='contained' color='primary' value='Submit'>Submit Ingredients</Button>
           </div>
         </FormControl>
             {submitted? <RequestFilter ingreds={inputs} inputLen={inputs.length} />: <div></div>} 

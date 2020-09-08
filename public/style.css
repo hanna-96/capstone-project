@@ -356,6 +356,11 @@ footer {
   margin-right: 5rem;
   padding-top: 1rem;
 }
+#cabinet-header {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 1rem;
+}
 
 #cabinet-shelf {
   display: flex;
@@ -364,6 +369,17 @@ footer {
   justify-content: space-evenly;
   padding-top: 1rem;
 
+}
+
+#cabinet-button {
+  padding-right: 1rem;
+}
+
+#delete-button {
+  padding-right: 1rem;
+  padding-left: 1rem;
+  padding-bottom: 0.5rem;
+  padding-top: 0.25rem;
 }
 /* 
 #cabinet-item {

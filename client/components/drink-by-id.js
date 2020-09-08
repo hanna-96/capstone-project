@@ -46,11 +46,9 @@ const DrinkId = (props) => {
         }
   
       }
-      if(!didRun) {
         getDrinkDetails(id)
-        setDidRun(true)
-      }
-    })
+
+    }, [])
 
     useEffect( () => {
       const getIngAndMeasure = () => {

@@ -34,56 +34,8 @@ const AllIngredients = (props) => {
       {oldOrNew === 'new' && <div>{props.ingred.split('_').join(' ')} was added to your Cabinet!</div>}
       {oldOrNew === 'old' && <div>{props.ingred.split('_').join(' ')} is in your cabinet and was included in the search!</div>}
     </div>
+    
   )
 }
 
 export default withRouter(AllIngredients)
-
-// class AllIngredients extends React.Component {
-//   async componentDidMount() {
-//     const userName = this.props.match.params.userName
-//     const ingredients = await this.props.ingredients
-//     console.log(ingredients, 'ingredients')
-//     this.props.addIngredient(userName, this.props.ingred)
-//     this.props.getIngredients(userName);
-//     }
-
-//   render() {
-//     const ingredients = this.props.ingredients;
-//     return (
-//       <div>
-
-//       </div>
-//     );
-// }
-
-// }
-
-// const mapState = (state) => {
-//   return {
-//     ingredients: state.ingredients,
-//   };
-// };
-
-// const mapDispatch = (dispatch) => {
-//   return {
-//     getIngredients: userName => dispatch(getAllIngredientsThunk(userName)),
-//     addIngredient: (userName, ingredient) =>
-//       dispatch(addIngredientThunk(userName, ingredient)),
-//   };
-// };
-
-// export default withRouter(connect(mapState, mapDispatch)(AllIngredients));
-
-// <div> 
-// { newIngredients.length ? 
-// <div>
-//   {ingredients.includes(props.ingred) ? 
-//   <div>{props.ingred.split('_').join(' ')} is already in your Cabinet but is included in the search results! </div> 
-//   : <div> {props.ingred.split('_').join(' ')} was added to your Cabinet</div> }
-// </div>
-
-// : <div></div>
-
-// }
-// </div>
