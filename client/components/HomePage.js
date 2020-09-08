@@ -2,10 +2,25 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
+import CardActions from '@material-ui/core/CardActions';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+
+const useStyles = makeStyles({
+    root: {
+      maxWidth: 345,
+    },
+    media: {
+        height: "150px",
+        // paddingTop: '56.25%', // 16:9
+      },
+  });
 
 export default function HomePape() {
     const [ingredient, setIngredient] = useState('')
     const [switch1, setSwitch1] = useState(false)
+    const classes = useStyles()
+
     useEffect(() => {
         const func =  async () => {
             try {
@@ -23,27 +38,26 @@ export default function HomePape() {
         }
     })
 
-    // console.log(ingredient)
+    console.log(typeof ingredient.strDrinkThumb)
     return(
         <div>
-            {/* {ingredient !== '' ? <h1>{ingredient}</h1> : <div></div>} */}
-            {/* <div style={{backgroundImage: `url("https://techgirl.co.za/wp-content/uploads/2015/01/pdid3.jpg")`, width:'250px',height:'250px'}}> */}
-            {/* <h1>Mixogolist</h1>/ */}
-    {/* <div style={{color:"white"}}>{" "}</div> */}
-              <img className="mainPic" 
+            {ingredient && 
+        (<div>
+        <img className="mainPic" 
              src="https://i.ibb.co/0Jhtp3b/Cheers-3.png"/>
-             <Card>
+
+             <Card className={classes.root} color='primary' variant='outlined'>
              <CardMedia
-        // className={classes.media}
+        className={classes.media}
+        component="img"
         image={ingredient.strDrinkThumb}
-        // title={ingredient.strDrink}
-        title="kak dela"
+        title={ingredient.strDrink}
       />
+      <Typography variant="body2" color="textSecondary" component="p">
+      {ingredient.strInstructions}
+      </Typography>
         </Card>
-            {/* <h3>Drink of the week</h3>
-            {ingredient.strDrink}
-            <img src={ingredient.strDrinkThumb} /> */}
-            {/* </div> */}
+        </div>)}
         </div>
     )
 }

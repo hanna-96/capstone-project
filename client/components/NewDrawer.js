@@ -55,6 +55,8 @@ const useStyles = makeStyles({
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
+        {props.isLoggedIn ? 
+        <React.Fragment>
       <List>
         <Link href='/welcome'>
           <ListItem button key='home'>
@@ -73,19 +75,29 @@ const useStyles = makeStyles({
         </Link>
       </List>
       <Divider />
-      <List>
-        {props.isLoggedIn && (
           <Link href='/login'>
           <ListItem button key="logout" onClick={props.handleClick} >
             {/* <Redirect to='/login' /> */}
             <ListItemText primary="Logout" />
           </ListItem>
-          </Link>)
+          </Link>
+      </React.Fragment>
+       : 
+              <List>
+              <Link href='/login'>
+                <ListItem button key='login'>
+                  <ListItemText primary='Login' />
+                </ListItem>
+              </Link>
+              <Link href='/signup'>
+                <ListItem button key='signup'>
+                  <ListItemText primary='Signup' />
+                </ListItem>
+              </Link>
+            </List>
       }
-      </List>
     </div>
   );
-  console.log('is it logged in?', props.isLoggedIn)
   return (
     <div>
         <React.Fragment key={anchor}>

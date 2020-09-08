@@ -31,7 +31,6 @@ if (process.env.NODE_ENV === "dev") require("./secrets");
 
 // also tried this:((
 passport.serializeUser(function (user, done) {
-  console.log("user in serialize", user);
   //diesnt work for google log in
   done(null, user.Item.userName);
 });
@@ -75,18 +74,15 @@ app.use("/auth", require("./server/auth"));
 
 app.post("/gvision", async (req, res, next) => {
   try {
-    //still need these console.logs for mobile tests
-    console.log("hi from the gvision route!");
-    console.log(req.files.img);
-    const client = new vision.ImageAnnotatorClient();
-    const fileName = req.files.img.data;
+    const client = new vision.ImageAnnotatorClient()
+    const fileName = req.files.img.data
     //result is the full json object
-    const [result] = await client.documentTextDetection(fileName);
+    const [result] = await client.documentTextDetection(fileName)
     //result.fullTextAnnotation.text gives us one string with all transcribed text
-    const fullTextAnnotation = result.fullTextAnnotation;
-    res.send(fullTextAnnotation.text.split("\n"));
+    const fullTextAnnotation = result.fullTextAnnotation
+    res.send(fullTextAnnotation.text)
   } catch (e) {
-    next(e);
+    next(e)
   }
 });
 

@@ -66,9 +66,9 @@ const InputForm = () => {
               }
           )}
           </div>
-        
+            <br />
 
-          <Button type='submit' value='Submit'>Submit Ingredients</Button>
+          <Button type='submit' variant='contained' color='primary' value='Submit'>Submit Ingredients</Button>
           </div>
         </FormControl>
             {submitted? <RequestFilter ingreds={inputs} inputLen={inputs.length} />: <div></div>} 

@@ -29,6 +29,7 @@ const Request = (props) => {
     ingreds.forEach( async ing => {
       await getDrinks(ing)
     })
+
 }, [ingreds])
 
 
@@ -42,7 +43,6 @@ const Request = (props) => {
       <div>
         <h2>{drinkList.length} Results</h2>
         <Link to={{ pathname: '/results', state: {drinkList} }}>Go to results</Link> 
-        <DrinkList drinks={drinkList} />
         </div>
  : <div> Could not find any drinks
    </div>} 

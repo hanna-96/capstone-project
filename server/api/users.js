@@ -150,22 +150,17 @@ router.put("/:userName/allingredients", async (req, res, next) => {
     const singleUser = await getSingleUserByUserName(userName)
     const ingredients = singleUser.Item.ingredients
     if(!ingredients.includes(ingredient)) {
-    // console.log(req.body, "body");
-    // console.log(req.params, "params");
-
-    // console.log("params", req.body.ingredient);
-    
-    const updatedIngredients = await updateUserIngredients(userName, [
-      ingredient,
-    ]);
-    res.send(updatedIngredients);
-  } else {
-    res.send(ingredients)
-  }
-  } catch (error) {
-    console.error(error)
-    next(error)
-  }
+      await updateUserIngredients(userName, [
+        ingredient,
+      ]);
+      res.send('new');
+    } else {
+      res.send('old');
+    }
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
 });
 
 
@@ -176,7 +171,7 @@ router.delete("/:userName", async (req, res, next) => {
     res.sendStatus(204);
   } catch (error) {
     console.error(error);
-    next(error)
+    next(error);
   }
 });
 

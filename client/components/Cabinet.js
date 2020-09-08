@@ -7,7 +7,6 @@ import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
 import CardMedia from '@material-ui/core/CardMedia'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { faGlassMartini } from "@fortawesome/free-solid-svg-icons";
 const Cabinet = (props) => {
     const ingredients = useSelector(state => state.ingredients)
@@ -31,13 +30,17 @@ const Cabinet = (props) => {
         return (
             <div id='cabinet-page'>
                 <Container fluid>
-                <div id='cabinet-hearder'>
-                    <h1>Welcome to cabinet <FontAwesomeIcon icon={faGlassMartini} /></h1>
+                <h1>Welcome to cabinet <FontAwesomeIcon icon={faGlassMartini} /></h1>
                 <p>You have {ingredients.length} ingredients in your cabinet right now</p>
+                
+                <div id='cabinet-header'>
+                    
+                
+                <div id='cabinet-button'> 
+                <Button variant='contained' color='primary' href='/scan'>Scan Receipt</Button> </div>
+                <div id='cabinet-button'> <Button variant='contained' color='primary' href={`/users/${userName}`}>Add Manually</Button>
                 </div>
-
-                <Button variant='contained' color='primary'><Link to={`/scan`}>Scan Receipt</Link> </Button>
-                <Button variant='contained' color='primary'><Link to={`/users/${userName}`}>Add Manually</Link> </Button>
+                </div>
             <div id='cabinet-shelf'>
 
 
@@ -50,14 +53,13 @@ const Cabinet = (props) => {
                     
                     <Card color='primary' variant='outlined'>
                         {ingred} 
-                        {/* <img src={`https://www.thecocktaildb.com/images/ingredients/${ingred}-small.png`} /> */}
                         <CardMedia
                             component="img"
                             height="100"
                             width="50"
                             image={`https://www.thecocktaildb.com/images/ingredients/${ingred}-small.png`}
                          />
-                                <div id='delete-button'><Button color='secondary' variant="contained" type='button' size='small' value={`${idx}`} onClick={handleClick}>delete</Button></div>
+                                <div id='delete-button'><Button color='secondary' size='small' variant="contained" type='button' size='small' value={`${idx}`} onClick={handleClick}>delete</Button></div>
                             </Card>
                         
                     </div>)

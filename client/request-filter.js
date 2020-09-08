@@ -30,13 +30,12 @@ const RequestFilter = (props) => {
         }
 
         ingreds.forEach(async ing => await reqValidator(ing))
-    }, [inputLen])
 
+    }, [inputLen])
     
     return (
         
         <div>
-
     <p>{validIng.map( (ingred) => 
     <div>
 
@@ -46,7 +45,7 @@ const RequestFilter = (props) => {
     )}</p>
 
     <p>See your results: </p>
-  <Request ingreds={validIng} />
+    <Request ingreds={validIng} />
   
 
 

@@ -6,7 +6,7 @@ const GET_INGREDIENTS = "GET_INGREDIENTS";
 const ADD_INGREDIENT = "ADD_INGREDIENT";
 const DELETE_INGREDIENT = "DELETE_INGREDIENT" 
 
-const initialState = [];
+const initialState = []
 
 /**
  * ACTION CREATORS
@@ -15,6 +15,7 @@ const getIngredients = (ingredients) => ({
   type: GET_INGREDIENTS,
   ingredients,
 });
+
 const addIngredient = (ingredient) => {
   return {
     type: ADD_INGREDIENT,
@@ -44,17 +45,15 @@ export const getAllIngredientsThunk = (userName) => {
 };
 export const addIngredientThunk = (userName, ingredient) => {
   return async (dispatch) => {
-   
     try {
       if (ingredient) {
         let { data } = await axios.put(
           `/api/users/${userName}/allingredients`, {ingredient}
-        );
-        
-        dispatch(addIngredient(data));
+        )
+        dispatch(addIngredient(ingredient))
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   };
 };
@@ -63,7 +62,6 @@ export const deleteIngredientThunk = (userName, ingredients, idx) => {
   return async (dispatch) => {
 
   try {
-      console.log("idx", idx)
        await axios.delete(`/api/users/${userName}/allingredients/${idx.toString()}`, {ingredients,idx})
         dispatch(deleteIngredient(ingredients,idx))
   } catch(err) {
@@ -77,9 +75,9 @@ export const deleteIngredientThunk = (userName, ingredients, idx) => {
 export default function (state = initialState, action) {
   switch (action.type) {
     case GET_INGREDIENTS:
-      return action.ingredients;
+      return action.ingredients
     case ADD_INGREDIENT:
-      return action.ingredient;
+      return [...state, action.ingredient]
     case DELETE_INGREDIENT:
       return action.ingredients.filter((ing, idx) => idx!== action.idx)
     default:
