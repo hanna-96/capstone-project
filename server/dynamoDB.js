@@ -1,10 +1,11 @@
 const AWS = require("aws-sdk");
-if (process.env.NODE_ENV === "dev") require("../secrets");
+const {ACCESS_KEY_ID,SECRET_ACCESS_KEY,region,AWS_ENDPOINT} = require('../secrets')
+// if (process.env.NODE_ENV === "dev") require("../secrets");
 let awsConfig = {
-  region: "us-east-2",
-  endpoint: process.env.AWS_ENDPOINT,
-  accessKeyId: process.env.ACCESS_KEY_ID,
-  secretAccessKey: process.env.SECRET_ACCESS_KEY,
+  region: region,
+  endpoint: AWS_ENDPOINT,
+  accessKeyId: ACCESS_KEY_ID,
+  secretAccessKey:SECRET_ACCESS_KEY,
 };
 
 AWS.config.update(awsConfig);
